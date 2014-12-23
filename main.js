@@ -16,10 +16,17 @@ mc.on("swipedown", function(ev) {
   showPrevPage();
 });
 
-function showNextPage() {
+var currentPage = 0, lastPage = 2;
 
+function showNextPage() {
+  if (currentPage >= lastPage) return;
+
+  currentPage += 1;
+  $('.slider').animate({ top: '-=100%' });
 }
 
 function showPrevPage() {
-
+  if (currentPage <= 0) return;
+  currentPage -= 1;
+  $('.slider').animate({ top: '+=100%' });
 }

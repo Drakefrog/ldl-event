@@ -18,20 +18,20 @@ body {
     left: 0px;
 }
 
-.slider-1 {
+.slider-0 {
     background: red;
     top: 0px;
     left: 0px;
 }
 
-.slider-2 {
+.slider-1 {
     background: green;
-    top: 30px;
+    top: 100%;
     left: 0px;
 }
 
-.slider-3 {
+.slider-2 {
     background: blue;
-    top: 80px;
+    top: 200%;
     left: 0px;
 }
