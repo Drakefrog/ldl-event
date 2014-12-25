@@ -1,0 +1,2 @@
+
+var ss = new SlideShow();
