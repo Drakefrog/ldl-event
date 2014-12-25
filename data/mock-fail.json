@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "uid": null,
+  "errorCode": 1,
+  "error": null,
+  "path": null,
+  "ret": {
+	  "message": "Something is wrong"
+  }
+}
