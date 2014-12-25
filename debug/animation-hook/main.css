@@ -5,19 +5,19 @@ body {
     overflow: hidden;
 }
 
-.slider-0 {
+.slide-0 {
     background: red;
     top: 0px;
     left: 0px;
 }
 
-.slider-1 {
+.slide-1 {
     background: green;
     top: 100%;
     left: 0px;
 }
 
-.slider-2 {
+.slide-2 {
     background: blue;
     top: 200%;
     left: 0px;
