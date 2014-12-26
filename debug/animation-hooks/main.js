@@ -44,6 +44,6 @@ var T = 10000,
       });
 
     }),
-    ss = new SlideShow(document.body, slides);
+    ss = new SlideShow(document.getElementById('main'), slides);
 
 ss.start();
