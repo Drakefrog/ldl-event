@@ -6,19 +6,19 @@ body {
 }
 
 .slide-0 {
-    background: red;
+    background: #ff0000;
     top: 0px;
     left: 0px;
 }
 
 .slide-1 {
-    background: green;
+    background: #00ff00;
     top: 100%;
     left: 0px;
 }
 
 .slide-2 {
-    background: blue;
+    background: #0000ff;
     top: 200%;
     left: 0px;
 }
