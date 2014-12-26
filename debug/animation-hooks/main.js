@@ -25,7 +25,6 @@ var T = 10000,
                   this.domEl.removeChild(h2);
                 };
 
-            debugger;
             h2.textContent = 'entered slide ' + i;
             this.domEl.appendChild(h2);
             setTimeout(later.bind(this), 2000);
