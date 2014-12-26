@@ -14,13 +14,11 @@ var T = 10000,
             h1.textContent = '' + i;
             this.domEl.appendChild(h1);
           },
-          frameFn = function(t) {
-            var comps = colorComponents.slice();
-            comps[i] = updateColorComponent(t);
-            this.domEl.style.backgroundColor = rgbToHex.apply(null, comps);
-          },
           enterFn = function() {
             var h2 = document.createElement('h2'),
+                components = ['backgroundColorRed', 'backgroundColorGreen', 'backgroundColorBlue'],
+                startState = {},
+                endState = {},
                 later = function() {
                   this.domEl.removeChild(h2);
                 };
@@ -28,19 +26,30 @@ var T = 10000,
             h2.textContent = 'entered slide ' + i;
             this.domEl.appendChild(h2);
             setTimeout(later.bind(this), 2000);
+
+            startState[components[i]] = 255;
+            endState[components[i]] = 100;
+            $(this.domEl)
+              .velocity(startState, { duration: 0 })
+              .velocity(endState, { duration: 2000, loop: true });
           },
           exitFn = function() {
-            var comps = colorComponents.slice();
+            var comps = colorComponents.slice(),
+                bgColor;
+
             comps[i] = 255;
-            this.domEl.style.backgroundColor = rgbToHex.apply(null, comps);
+            bgColor = rgbToHex.apply(null, comps);
+
+            $(this.domEl)
+              .velocity('stop', true)
+              .css('backgroundColor', bgColor);
           };
 
       return new Slide({
         domEl: id,
         onCreate: createFn,
         onEnter: enterFn,
-        onExit: exitFn,
-        onFrame: frameFn
+        onExit: exitFn
       });
 
     }),
