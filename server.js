@@ -7,9 +7,7 @@ var express = require('express'),
 app.set('view engine', 'hbs');
 
 app.get('/', function(req, res) {
-  res.send(builder.render('index', {
-    title: "Slide show"
-  }));
+  res.send(builder.render('index'));
 });
 
 app.use(express.static(__dirname));

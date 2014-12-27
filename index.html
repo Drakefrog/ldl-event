@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -10,26 +9,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/slideshow.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="app.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide0/slide0.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide1/slide1.css" type="text/css" media="screen" />
     <title></title>
   </head>
   <body>
 
     <div id="main" class="ss-container">
-      <div id="slide-0" class="ss-slide slide-0"></div>
-      <div id="slide-1" class="ss-slide slide-1"></div>
-      <div id="slide-2" class="ss-slide slide-2"></div>
+        <div id="slide-0" class="ss-slide ss-0-0 slide-0">
+  <h1>Slide 0</h1>
+</div>
+
+        <div id="slide-1" class="ss-slide ss-0-1 slide-1">
+  <h1>Slide 1</h1>
+</div>
+
     </div>
 
-    <script src="https://rawgit.com/lodash/lodash/2.4.1/dist/lodash.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//zeptojs.com/zepto.min.js"></script>
+    <script src="//cdn.jsdelivr.net/velocity/1.1.0/velocity.min.js"></script>
     <script src="lib/utils.js"></script>
     <script src="lib/ldl-api.js"></script>
     <script src="lib/slideshow.js"></script>
 
     <script src="app.js"></script>
-    <script src="slides/slide0.js"></script>
-    <script src="slides/slide1.js"></script>
-    <script src="slides/slide2.js"></script>
+
+        <script src="slides/slide0/slide0.js"></script>
+        <script src="slides/slide1/slide1.js"></script>
 
     <script>
       app.bootstrap();
