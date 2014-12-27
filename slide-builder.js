@@ -42,6 +42,7 @@ function loadConfig(slides) {
         throw err;
       }
     }
+    config.basePath = 'slides/' + config.name;
     slide.config = config;
   });
 }
@@ -66,7 +67,6 @@ function compileHTMLForEachSlides(slides) {
 function injectConfigs(slides) {
   var merged = slides.reduce(function(sofar, slide) {
     sofar[slide.name] = slide.config || {};
-    sofar[slide.name].basePath = 'slides/' + slide.name;;
     return sofar;
   }, {});
   return JSON.stringify(merged);
