@@ -9,21 +9,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="lib/slideshow.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="app.css" type="text/css" media="screen" />
-          <link rel="stylesheet" href="slides/slide0/slide0.css" type="text/css" media="screen" />
-          <link rel="stylesheet" href="slides/slide1/slide1.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-0/slide-0.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-1/slide-1.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-2/slide-2.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-3/slide-3.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-4/slide-4.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-5/slide-5.css" type="text/css" media="screen" />
+          <link rel="stylesheet" href="slides/slide-6/slide-6.css" type="text/css" media="screen" />
     <title></title>
   </head>
   <body>
 
     <div id="main" class="ss-container">
         <div id="slide-0" class="ss-slide ss-0-0 slide-0">
-  <h1>Slide 0</h1>
+  <h1>slide-0</h1>
 </div>
-
         <div id="slide-1" class="ss-slide ss-0-1 slide-1">
-  <h1>Slide 1</h1>
+  <h1>slide-1</h1>
 </div>
-
+        <div id="slide-2" class="ss-slide ss-0-2 slide-2">
+  <h1>slide-2</h1>
+</div>
+        <div id="slide-3" class="ss-slide ss-0-3 slide-3">
+  <h1>slide-3</h1>
+</div>
+        <div id="slide-4" class="ss-slide ss-0-4 slide-4">
+  <h1>slide-4</h1>
+</div>
+        <div id="slide-5" class="ss-slide ss-0-5 slide-5">
+  <h1>slide-5</h1>
+</div>
+        <div id="slide-6" class="ss-slide ss-0-6 slide-6">
+  <h1>slide-6</h1>
+</div>
     </div>
 
     <script src="//zeptojs.com/zepto.min.js"></script>
@@ -33,9 +51,17 @@
     <script src="lib/slideshow.js"></script>
 
     <script src="app.js"></script>
+    <script>
+      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5},"slide-6":{"name":"slide-6","title":"slide-6","index":6,"posX":0,"posY":6}}
+    </script>
 
-        <script src="slides/slide0/slide0.js"></script>
-        <script src="slides/slide1/slide1.js"></script>
+        <script src="slides/slide-0/slide-0.js"></script>
+        <script src="slides/slide-1/slide-1.js"></script>
+        <script src="slides/slide-2/slide-2.js"></script>
+        <script src="slides/slide-3/slide-3.js"></script>
+        <script src="slides/slide-4/slide-4.js"></script>
+        <script src="slides/slide-5/slide-5.js"></script>
+        <script src="slides/slide-6/slide-6.js"></script>
 
     <script>
       app.bootstrap();
