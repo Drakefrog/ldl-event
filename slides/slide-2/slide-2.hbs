@@ -1,5 +1,13 @@
 <div id="{{name}}" class="ss-slide ss-{{posX}}-{{posY}} {{name}}">
-  <img src="{{basePath}}/element-1.png"></img>
-  <img src="{{basePath}}/element-2.png"></img>
-  <img src="{{basePath}}/element-3.png"></img>
+  <img src="{{basePath}}/earth.png" class="{{name}}-earth"></img>
+  <img src="{{basePath}}/superman.png" class="{{name}}-superman"></img>
+  <img src="{{basePath}}/girl.png" class="{{name}}-girl"></img>
 </div>
+
+<script id="{{name}}-template" type="handlebars-template">
+  <div class="{{name}} {{name}}-text">
+    <div class="{{name}}-orange">\{{userData.firstday_running}}</div>
+    <div>第一次使用乐动力跑步功能</div>
+    <div>飞奔了<span class="{{name}}-orange">\{{userData.runningsteps}}</span>m</div>
+  </div>
+</script>

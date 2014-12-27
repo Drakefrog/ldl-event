@@ -1,6 +1,9 @@
 
 var app = {
   $: window.$,
+  compile: function(source) {
+    return Handlebars.compile(source);
+  },
   slidesByName: {},
   mainEl: document.getElementById('main'),
   addSlide: function(name, aOptions) {
@@ -29,17 +32,29 @@ var app = {
         slides = Object.keys(slidesByName).map(function(name) {
           return slidesByName[name];
         }),
-        urlParams = parseURL(location.href).params;
+        urlParams = parseURL(location.href).params,
+        scope = this;
 
     slides.sort(function(a, b) {
       return a.context.index - b.context.index;
     });
 
-    this.ss = new SlideShow(this.mainEl, slides);
-    this.ss.start();
+    // add user data to slides context:
+    LDLAPI.getAnnualUserData(null, function(err, data) {
+      if (err) {
+        // TODO: handle the case can not get user data
+      }
 
-    if (urlParams.index) {
-      this.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
-    }
+      slides.forEach(function(slide) {
+        slide.context.userData = data.ret;;
+      });
+
+      scope.ss = new SlideShow(scope.mainEl, slides);
+      scope.ss.start();
+
+      if (urlParams.index) {
+        scope.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
+      }
+    });
   }
 };

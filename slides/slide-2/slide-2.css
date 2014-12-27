@@ -1,1 +1,46 @@
-.slide-2 { background-color: #5b0d05; }
+.slide-2 {
+    background-color: #0B1635;
+}
+
+.slide-2.slide-2-text div {
+    margin-bottom: 0.2em;
+}
+
+.slide-2.slide-2-text div span {
+    margin: 0.3em;
+}
+
+.slide-2.slide-2-text {
+    opacity: 0.0;
+    font-size: 1.2em;
+    color: white;
+    text-align: left;
+    position: absolute;
+    top: 70%;
+    left: 10%;
+}
+
+.slide-2-orange {
+    color: #85481C;
+}
+
+.slide-2 .slide-2-earth {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+}
+
+.slide-2 .slide-2-girl {
+    position: absolute;
+    top: 11%;
+    left: 150%;
+    width: 12.8%;
+}
+
+.slide-2 .slide-2-superman {
+    position: absolute;
+    top: 18%;
+    left: 150%;
+    width: 18%;
+}
