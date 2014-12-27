@@ -33,7 +33,7 @@
     onExit: function() {
       this.$text.css('opacity', '');
       this.$girl.css('left', '');
-      this.$superman.css('right', '');
+      this.$superman.css('left', '');
     }
   });
 })(app);

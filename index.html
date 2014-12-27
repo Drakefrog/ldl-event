@@ -13,9 +13,6 @@
           <link rel="stylesheet" href="slides/slide-1/slide-1.css" type="text/css" media="screen" />
           <link rel="stylesheet" href="slides/slide-2/slide-2.css" type="text/css" media="screen" />
           <link rel="stylesheet" href="slides/slide-3/slide-3.css" type="text/css" media="screen" />
-          <link rel="stylesheet" href="slides/slide-4/slide-4.css" type="text/css" media="screen" />
-          <link rel="stylesheet" href="slides/slide-5/slide-5.css" type="text/css" media="screen" />
-          <link rel="stylesheet" href="slides/slide-6/slide-6.css" type="text/css" media="screen" />
     <title></title>
   </head>
   <body>
@@ -28,22 +25,24 @@
   <h1>slide-1</h1>
 </div>
         <div id="slide-2" class="ss-slide ss-0-2 slide-2">
-  <h1>slide-2</h1>
+  <img src="slides/slide-2/earth.png" class="slide-2-earth"></img>
+  <img src="slides/slide-2/superman.png" class="slide-2-superman"></img>
+  <img src="slides/slide-2/girl.png" class="slide-2-girl"></img>
 </div>
+
+<script id="slide-2-template" type="handlebars-template">
+  <div class="slide-2 slide-2-text">
+    <div class="slide-2-orange">{{userData.firstday_running}}</div>
+    <div>第一次使用乐动力跑步功能</div>
+    <div>飞奔了<span class="slide-2-orange">{{userData.runningsteps}}</span>m</div>
+  </div>
+</script>
         <div id="slide-3" class="ss-slide ss-0-3 slide-3">
   <h1>slide-3</h1>
 </div>
-        <div id="slide-4" class="ss-slide ss-0-4 slide-4">
-  <h1>slide-4</h1>
-</div>
-        <div id="slide-5" class="ss-slide ss-0-5 slide-5">
-  <h1>slide-5</h1>
-</div>
-        <div id="slide-6" class="ss-slide ss-0-6 slide-6">
-  <h1>slide-6</h1>
-</div>
     </div>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
     <script src="//zeptojs.com/zepto.min.js"></script>
     <script src="//cdn.jsdelivr.net/velocity/1.1.0/velocity.min.js"></script>
     <script src="lib/utils.js"></script>
@@ -52,16 +51,13 @@
 
     <script src="app.js"></script>
     <script>
-      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5},"slide-6":{"name":"slide-6","title":"slide-6","index":6,"posX":0,"posY":6}}
+      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"}}
     </script>
 
         <script src="slides/slide-0/slide-0.js"></script>
         <script src="slides/slide-1/slide-1.js"></script>
         <script src="slides/slide-2/slide-2.js"></script>
         <script src="slides/slide-3/slide-3.js"></script>
-        <script src="slides/slide-4/slide-4.js"></script>
-        <script src="slides/slide-5/slide-5.js"></script>
-        <script src="slides/slide-6/slide-6.js"></script>
 
     <script>
       app.bootstrap();
