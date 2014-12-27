@@ -63,6 +63,14 @@ function compileHTMLForEachSlides(slides) {
   });
 }
 
+function injectConfigs(slides) {
+  var merged = slides.reduce(function(sofar, slide) {
+    sofar[slide.name] = slide.config || {};
+    return sofar;
+  }, {});
+  return JSON.stringify(merged);
+}
+
 function load(dir) {
   var slides = loadSlidesList(dir);
   loadConfig(slides);
@@ -76,6 +84,7 @@ function render(template, aContext) {
       compiled;
 
   context.slides = context.slides || load(context.slidesDir);
+  context.config = injectConfigs(context.slides);
 
   compiled = handlebars.compile(source);
   return compiled(context);
