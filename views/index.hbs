@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/slideshow.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="app.css" type="text/css" media="screen" />
+    {{#each slides}}
+      {{#if contents.css}}
+        {{#each contents.css}}
+          <link rel="stylesheet" href="{{path}}" type="text/css" media="screen" />
+        {{/each}}
+      {{/if}}
+    {{/each}}
+    <title>{{title}}</title>
+  </head>
+  <body>
+
+    <div id="main" class="ss-container">
+      {{#each slides}}
+        {{{html}}}
+      {{/each}}
+    </div>
+
+    <script src="//zeptojs.com/zepto.min.js"></script>
+    <script src="//cdn.jsdelivr.net/velocity/1.1.0/velocity.min.js"></script>
+    <script src="lib/utils.js"></script>
+    <script src="lib/ldl-api.js"></script>
+    <script src="lib/slideshow.js"></script>
+
+    <script src="app.js"></script>
+
+    {{#each slides}}
+      {{#each contents.js}}
+        <script src="{{path}}"></script>
+      {{/each}}
+    {{/each}}
+
+    <script>
+      app.bootstrap();
+    </script>
+  </body>
+</html>

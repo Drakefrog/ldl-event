@@ -4,7 +4,3 @@ body {
     height: 100%;
     overflow: hidden;
 }
-
-.slide-0 { top: 0px; left: 0px; }
-.slide-1 { top: 100%; left: 0px; }
-.slide-2 { top: 200%; left: 0px; }
