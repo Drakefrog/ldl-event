@@ -28,7 +28,8 @@ var app = {
     var slidesByName = this.slidesByName,
         slides = Object.keys(slidesByName).map(function(name) {
           return slidesByName[name];
-        });
+        }),
+        urlParams = parseURL(location.href).params;
 
     slides.sort(function(a, b) {
       return a.context.index - b.context.index;
@@ -36,5 +37,9 @@ var app = {
 
     this.ss = new SlideShow(this.mainEl, slides);
     this.ss.start();
+
+    if (urlParams.index) {
+      this.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
+    }
   }
 };
