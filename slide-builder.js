@@ -66,6 +66,7 @@ function compileHTMLForEachSlides(slides) {
 function injectConfigs(slides) {
   var merged = slides.reduce(function(sofar, slide) {
     sofar[slide.name] = slide.config || {};
+    sofar[slide.name].basePath = 'slides/' + slide.name;;
     return sofar;
   }, {});
   return JSON.stringify(merged);
@@ -94,5 +95,7 @@ exports.load = load;
 exports.render = render;
 
 if (!module.parent) {
-  console.log("slides = ", JSON.stringify(load(), null, 4));
+  var slides = load();
+  console.log("slides = ", JSON.stringify(slides, null, 4));
+  console.log("conf = ", JSON.stringify(JSON.parse(injectConfigs(slides)), null, 4));
 }
