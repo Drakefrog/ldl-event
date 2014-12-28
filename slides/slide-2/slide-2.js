@@ -31,6 +31,10 @@
       });
     },
     onExit: function() {
+      this.$text.velocity('stop');
+      this.$girl.velocity('stop');
+      this.$superman.velocity('stop');
+
       this.$text.css('opacity', '');
       this.$girl.css('left', '');
       this.$superman.css('left', '');
