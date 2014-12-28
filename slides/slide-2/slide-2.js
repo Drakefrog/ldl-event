@@ -19,7 +19,7 @@
       });
 
       this.$girl.velocity({
-        left: "45%"
+        left: "46%"
       }, {
         duration: 2000
       });

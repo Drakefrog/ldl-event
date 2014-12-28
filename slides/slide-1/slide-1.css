@@ -1,1 +1,16 @@
-.slide-1 { background-color: #e63756; }
+.ss-slide.slide-1 {
+    background-color: #0B1635;
+}
+
+.slide-1-sky {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+}
+
+.slide-1-foot {
+    position: absolute;
+    width: 56.4%;
+    top: 20%;
+    left: -60%;
+}
