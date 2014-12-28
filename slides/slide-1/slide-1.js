@@ -17,19 +17,19 @@
       this.$sky.velocity({
         left: '5%'
       }, {
-        duration: 1000
+        duration: 1500
       });
 
       this.$text1.velocity({
         opacity: 1.0
       }, {
-        duration: 1000
+        duration: 1500
       });
 
       this.$foot.velocity({
         left: '-5%'
       }, {
-        delay: 1000,
+        delay: 1500,
         duration: 1200,
         easing: [300, 8]
       });
@@ -37,8 +37,8 @@
       this.$text2.velocity({
         opacity: 1.0
       }, {
-        duration: 1200,
-        delay: 1000
+        delay: 1500,
+        duration: 1500
       });
     },
     onExit: function() {
