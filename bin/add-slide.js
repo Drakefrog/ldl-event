@@ -51,7 +51,7 @@ jsonStr = JSON.stringify({
   "index": index,
   "posX": 0,
   "posY": index
-}, null, 4);
+}, null, 2);
 
 mkdirp(destFolder);
 write(destFolder + '/' + slideName + '.hbs', hbsStr);
