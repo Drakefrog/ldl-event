@@ -8,10 +8,11 @@ var app = {
   mainEl: document.getElementById('main'),
   addSlide: function(name, aOptions) {
     var options = aOptions || {},
+        urlParams,
         context,
         slide;
 
-    // Apply config
+    // Apply config from slide*.json
     context = this.config && this.config[name] || {};
     if (aOptions && aOptions.context) {
       Object.keys(aOptions.context).forEach(function(k) {
@@ -19,10 +20,21 @@ var app = {
       });
     }
     options.context = context;
-
     options.domEl = name;
-    slide = new Slide(options);
 
+    // Apply config from url for this slide
+    urlParams = parseURL(location.href).params;
+    if (parseInt(urlParams.index) === context.index) {
+      Object.keys(urlParams).forEach(function(key) {
+        var val;
+        if (key !== 'index') {
+          val = urlParams[key];
+          context[key] = val;
+        }
+      });
+    }
+
+    slide = new Slide(options);
     this.slidesByName[name] = slide;
 
     return slide;

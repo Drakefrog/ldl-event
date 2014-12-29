@@ -12,22 +12,23 @@
       this.$superman = $('.slide-2-superman', this.domEl);
     },
     onEnter: function() {
+      var duration = this.context.duration;
       this.$text.velocity({
         opacity: 1.0
       }, {
-        duration: 2000
+        duration: duration
       });
 
       this.$girl.velocity({
         left: "46%"
       }, {
-        duration: 2000
+        duration: duration
       });
 
       this.$superman.velocity({
         left: "64%"
       }, {
-        duration: 2000
+        duration: duration
       });
     },
     onExit: function() {
