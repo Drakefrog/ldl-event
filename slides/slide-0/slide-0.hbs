@@ -1,4 +1,11 @@
 <div id="{{name}}" class="ss-slide ss-{{posX}}-{{posY}} {{name}}">
-  <img src="{{basePath}}/background.png" class="{{name}}-background"></img>
-  <img src="{{basePath}}/logo.png" class="{{name}}-logo"></img>
+  <svg id="{{name}}-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
+    <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/background.png" />
+    <image x="279" y="1210" width="342" height="90" xlink:href="{{basePath}}/logo.png" />
+    <g id="{{name}}-stars"></g>
+  </svg>
 </div>
+
+<script id="{{name}}-template-star" type="handlebars-template">
+  <image id="\{{id}}" style="display: none;" x="\{{x}}" y="\{{y}}" width="\{{size}}" height="\{{size}}" transform="translate(\{{tx}}, \{{ty}})" xlink:href="{{basePath}}/star.png" />
+</script>

@@ -2,16 +2,10 @@
     background-color: #0B1635;
 }
 
-img.slide-0-background {
+.slide-0 svg {
     position: absolute;
-    top: 0;
     left: 0;
-    width: 100%;
-}
-
-img.slide-0-logo {
-    position: absolute;
-    bottom: 30%;
-    left: 35%;
-    width: 30%;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
