@@ -13,5 +13,5 @@ ldl-event-slideshow
   * `node bin/build-dev.js`
   * `node bin/build-dist.js` (TODO)
 - Add a new slide: 
-  `node bin/add-slide.js slide-5` will generate a scalfold in `slides/slide-5`
+  `node bin/add-slide.js slide-5` will generate a scaffold in `slides/slide-5`
 
