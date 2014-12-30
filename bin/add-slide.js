@@ -20,7 +20,7 @@ if (match) {
 }
 
 hbsStr = [
-  '<div id="{{name}}" class="ss-slide ss-{{posX}}-{{posY}} {{name}}">',
+  '<div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">',
   '  <h1>{{title}}</h1>',
   '</div>'
 ].join('\n');
@@ -31,7 +31,9 @@ cssStr = [
 
 jsStr = [
   '(function(app) {',
-  '  var slide = app.addSlide(\'' + slideName + '\', {',
+  '  var compile = app.compile,',
+  '      $ = app.$;',
+  '  app.addSlide(\'' + slideName + '\', {',
   '    onCreate: function() {',
   '      console.log(\'' + slideName + '.context\', this.context);',
   '    },',
