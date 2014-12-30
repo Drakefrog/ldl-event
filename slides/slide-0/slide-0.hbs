@@ -1,11 +1,12 @@
 <div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">
   <svg id="{{name}}-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
     <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/background.png" />
-    <image x="279" y="1210" width="342" height="90" xlink:href="{{basePath}}/logo.png" />
+    <image id="{{name}}-logo" opacity="1.0" x="279" y="1210" width="342" height="90" xlink:href="{{basePath}}/logo.png" />
     <g id="{{name}}-stars"></g>
+    <g id="{{name}}-text" transform="translate(-600, 550)">
+      <text fill="white" font-size="86px" transform="matrix(1, -0.2, 0, 1, 0, 0)">
+        {{textOnBoard}}
+      </text>
+    </g>
   </svg>
 </div>
-
-<script id="{{name}}-template-star" type="handlebars-template">
-  <image id="\{{id}}" style="display: none;" x="\{{x}}" y="\{{y}}" width="\{{size}}" height="\{{size}}" transform="translate(\{{tx}}, \{{ty}})" xlink:href="{{basePath}}/star.png" />
-</script>

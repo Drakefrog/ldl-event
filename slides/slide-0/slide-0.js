@@ -1,6 +1,5 @@
 (function(app) {
-  var $ = app.$,
-      d3 = app.d3,
+  var d3 = app.d3,
       starSize = 32,
       starCenters = [
         { x:249, y: 316 },
@@ -9,14 +8,18 @@
         { x:357, y: 295 }
       ];
 
-  function resetStars() {
+  function reset() {
     var size = 10 * starSize,
         stars = this.stars,
+        logo = this.logo,
+        text = this.text,
         basePath = this.context.basePath;
 
+    stars.transition().duration(0);
+    logo.transition().duration(0);
+    text.transition().duration(0);
+
     stars
-      .transition()
-      .duration(0)
       .style('display', 'none')
       .attr('x', function(d) { return d.x; })
       .attr('y', function(d) { return d.y; })
@@ -24,13 +27,17 @@
       .attr('height', function(d) { return size; })
       .attr('xlink:href', basePath + '/star.png')
       .attr('transform', 'translate(' + [-size/2, -size/2] + ')');
+
+    // logo.attr('opacity', 0.0);
+
+    text.attr('transform', 'translate(' + [-600, 550] + ')');
   }
 
   app.addSlide('slide-0', {
     onCreate: function() {
-      var duration = this.context.starAnimationDuration || 500,
+      var duration = parseInt(this.context.starAnimationDuration) || 500,
           starData = starCenters.map(function(p, i) {
-            p.delay = i*duration+10;
+            p.delay = i*duration;
             p.duration = duration;
             return p;
           }),
@@ -42,26 +49,47 @@
         .enter()
         .append("image");
 
-      resetStars.call(this);
+      this.logo = d3.select('#slide-0-logo');
+
+      this.text = d3.select('g#slide-0-text');
+
+      reset.call(this);
     },
     onEnter: function() {
-      var size = starSize;
+      var size = starSize,
+          logoDuration = parseInt(this.context.logoAnimationDuration) || 200,
+          textAnimationDuration = parseInt(this.context.textAnimationDuration) || 200,
+          starDelay = 0;
+
+      // this.logo
+      //   .transition()
+      //   .duration(logoDuration)
+      //   .attr('opacity', 1.0);
+
       this.stars
         .transition()
-        .delay(function(d) { return d.delay; })
-        .duration(0)
-        .style('display', '')
+        .delay(function(d) {
+          starDelay += d.duration;
+          return d.delay + logoDuration;
+        })
         .each(function() {
           d3.select(this)
             .transition()
+            .style('display', '')
             .duration(function(d) { return d.duration; })
             .attr('width', size)
             .attr('height', size)
             .attr('transform', 'translate(' + [-size/2, -size/2] + ')');
         });
+
+      this.text
+        .transition()
+        .delay(logoDuration + starDelay)
+        .duration(500)
+        .attr('transform', 'translate(' + [190, 550] + ')');
     },
     onExit: function() {
-      resetStars.call(this);
+      reset.call(this);
     }
   });
 })(app);

@@ -4,6 +4,8 @@
   "index": 0,
   "posX": 0,
   "posY": 0,
-  "starAnimationDuration": 500,
+  "starAnimationDuration": 200,
+  "logoAnimationDuration": 200,
+  "textAnimationDuration": 0,
   "textOnBoard": "年度运动旅程"
 }
