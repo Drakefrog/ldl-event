@@ -53,13 +53,14 @@ var app = {
     });
 
     // add user data to slides context:
-    LDLAPI.getAnnualUserData(null, function(err, data) {
+
+    LDLAPI.getAnnualUserData(urlParams.uid, function(err, data) {
       if (err) {
         // TODO: handle the case can not get user data
       }
 
       slides.forEach(function(slide) {
-        slide.context.userData = data.ret;;
+        slide.context.userData = data.ret;
       });
 
       scope.ss = new SlideShow(scope.mainEl, slides);
