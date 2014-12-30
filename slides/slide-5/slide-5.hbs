@@ -1,13 +1,16 @@
 <div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
-    <defs>
-      <clipPath id="{{name}}-bright-map-clip">
-        <rect x="0" y="0" width="100" height="900" />
-      </clipPath>
-    </defs>
+    <g>
+      <defs>
+        <clipPath id="{{name}}-bright-map-clip">
+          <rect x="0" y="0" width="100" height="900" />
+        </clipPath>
+      </defs>
+      <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/dark-map.png" />
+      <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/bright-map.png" clip-path="url(#{{name}}-bright-map-clip)"/>
+    </g>
 
-    <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/dark-map.png" />
-    <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/bright-map.png" clip-path="url(#{{name}}-bright-map-clip)"/>
+
   </svg>
 </div>
 
@@ -22,4 +25,14 @@
       <tspan id="{{name}}-avg-steps">0</tspan>
       <tspan> 步</tspan></tspan>
   </text>
+</script>
+
+<script id="{{name}}-template-rank-circle" type="handlebars-template">
+  <g id="{{name}}-rank-circle" transform="translate(\{{circleCenterX}},\{{circleCenterY}}) scale(0.0)" >
+    <g transform="translate(-156, -156)" >
+      <image x="0" y="0" width="312" height="312" xlink:href="{{basePath}}/circle.png"/>
+      <text x="110" y="120" font-size="48" fill="white">超过</text>
+      <text x="80" y="220" font-size="80" fill="white">\{{userData.better_than_pct}}</text>
+    </g>
+  </g>
 </script>

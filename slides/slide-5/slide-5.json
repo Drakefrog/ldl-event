@@ -4,5 +4,8 @@
   "index": 5,
   "posX": 0,
   "posY": 5,
-  "stepsAccumulateAnimationDuration": 2000
+  "circleCenterX": 700,
+  "circleCenterY": 600,
+  "stepsAccumulateAnimationDuration": 1000,
+  "rankCircleAnimationDuration": 200
 }
