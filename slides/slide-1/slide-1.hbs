@@ -1,7 +1,45 @@
 <div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">
-  <img src="{{basePath}}/sky-900-900.png" class="{{name}}-sky"></img>
-  <img src="{{basePath}}/foot-564-360.png" class="{{name}}-foot"></img>
+
+  <svg id="{{name}}-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-450 0 900 1600">
+    <!-- <g id="{{name}}-sky" transform="translate({{skyStartX}}, {{skyStartY}})"> -->
+    <!--   <image x="0" y="0" width="900" height="900" -->
+    <!--          transform="translate(-450, -450)" -->
+    <!--          xlink:href="{{basePath}}/sky-900-900.png"></image> -->
+    <!-- </g> -->
+    <!-- <g id="{{name}}-bgs"> -->
+    <!-- </g> -->
+    <!-- <image xlink:href="{{basePath}}/foot-564-360.png"></image> -->
+
+
+    <g transform="translate(-400,1000)" font-size="76px" fill="white">
+      <text x="0" y="0">{{userData.first}}</text>
+    </g>
+
+    <g>
+      <g transform="translate(-400,1200)" font-size="56px" fill="white">
+        <g id="{{name}}-text-0" opacity="0.0" >
+          <text x="0" y="0">我开始使用乐动力</text>
+          <text x="0" y="100">走出了历史性的第一步！</text>
+        </g>
+        <g id="{{name}}-text-1" opacity="0.0" >
+          <text x="0" y="0">第一次走到<tspan fill="#FF7E00"> 10 </tspan>万步</text>
+          <text x="0" y="100">相当于绕香港岛一圈</text>
+        </g>
+        <g id="{{name}}-text-2" opacity="1.0" >
+          <text x="0" y="0">第一次走到<tspan fill="#FF7E00"> 100 </tspan>万步</text>
+          <text x="0" y="100">相当于奥特曼追到小怪兽的距离</text>
+        </g>
+      </g>
+    </g>
+
+  </svg>
 </div>
+
+<!-- <script id="{{name}}-template-text" type="handlebars-template"> -->
+<!--   <text> -->
+<!--     我开始使用乐动力 -->
+<!--   </text> -->
+<!-- </script> -->
 
 <script id="{{name}}-template" type="handlebars-template">
   <div class="{{name}} {{name}}-text">
