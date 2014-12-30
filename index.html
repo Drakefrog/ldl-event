@@ -56,7 +56,7 @@
   <div class="slide-2 slide-2-text">
     <div class="ldl-ss-text-orange">{{userData.firstday_running}}</div>
     <div>第一次使用乐动力跑步功能</div>
-    <div>飞奔了<span class="ldl-ss-text-orange">{{userData.runningsteps}}</span>m</div>
+    <div>飞奔了<span class="ldl-ss-text-orange">{{userData.firstday_running_steps}}</span>m</div>
   </div>
 </script>
         <div id="slide-3" class="ldl-ss-page ss-slide ss-0-3 slide-3">
@@ -112,14 +112,17 @@
 
         <div id="slide-5" class="ldl-ss-page ss-slide ss-0-5 slide-5">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
-    <defs>
-      <clipPath id="slide-5-bright-map-clip">
-        <rect x="0" y="0" width="100" height="900" />
-      </clipPath>
-    </defs>
+    <g>
+      <defs>
+        <clipPath id="slide-5-bright-map-clip">
+          <rect x="0" y="0" width="100" height="900" />
+        </clipPath>
+      </defs>
+      <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-5/dark-map.png" />
+      <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-5/bright-map.png" clip-path="url(#slide-5-bright-map-clip)"/>
+    </g>
 
-    <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-5/dark-map.png" />
-    <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-5/bright-map.png" clip-path="url(#slide-5-bright-map-clip)"/>
+
   </svg>
 </div>
 
@@ -136,6 +139,16 @@
   </text>
 </script>
 
+<script id="slide-5-template-rank-circle" type="handlebars-template">
+  <g id="slide-5-rank-circle" transform="translate({{circleCenterX}},{{circleCenterY}}) scale(0.0)" >
+    <g transform="translate(-156, -156)" >
+      <image x="0" y="0" width="312" height="312" xlink:href="slides/slide-5/circle.png"/>
+      <text x="110" y="120" font-size="48" fill="white">超过</text>
+      <text x="80" y="220" font-size="80" fill="white">{{userData.better_than_pct}}</text>
+    </g>
+  </g>
+</script>
+
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
@@ -147,7 +160,7 @@
 
     <script src="app.js"></script>
     <script>
-      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"starAnimationDuration":500,"textOnBoard":"年度运动旅程","basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"duration":2000,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4,"basePath":"slides/slide-4"},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5,"stepsAccumulateAnimationDuration":2000,"basePath":"slides/slide-5"}}
+      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"starAnimationDuration":500,"textOnBoard":"年度运动旅程","basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"duration":2000,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4,"basePath":"slides/slide-4"},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5,"circleCenterX":700,"circleCenterY":600,"stepsAccumulateAnimationDuration":1000,"rankCircleAnimationDuration":200,"basePath":"slides/slide-5"}}
     </script>
 
         <script src="slides/slide-0/slide-0.js"></script>
