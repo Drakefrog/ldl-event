@@ -4,6 +4,6 @@
   "index": 1,
   "posX": 0,
   "posY": 1,
-  "skyStartX": 1150,
-  "skyStartY": 1150
+  "subslideDelay": 1500,
+  "subslideDuration": 1500
 }

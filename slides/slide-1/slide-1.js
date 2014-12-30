@@ -3,6 +3,7 @@
       d3 = app.d3,
       // compile = app.compile,
       // template = compile($('#slide-1-template-text').html()),
+      config = app.config['slide-1'],
       basePath = app.config['slide-1'].basePath,
       w = 900,
       hfW = w/2,
@@ -16,17 +17,23 @@
         {
           id: 'slide-1-sky',
           url: basePath + '/sky-900-900.png',
-          startAngle: 90
+          startAngle: 90,
+          delay: config.subslideDelay || 1000,
+          duration: config.subslideDuration || 1000
         },
         {
           id: 'slide-1-city',
           url: basePath + '/city-900-900.png',
-          startAngle: 180
+          startAngle: 180,
+          delay: config.subslideDelay || 1000,
+          duration: config.subslideDuration || 1000
         },
         {
           id: 'slide-1-clouds',
           url: basePath + '/clouds-900-900.png',
-          startAngle: 270
+          startAngle: 270,
+          delay: config.subslideDelay || 1000,
+          duration: config.subslideDuration || 1000
         }
       ],
       textData = [
@@ -92,7 +99,8 @@
           ++i;
           var tr = d3.select(scope)
                 .transition()
-                .duration(1000)
+                .delay(function(d) { return d.delay; })
+                .duration(function(d) { return d.duration; })
                 .attrTween('transform', function(d) {
                   var current = d.startAngle - (i-1)*90;
                   return function(t) {
@@ -109,7 +117,18 @@
 
     return {
       stop: function() {
-
+        d3
+          .selectAll('#slide-1-bgs g')
+          .data(bgData)
+          .each(function(d) {
+            var sel = d3.select(this);
+            sel.transition().duration(0);
+            sel
+              .attr('transform', function() {
+                var loc = slideLocationFromAngle(d.startAngle);
+                return 'translate(' + [loc.x, loc.y] + ')';
+              });
+          });
       }
     };
   }
@@ -117,38 +136,60 @@
 
 
   function animateText() {
-    this.$text1.velocity({
-      opacity: 1.0
-    }, {
-      duration: 1500
-    });
+    var delay = config.subslideDelay || 1000,
+        duration = config.subslideDuration || 1000;
+    d3
+      .selectAll('g#slide-1-text > g')
+      .data([
+        { delay: delay, duration: duration },
+        { delay: delay, duration: duration },
+        { delay: delay, duration: duration }
+      ])
+      .each(function(d, i) {
+        var scope = this,
+            count = 0;
 
-    this.$text2.velocity({
-      opacity: 1.0
-    }, {
-      delay: 1500,
-      duration: 1500
-    });
+        function animate() {
+          ++count;
+          d3.select(scope)
+            .transition()
+            .delay(d.delay)
+            .duration(d.duration)
+            .attr('opacity', i + 1 === count ? 1.0 : 0.0)
+            .each('end', function() {
+              if (count < 3) animate();
+            });
+        };
+        animate();
+      });
+
+    return {
+      stop: function() {
+        d3
+          .selectAll('g#slide-1-text > g')
+          .each(function(d) {
+            var sel = d3.select(this);
+            sel.transition().duration(0);
+            sel.attr('opacity', 0);
+          });
+      }
+    };
+
   }
 
   app.addSlide('slide-1', {
     onCreate: function() {
-      // var $text = $(template(this.context));
+      var userData = this.context.userData;
+      d3.selectAll('g#slide-1-text > g text.ldl-date')
+        .data([
+          userData.firstday,
+          userData.dt_10w,
+          userData.dt_100w,
+        ])
+        .text(function(d) { return d; });
 
-      // var svgTextFrag = (new DOMParser()).parseFromString(template(this.context), 'text/xml');
-      // document.getElementById('slide-1-svg').appendChild(svgTextFrag);
-
-      // $(this.domEl).append($text);
-      // this.$text = $text;
-      // this.$text1 = $('.slide-1-text-1', $text);
-      // this.$text2 = $('.slide-1-text-2', $text);
-      // this.$foot = $('.slide-1-foot', this.domEl);
       d3
         .select('svg#slide-1-svg')
-
-        // .selectAll('g')
-        // .data([0])
-        // .enter()
         .append('g')
         .attr('id', 'slide-1-bgs')
 
@@ -164,7 +205,7 @@
     onEnter: function() {
 
       this.animationHandles.push(animateBg());
-      // this.animationHandles.push(animateText.call(this));
+      this.animationHandles.push(animateText.call(this));
 
       return;
       // d3
@@ -204,7 +245,11 @@
       });
     },
     onExit: function() {
+      this.animationHandles.forEach(function(h) {
+        h.stop();
+      });
       return;
+
       this.$foot.velocity('stop');
       this.$foot.css('left', '');
 
