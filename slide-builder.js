@@ -36,7 +36,7 @@ function loadConfig(slides) {
 
     if (configFile) {
       try {
-        config = require(configFile);
+        config = JSON.parse(fs.readFileSync(configFile));
       } catch(err) {
         console.log('Error parsing json file: ' + configFile);
         throw err;
