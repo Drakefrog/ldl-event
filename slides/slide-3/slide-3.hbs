@@ -1,3 +1,27 @@
 <div id="{{name}}" class="ss-slide ss-{{posX}}-{{posY}} {{name}}">
-  <h1>{{name}}</h1>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
+    <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/background.png" />
+    <g id="{{name}}-self-photo"></g>
+    <g id="{{name}}-friend-photos"></g>
+  </svg>
 </div>
+
+<script id="{{name}}-template-self-photo" type="handlebars-template">
+  <defs>
+    <pattern id="\{{patternId}}" x="-\{{radius}}" y="-\{{radius}}" patternUnits="userSpaceOnUse"
+             height="\{{diameter}}" width="\{{diameter}}">
+      <image x="0" y="0" width="\{{diameter}}" height="\{{diameter}}" xlink:href="\{{url}}"/>
+    </pattern>
+  </defs>
+  <circle transform="translate(\{{x}},\{{y}})" r="\{{radius}}" fill="url(#\{{patternId}})"/>
+</script>
+
+<script id="{{name}}-template-friend-photo" type="handlebars-template">
+  <defs>
+    <pattern id="\{{patternId}}" x="-\{{radius}}" y="-\{{radius}}" patternUnits="userSpaceOnUse"
+             height="\{{diameter}}" width="\{{diameter}}">
+      <image x="0" y="0" width="\{{diameter}}" height="\{{diameter}}" xlink:href="\{{url}}"/>
+    </pattern>
+  </defs>
+  <circle id="\{{id}}" style="display: none;" transform="translate(\{{x}},\{{y}})" r="0" fill="url(#\{{patternId}})"/>
+</script>

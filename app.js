@@ -1,6 +1,7 @@
 
 var app = {
   $: window.$,
+  uuid: window.uuid,
   compile: function(source) {
     return Handlebars.compile(source);
   },
