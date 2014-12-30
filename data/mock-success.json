@@ -13,8 +13,9 @@
     "averagesteps": 11243,
     "firstday": "2013-04-15",
     "rank": "181625",
+    "better_than_pct": "36%",
     "firstday_running": "0",
-    "runningsteps": "0",
+    "firstday_running_steps": "0",
     "dailystatsday": "370",
     "dt_10w": "2013-06-28",
     "friendsinfo": {
