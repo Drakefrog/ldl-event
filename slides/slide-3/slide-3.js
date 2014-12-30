@@ -66,28 +66,50 @@
   };
 
   FriendPhoto.prototype.present = function(duration, delay) {
-    var id = this.id, r = this.radius, loc = this.location;
-    return setTimeout(function() {
-      $('#' + id)
-        .css('display', '')
-        .velocity({ translateX: loc.x, translateY: loc.y }, {duration: 0})
-        .velocity({ r: r }, {
-          duration: duration,
-          delay: delay
-        });
-    }, delay);
+    var id = this.id, r = this.radius, loc = this.location,
+        animateId = setTimeout(function() {
+          $('#' + id)
+            .css('display', '')
+            .velocity({ translateX: loc.x, translateY: loc.y }, {duration: 0})
+            .velocity({ r: r }, {
+              duration: duration,
+              delay: delay
+            });
+        }, delay);
+    return {
+      stop: function() {
+        clearTimeout(animateId);
+        $('#' + id).velocity('stop', true);
+        $('#' + id).css('display', 'none');
+      }
+    };
   };
+
+
 
   app.addSlide('slide-3', {
     onCreate: function() {
       var selfImgUrl = this.context && this.context.userData && this.context.userData.avatar_url,
-          selfPhoto = new SelfPhoto(selfImgUrl),
-          friendsList = this.context && this.context.userData &&
-            this.context.userData.friendsinfo &&
-            this.context.userData.friendsinfo.friendslist || [];
+          selfPhoto = new SelfPhoto(selfImgUrl);
 
       this.photosContainer = $('#slide-3-self-photo', this.domEl)[0];
       this.photosContainer.innerHTML = selfPhoto.compileToHTML();
+
+      $('#slide-3-text')[0].innerHTML = textTemplate(this.context);
+      this.$summary = $('#slide-3-text-summary', this.domEl);
+      this.$yuepao = $('#slide-3-text-yuepao', this.domEl);
+    },
+    onEnter: function() {
+      var dt = this.context.avatarShowDuration || 200,
+           friendsList = this.context && this.context.userData &&
+            this.context.userData.friendsinfo &&
+            this.context.userData.friendsinfo.friendslist || [];
+
+      $('text', this.$summary).velocity({
+        opacity: 1.0
+      }, {
+        duration: 1500
+      });
 
       this.friendsPhotos = [];
       this.friendsPhotoContainer = $('#slide-3-friend-photos', this.domEl)[0];
@@ -105,23 +127,10 @@
         this.friendsPhotos.push(photo);
       }, this);
 
-      this.animations = [];
-
-      $('#slide-3-text')[0].innerHTML = textTemplate(this.context);
-      this.$summary = $('#slide-3-text-summary', this.domEl);
-      this.$yuepao = $('#slide-3-text-yuepao', this.domEl);
-    },
-    onEnter: function() {
-      var dt = this.context.avatarShowDuration || 200;
-
-      $('text', this.$summary).velocity({
-        opacity: 1.0
-      }, {
-        duration: 1500
-      });
+      this.animationHandles = [];
 
       this.friendsPhotos.forEach(function(p, i) {
-        this.animations.push(p.present(dt, dt * i));
+        this.animationHandles.push(p.present(dt, dt * i));
       }, this);
 
       $('text', this.$yuepao).velocity({
@@ -133,10 +142,17 @@
 
     },
     onExit: function() {
-      this.animations.forEach(function(id) {
-        clearTimeout(id);
+      this.animationHandles.forEach(function(h) {
+        h.stop();
       });
       this.friendsPhotoContainer.innerHTML = '';
+
+      // TODO: does not reset the style.opactiy
+      $('text', this.$yuepao).velocity('stop', true);
+      $('text', this.$yuepao)[0].opacity = 0.0;
+
+      $('text', this.$summary).velocity('stop', true);
+      $('text', this.$summary)[0].opacity = 0.0;
     }
   });
 })(app);
