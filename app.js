@@ -1,6 +1,7 @@
 
 var app = {
   $: window.$,
+  d3: window.d3,
   uuid: window.uuid,
   compile: function(source) {
     return Handlebars.compile(source);

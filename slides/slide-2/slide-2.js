@@ -4,6 +4,9 @@
       template = compile($('#slide-2-template').html());
 
   app.addSlide('slide-2', {
+    // shouldCreate: function() {
+    //   return false;
+    // },
     onCreate: function() {
       var $text = $(template(this.context));
       $(this.domEl).append($text);

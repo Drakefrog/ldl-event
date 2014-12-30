@@ -1,8 +1,6 @@
 (function(app) {
   var $ = app.$,
-      compile = app.compile,
-      starSource = $('#slide-0-template-star').html(),
-      starTemplate = compile(starSource),
+      d3 = app.d3,
       starSize = 32,
       starCenters = [
         { x:249, y: 316 },
@@ -11,56 +9,59 @@
         { x:357, y: 295 }
       ];
 
-  function createStar(id, point, size) {
-    var data = {
-      id: id,
-      x: point.x,
-      y: point.y,
-      size: size,
-      tx: -size/2,
-      ty: -size/2
-    };
-    return starTemplate(data);
-  }
+  function resetStars() {
+    var size = 10 * starSize,
+        stars = this.stars,
+        basePath = this.context.basePath;
 
-  function presentStar(index, duration, delay) {
-    return setTimeout(function() {
-      $('#slide-0-star-' + index)
-        .css('display', '')
-        .velocity({
-          width: starSize,
-          height: starSize,
-          translateX: -starSize/2,
-          translateY: -starSize/2
-        }, {
-          duration: duration
-        });
-      return duration;
-    }, delay);
+    stars
+      .transition()
+      .duration(0)
+      .style('display', 'none')
+      .attr('x', function(d) { return d.x; })
+      .attr('y', function(d) { return d.y; })
+      .attr('width', function(d) { return size; })
+      .attr('height', function(d) { return size; })
+      .attr('xlink:href', basePath + '/star.png')
+      .attr('transform', 'translate(' + [-size/2, -size/2] + ')');
   }
 
   app.addSlide('slide-0', {
     onCreate: function() {
-      this.starContainer = $('#slide-0-stars', this.domEl)[0];
-      this.animations = [];
+      var duration = this.context.starAnimationDuration || 500,
+          starData = starCenters.map(function(p, i) {
+            p.delay = i*duration+10;
+            p.duration = duration;
+            return p;
+          }),
+          size = 10 * starSize;
+
+      this.stars = d3.select('g#slide-0-stars')
+        .selectAll("image")
+        .data(starData)
+        .enter()
+        .append("image");
+
+      resetStars.call(this);
     },
     onEnter: function() {
-      var duration = this.context.starAnimationDuration || 500;
-      starCenters.forEach(function(p, i) {
-        var html = createStar('slide-0-star-'+i, p, starSize*10);
-        this.starContainer.innerHTML += html;
-      }, this);
-
-      this.animations.push(presentStar(0, duration, 0*duration));
-      this.animations.push(presentStar(1, duration, 1*duration));
-      this.animations.push(presentStar(2, duration, 2*duration));
-      this.animations.push(presentStar(3, duration, 3*duration));
+      var size = starSize;
+      this.stars
+        .transition()
+        .delay(function(d) { return d.delay; })
+        .duration(0)
+        .style('display', '')
+        .each(function() {
+          d3.select(this)
+            .transition()
+            .duration(function(d) { return d.duration; })
+            .attr('width', size)
+            .attr('height', size)
+            .attr('transform', 'translate(' + [-size/2, -size/2] + ')');
+        });
     },
     onExit: function() {
-      this.animations.forEach(function(id) {
-        clearTimeout(id);
-      });
-      this.starContainer.innerHTML = '';
+      resetStars.call(this);
     }
   });
 })(app);
