@@ -1,0 +1,11 @@
+.slide-4 {
+    background-color: #0B1635;
+}
+
+.slide-4 svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

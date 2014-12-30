@@ -1,0 +1,18 @@
+<div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
+    <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/dark-map.png" />
+  </svg>
+</div>
+
+<script id="{{name}}-template-text-1" type="handlebars-template">
+  <text x="90" y="112" opacity="1.0" fill="white" font-size="48px">
+    我一共走了 <tspan style="fill: #FF7E00;" font-size="64px">
+      <tspan id="{{name}}-total-steps">0</tspan>
+      <tspan> 步</tspan></tspan>
+  </text>
+  <text x="90" y="208" opacity="1.0" fill="white" font-size="48px">
+    日均 <tspan style="fill: #FF7E00;" font-size="64px">
+      <tspan id="{{name}}-avg-steps">0</tspan>
+      <tspan> 步</tspan></tspan>
+  </text>
+</script>
