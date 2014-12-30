@@ -19,9 +19,17 @@
 
     <div id="main" class="ss-container">
         <div id="slide-0" class="ss-slide ss-0-0 slide-0">
-  <img src="slides/slide-0/background.png" class="slide-0-background"></img>
-  <img src="slides/slide-0/logo.png" class="slide-0-logo"></img>
+  <svg id="slide-0-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
+    <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-0/background.png" />
+    <image x="279" y="1210" width="342" height="90" xlink:href="slides/slide-0/logo.png" />
+    <g id="slide-0-stars"></g>
+  </svg>
 </div>
+
+<script id="slide-0-template-star" type="handlebars-template">
+  <image id="{{id}}" style="display: none;" x="{{x}}" y="{{y}}" width="{{size}}" height="{{size}}" transform="translate({{tx}}, {{ty}})" xlink:href="slides/slide-0/star.png" />
+</script>
+
         <div id="slide-1" class="ss-slide ss-0-1 slide-1">
   <img src="slides/slide-1/sky-900-900.png" class="slide-1-sky"></img>
   <img src="slides/slide-1/foot-564-360.png" class="slide-1-foot"></img>
@@ -50,8 +58,33 @@
   </div>
 </script>
         <div id="slide-3" class="ss-slide ss-0-3 slide-3">
-  <h1>slide-3</h1>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
+    <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-3/background.png" />
+    <g id="slide-3-self-photo"></g>
+    <g id="slide-3-friend-photos"></g>
+  </svg>
 </div>
+
+<script id="slide-3-template-self-photo" type="handlebars-template">
+  <defs>
+    <pattern id="{{patternId}}" x="-{{radius}}" y="-{{radius}}" patternUnits="userSpaceOnUse"
+             height="{{diameter}}" width="{{diameter}}">
+      <image x="0" y="0" width="{{diameter}}" height="{{diameter}}" xlink:href="{{url}}"/>
+    </pattern>
+  </defs>
+  <circle transform="translate({{x}},{{y}})" r="{{radius}}" fill="url(#{{patternId}})"/>
+</script>
+
+<script id="slide-3-template-friend-photo" type="handlebars-template">
+  <defs>
+    <pattern id="{{patternId}}" x="-{{radius}}" y="-{{radius}}" patternUnits="userSpaceOnUse"
+             height="{{diameter}}" width="{{diameter}}">
+      <image x="0" y="0" width="{{diameter}}" height="{{diameter}}" xlink:href="{{url}}"/>
+    </pattern>
+  </defs>
+  <circle id="{{id}}" style="display: none;" transform="translate({{x}},{{y}})" r="0" fill="url(#{{patternId}})"/>
+</script>
+
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
@@ -63,7 +96,7 @@
 
     <script src="app.js"></script>
     <script>
-      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"duration":2000,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"}}
+      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"starAnimationDuration":500,"textOnBoard":"年度运动旅程","basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"duration":2000,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"}}
     </script>
 
         <script src="slides/slide-0/slide-0.js"></script>
