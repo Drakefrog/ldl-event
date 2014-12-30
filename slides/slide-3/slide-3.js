@@ -11,7 +11,8 @@
         { x: 200, y: 720, circleborderWidth: 3, rayWidth: 3, radius: 105 },
         { x: 600, y: 160, circleborderWidth: 3, rayWidth: 3, radius: 90 },
         { x: 100, y: 500, circleborderWidth: 3, rayWidth: 3, radius: 81 }
-      ];
+      ],
+      textTemplate = compile($('#slide-3-template-text').html());
 
   friendsPhotoSpecs = calculateLinesFromSelfToFriend(friendsPhotoSpecs);
 
@@ -105,12 +106,31 @@
       }, this);
 
       this.animations = [];
+
+      $('#slide-3-text')[0].innerHTML = textTemplate(this.context);
+      this.$summary = $('#slide-3-text-summary', this.domEl);
+      this.$yuepao = $('#slide-3-text-yuepao', this.domEl);
     },
     onEnter: function() {
       var dt = this.context.avatarShowDuration || 200;
+
+      $('text', this.$summary).velocity({
+        opacity: 1.0
+      }, {
+        duration: 1500
+      });
+
       this.friendsPhotos.forEach(function(p, i) {
         this.animations.push(p.present(dt, dt * i));
       }, this);
+
+      $('text', this.$yuepao).velocity({
+        opacity: 1.0
+      }, {
+        delay: 1500,
+        duration: 800
+      });
+
     },
     onExit: function() {
       this.animations.forEach(function(id) {
