@@ -13,43 +13,107 @@
       hfBgImageSize = bgImageSize/2,
       slideRotateCenter = { x: 0, y: h },
       slideRotateRadius = h - hfBgImageSize,
-      bgData = [
+      slideData = [
         {
-          id: 'slide-1-sky',
-          url: basePath + '/sky-900-900.png',
-          startAngle: 90,
+          id: 'slide-1-0',
+          elements: [
+            {
+              translate: [0, 0],
+              image: createImageElement(basePath + '/sky-900-900.png', 'slide-1-img-')
+            },
+            {
+              id: 'slide-1-0-foot',
+              translate: [-700, 0],
+              visibility: 'hidden',
+              image: createImageElement(basePath + '/foot-564-360.png', 'slide-1-img-')
+            },
+          ],
+          angle: 90,
+          delay: config.subslideDelay || 1000,
+          delay: 0,
+          duration: config.subslideDuration || 1000
+        },
+        {
+          id: 'slide-1-1',
+          elements: [
+            {
+              translate: [0, 0],
+              image: createImageElement(basePath + '/city-900-900.png', 'slide-1-img-')
+            },
+            {
+              translate: [0, 180],
+              image: createImageElement(basePath + '/road-1080-30.png', 'slide-1-img-')
+            },
+            {
+              translate: [750, 180],
+              id: 'slide-1-car',
+              image: createImageElement(basePath + '/car-576-36.png', 'slide-1-img-')
+            }
+          ],
+          angle: 180,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         },
         {
-          id: 'slide-1-city',
-          url: basePath + '/city-900-900.png',
-          startAngle: 180,
-          delay: config.subslideDelay || 1000,
-          duration: config.subslideDuration || 1000
-        },
-        {
-          id: 'slide-1-clouds',
-          url: basePath + '/clouds-900-900.png',
-          startAngle: 270,
+          id: 'slide-1-2',
+          elements: [
+            {
+              image: createImageElement(basePath + '/clouds-900-900.png', 'slide-1-img-'),
+              translate: [0, 0]
+            },
+            {
+              image: createImageElement(basePath + '/heart-96-216.png', 'slide-1-img-'),
+              translate: [60, -150]
+            },
+            {
+              image: createImageElement(basePath + '/monster-258-216.png', 'slide-1-img-'),
+              translate: [210, 0]
+            },
+            {
+              image: createImageElement(basePath + '/aotema-216-216.png', 'slide-1-img-'),
+              translate: [-80, 0]
+            },
+          ],
+          angle: 270,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         }
-      ],
-      textData = [
-        {
-          text1: '我开始使用乐动力',
-          text2: '走出了历史性的第一步！'
-        },
-        {
-          text1Fmt: '第一次走到%d万步',
-          text2: '相当于绕香港岛一圈'
-        },
-        {
-          text1Fmt: '第一次走到%d万步',
-          text2: '相当于绕香港岛一圈'
-        }
-      ];
+      ], slideAnimates;
+
+  function parseImageUrl(url) {
+    var paths = url.split('/'),
+        basename = paths[paths.length-1],
+        splits = basename.split('.'),
+        wh;
+
+    if (splits) {
+      wh = splits[0].split('-');
+      return {
+        width: parseInt(wh[wh.length-2]),
+        height: parseInt(wh[wh.length-1]),
+        name: splits[0],
+        ext: splits[1]
+      };
+    } else return {};
+  }
+
+  function createImageElement(url, aIdPrefix) {
+    var obj = parseImageUrl(url),
+        w = obj.width,
+        h = obj.height,
+        idPrefix = aIdPrefix || '';
+
+    return {
+      'xlink:href': url,
+      id: idPrefix + obj.name,
+      ext: obj.ext,
+      width: w,
+      height: h,
+      x:0,
+      y: 0,
+      transform: 'translate(' + [-w/2, -h/2] + ')'
+    };
+  }
 
   function addVectors(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
@@ -70,112 +134,224 @@
       .select(this)
       .attr('id', function(d) { return d.id; })
       .attr('transform', function(d) {
-        var loc = slideLocationFromAngle(d.startAngle);
+        var loc = slideLocationFromAngle(d.angle);
         return 'translate(' + [loc.x, loc.y] + ')';
+      })
+
+      .selectAll('g')
+      .data(function(d) { return d.elements; })
+      .enter()
+      .append('g')
+      .attr('id', function(d) { return d.id; })
+      .attr('visibility', function(d) {
+        return d['visibility'] ? d['visibility'] : 'visible';
+      })
+      .attr('transform', function(d) {
+        var str = [];
+        if (d.translate) str.push('translate(' + d.translate + ')');
+        if (d.rotate) str.push('rotate(' + d.rotate + ')');
+        if (d.scale) str.push('scale(' + d.scale + ')');
+        return str.join(' ');
       })
 
       .selectAll('image')
       .data(function(d) {
-        return [{url: d.url}];
+        return [d.image];
       })
       .enter()
       .append('image')
-      .attr('x', 0).attr('y', 0)
-      .attr('width', bgImageSize)
-      .attr('height', bgImageSize)
-      .attr('transform', 'translate(' + [-hfBgImageSize, -hfBgImageSize] + ')')
-      .attr('xlink:href', function(d) { return d.url; });
+      .attr('x', function(d) { return d['x']; })
+      .attr('y', function(d) { return d['y']; })
+      .attr('width', function(d) { return d['width']; })
+      .attr('height', function(d) { return d['height']; })
+      .attr('transform', function(d) { return d['transform']; })
+      .attr('xlink:href', function(d) { return d['xlink:href']; });
   }
 
-  function animateBg() {
+  function fadeInText(el, duration, cb) {
     d3
-      .selectAll('#slide-1-bgs g')
-      .data(bgData)
-      .each(function() {
-        var scope = this,
-            i = 0;
+      .select(el)
+      .transition()
+      .duration(duration)
+      .attr('opacity', 1.0)
+      .each('end', cb);
+  }
 
-        function animate() {
+  function fadeOutText(el, duration, cb) {
+    d3
+      .select(el)
+      .transition()
+      .duration(duration)
+      .attr('opacity', 0.0)
+      .each('end', cb);
+  }
+
+  function makeResetText() {
+    return function(ctx, done) { resetText(); done(); };
+  }
+
+  function animateFirstSlide(ctx, done) {
+    chain(ctx, [
+      makeResetText(),
+      animateFoot,
+      makeFadeIn('#slide-1-text-0', 1000),
+      makeFadeOut('#slide-1-text-0', 1000)
+    ], done);
+  }
+
+  function animateSecondSlide(ctx, done) {
+    chain(ctx, [
+      makeResetText(),
+      animateCar,
+      makeFadeIn('#slide-1-text-1', 1000),
+      makeFadeOut('#slide-1-text-1', 1000)
+    ], done);
+  }
+
+  function animateThirdSlide(ctx, done) {
+    chain(ctx, [
+      makeResetText(),
+      // animateMonsters,
+      makeFadeIn('#slide-1-text-2', 1000),
+      // makeFadeOut('#slide-1-text-2', 1000)
+    ], done);
+  }
+
+  // TODO:
+  function animateMonsters(ctx, done) {
+    done();
+  }
+
+  function animateCar(ctx, done) {
+    d3.select('#slide-1-car')
+      .transition()
+      .duration(1000)
+      .attr('transform', 'translate(-200, 180)')
+      .each('end', function() {
+        done();
+      });
+  }
+
+  // FIXME:
+  function makeChain(fns) {
+    return function(ctx, done) { chain(ctx, fns, done); };
+  }
+
+  function makeFadeIn(el, duration) {
+    return function(ctx, done) {
+      fadeInText(el, duration, function() {
+        done();
+      });
+    };
+  }
+
+  function makeFadeOut(el, duration) {
+    return function(ctx, done) {
+      fadeOutText(el, duration, function() {
+        done();
+      });
+    };
+  }
+
+  function makeFadeInFadeOutChain(el, duration) {
+    return makeChain([
+      function(ctx, done) {
+        resetText();
+        done();
+      },
+      function(ctx, done) {
+        fadeInText(el, duration, function() {
+          done();
+        });
+      },
+      function(ctx, done) {
+        fadeOutText(el, duration, function() { done(); });
+      }
+    ]);
+  }
+
+  function animateFoot(ctx, done) {
+    d3
+      .select('#slide-1-0-foot')
+      .attr('visibility', 'visible')
+      .transition()
+      .duration(200)
+      .ease(d3.ease('elastic'))
+      .attr('transform', 'translate(-200, 0)')
+      .each('end', function() {
+        done();
+      });
+  }
+
+  function resetText() {
+    d3
+      .selectAll('#slide-1-text g')
+      .attr('opacity', 0.0);
+  }
+
+  function rotateSlides(angle, done) {
+    var count = 3;
+    d3.selectAll('#slide-1-bgs > g')
+      .transition()
+      .duration(function(d) { return d.duration; })
+      .attrTween('transform', function(d) {
+        var startAngle = d.angle;
+
+        return function(t) {
+          var loc;
+          d.angle = startAngle + angle*t;
+          loc = slideLocationFromAngle(d.angle);
+          return 'translate(' + [loc.x, loc.y] + ')';
+        };
+      })
+      .each('end', function() {
+        count--;
+        if (count === 0) {
+          if (typeof done === 'function')
+            done();
+        }
+      });
+  }
+
+  function chain(context, fns, done) {
+    var i = 0, count, j, len, completed;
+    function next() {
+      var fn = fns[i];
+
+      if (typeof fn === 'function') {
+        fn(context, function(err) {
+          if (err) {
+            done(err);
+            return;
+          }
+
           ++i;
-          var tr = d3.select(scope)
-                .transition()
-                .delay(function(d) { return d.delay; })
-                .duration(function(d) { return d.duration; })
-                .attrTween('transform', function(d) {
-                  var current = d.startAngle - (i-1)*90;
-                  return function(t) {
-                    var loc = slideLocationFromAngle(current-90*t);
-                    return 'translate(' + [loc.x, loc.y] + ')';
-                  };
-                })
-                .each('end', function() {
-                  if (i < 3) animate();
-                });
-        };
-        animate();
-      });
-
-    return {
-      stop: function() {
-        d3
-          .selectAll('#slide-1-bgs g')
-          .data(bgData)
-          .each(function(d) {
-            var sel = d3.select(this);
-            sel.transition().duration(0);
-            sel
-              .attr('transform', function() {
-                var loc = slideLocationFromAngle(d.startAngle);
-                return 'translate(' + [loc.x, loc.y] + ')';
-              });
+          next();
+        });
+      } else if (Array.isArray(fn)) {
+        len = fn.length;
+        completed = 0;
+        j = 0;
+        for (j = 0; j < len; ++j) {
+          fn[j](context, function(err) {
+            if (err) {
+              done(err);
+              return;
+            }
+            completed += 1;
+            if (completed === len) {
+              ++i;
+              next();
+            }
           });
+        }
+      } else {
+        done(null, context);
       }
-    };
+    }
+    next();
   }
 
-
-
-  function animateText() {
-    var delay = config.subslideDelay || 1000,
-        duration = config.subslideDuration || 1000;
-    d3
-      .selectAll('g#slide-1-text > g')
-      .data([
-        { delay: delay, duration: duration },
-        { delay: delay, duration: duration },
-        { delay: delay, duration: duration }
-      ])
-      .each(function(d, i) {
-        var scope = this,
-            count = 0;
-
-        function animate() {
-          ++count;
-          d3.select(scope)
-            .transition()
-            .delay(d.delay)
-            .duration(d.duration)
-            .attr('opacity', i + 1 === count ? 1.0 : 0.0)
-            .each('end', function() {
-              if (count < 3) animate();
-            });
-        };
-        animate();
-      });
-
-    return {
-      stop: function() {
-        d3
-          .selectAll('g#slide-1-text > g')
-          .each(function(d) {
-            var sel = d3.select(this);
-            sel.transition().duration(0);
-            sel.attr('opacity', 0);
-          });
-      }
-    };
-
-  }
 
   app.addSlide('slide-1', {
     onCreate: function() {
@@ -194,7 +370,7 @@
         .attr('id', 'slide-1-bgs')
 
         .selectAll('g')
-        .data(bgData)
+        .data(slideData)
         .enter()
         .append('g')
         .each(createSubSlide);
@@ -203,64 +379,24 @@
       return;
     },
     onEnter: function() {
+      var doRotateSlides = function(ctx, done) { rotateSlides(ctx.angle, done); };
 
-      this.animationHandles.push(animateBg());
-      this.animationHandles.push(animateText.call(this));
+      chain({
+        angle: -90
+      }, [
+        doRotateSlides,
+        animateFirstSlide,
+        doRotateSlides,
+        animateSecondSlide,
+        doRotateSlides,
+        animateThirdSlide
+      ], function(err, ctx) {
 
+      });
       return;
-      // d3
-      //   .select('#slide-1-sky')
-      //   .transition()
-      //   .duration(500)
-      //   .attrTween(function(d) {
-
-
-      //   });
-
-      // this.$sky.velocity({
-      //   left: '5%'
-      // }, {
-      //   duration: 1500
-      // });
-
-      this.$text1.velocity({
-        opacity: 1.0
-      }, {
-        duration: 1500
-      });
-
-      // this.$foot.velocity({
-      //   left: '-5%'
-      // }, {
-      //   delay: 1500,
-      //   duration: 1200,
-      //   easing: [300, 8]
-      // });
-
-      this.$text2.velocity({
-        opacity: 1.0
-      }, {
-        delay: 1500,
-        duration: 1500
-      });
     },
     onExit: function() {
-      this.animationHandles.forEach(function(h) {
-        h.stop();
-      });
-      return;
-
-      this.$foot.velocity('stop');
-      this.$foot.css('left', '');
-
-      this.$sky.velocity('stop');
-      this.$sky.css('left', '');
-
-      this.$text1.velocity('stop');
-      this.$text1.css('opacity', '');
-
-      this.$text2.velocity('stop');
-      this.$text2.css('opacity', '');
+      resetText();
     }
   });
 })(app);
