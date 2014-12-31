@@ -13,43 +13,104 @@
       hfBgImageSize = bgImageSize/2,
       slideRotateCenter = { x: 0, y: h },
       slideRotateRadius = h - hfBgImageSize,
-      bgData = [
+      slideData = [
         {
-          id: 'slide-1-sky',
-          url: basePath + '/sky-900-900.png',
+          id: 'slide-1-0',
+          elements: [
+            {
+              translate: [0, 0],
+              image: createImageElement(basePath + '/sky-900-900.png', 'slide-1-img-')
+            },
+            {
+              translate: [-100, 0],
+              image: createImageElement(basePath + '/foot-564-360.png', 'slide-1-img-')
+            },
+          ],
           startAngle: 90,
           delay: config.subslideDelay || 1000,
+          delay: 0,
           duration: config.subslideDuration || 1000
         },
         {
-          id: 'slide-1-city',
-          url: basePath + '/city-900-900.png',
+          id: 'slide-1-1',
+          elements: [
+            {
+              translate: [0, 0],
+              image: createImageElement(basePath + '/city-900-900.png', 'slide-1-img-')
+            },
+            {
+              translate: [0, 0],
+              image: createImageElement(basePath + '/car-576-36.png', 'slide-1-img-')
+            },
+            {
+              translate: [0, 0],
+              image: createImageElement(basePath + '/road-1080-30.png', 'slide-1-img-')
+            },
+          ],
           startAngle: 180,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         },
         {
-          id: 'slide-1-clouds',
-          url: basePath + '/clouds-900-900.png',
+          id: 'slide-1-2',
+          elements: [
+            {
+              image: createImageElement(basePath + '/clouds-900-900.png', 'slide-1-img-'),
+              translate: [0, 0]
+            },
+            {
+              image: createImageElement(basePath + '/heart-96-216.png', 'slide-1-img-'),
+              translate: [0, 0]
+            },
+            {
+              image: createImageElement(basePath + '/monster-258-216.png', 'slide-1-img-'),
+              translate: [0, 0]
+            },
+            {
+              image: createImageElement(basePath + '/aotema-216-216.png', 'slide-1-img-'),
+              translate: [0, 0]
+            },
+          ],
           startAngle: 270,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         }
-      ],
-      textData = [
-        {
-          text1: '我开始使用乐动力',
-          text2: '走出了历史性的第一步！'
-        },
-        {
-          text1Fmt: '第一次走到%d万步',
-          text2: '相当于绕香港岛一圈'
-        },
-        {
-          text1Fmt: '第一次走到%d万步',
-          text2: '相当于绕香港岛一圈'
-        }
-      ];
+      ], slideAnimates;
+
+  function parseImageUrl(url) {
+    var paths = url.split('/'),
+        basename = paths[paths.length-1],
+        splits = basename.split('.'),
+        wh;
+
+    if (splits) {
+      wh = splits[0].split('-');
+      return {
+        width: parseInt(wh[wh.length-2]),
+        height: parseInt(wh[wh.length-1]),
+        name: splits[0],
+        ext: splits[1]
+      };
+    } else return {};
+  }
+
+  function createImageElement(url, aIdPrefix) {
+    var obj = parseImageUrl(url),
+        w = obj.width,
+        h = obj.height,
+        idPrefix = aIdPrefix || '';
+
+    return {
+      'xlink:href': url,
+      id: idPrefix + obj.name,
+      ext: obj.ext,
+      width: w,
+      height: h,
+      x:0,
+      y: 0,
+      transform: 'translate(' + [-w/2, -h/2] + ')'
+    };
+  }
 
   function addVectors(a, b) {
     return { x: a.x + b.x, y: a.y + b.y };
@@ -74,23 +135,59 @@
         return 'translate(' + [loc.x, loc.y] + ')';
       })
 
+      .selectAll('g')
+      .data(function(d) { return d.elements; })
+      .enter()
+      .append('g')
+      .attr('transform', function(d) {
+        var str = [];
+        if (d.translate) str.push('translate(' + d.translate + ')');
+        if (d.rotate) str.push('rotate(' + d.rotate + ')');
+        if (d.scale) str.push('scale(' + d.scale + ')');
+        return str.join(' ');
+      })
+
       .selectAll('image')
       .data(function(d) {
-        return [{url: d.url}];
+        return [d.image];
       })
       .enter()
       .append('image')
-      .attr('x', 0).attr('y', 0)
-      .attr('width', bgImageSize)
-      .attr('height', bgImageSize)
-      .attr('transform', 'translate(' + [-hfBgImageSize, -hfBgImageSize] + ')')
-      .attr('xlink:href', function(d) { return d.url; });
+      .attr('x', function(d) { return d['x']; })
+      .attr('y', function(d) { return d['y']; })
+      .attr('width', function(d) { return d['width']; })
+      .attr('height', function(d) { return d['height']; })
+      .attr('transform', function(d) { return d['transform']; })
+      .attr('xlink:href', function(d) { return d['xlink:href']; });
   }
+
+  slideAnimates = [
+    function animateFirstSlide(done) {
+
+    },
+    function moveToSecondSlide(done) {
+
+    },
+    function animateSecondSlide(done) {
+
+    },
+    function moveToThirdSlide(done) {
+
+    },
+    function animateThirdSlide(done) {
+
+    },
+  ];
+
+  function chainAnimations(arr) {
+
+  }
+
 
   function animateBg() {
     d3
-      .selectAll('#slide-1-bgs g')
-      .data(bgData)
+      .selectAll('#slide-1-bgs > g')
+      .data(slideData)
       .each(function() {
         var scope = this,
             i = 0;
@@ -119,7 +216,7 @@
       stop: function() {
         d3
           .selectAll('#slide-1-bgs g')
-          .data(bgData)
+          .data(slideData)
           .each(function(d) {
             var sel = d3.select(this);
             sel.transition().duration(0);
@@ -194,7 +291,7 @@
         .attr('id', 'slide-1-bgs')
 
         .selectAll('g')
-        .data(bgData)
+        .data(slideData)
         .enter()
         .append('g')
         .each(createSubSlide);
