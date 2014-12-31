@@ -355,7 +355,7 @@
 
   app.addSlide('slide-1', {
     onCreate: function() {
-      var userData = this.context.userData;
+      var userData = this.context.userData || {};
       d3.selectAll('g#slide-1-text > g text.ldl-date')
         .data([
           userData.firstday,
