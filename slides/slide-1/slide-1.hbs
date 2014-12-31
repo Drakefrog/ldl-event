@@ -1,24 +1,11 @@
 <div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">
 
   <svg id="{{name}}-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-450 0 900 1600">
-    <!-- <g id="{{name}}-sky" transform="translate({{skyStartX}}, {{skyStartY}})"> -->
-    <!--   <image x="0" y="0" width="900" height="900" -->
-    <!--          transform="translate(-450, -450)" -->
-    <!--          xlink:href="{{basePath}}/sky-900-900.png"></image> -->
-    <!-- </g> -->
-    <!-- <g id="{{name}}-bgs"> -->
-    <!-- </g> -->
-    <!-- <image xlink:href="{{basePath}}/foot-564-360.png"></image> -->
 
-
-    <g transform="translate(-400,1000)" font-size="76px" fill="#FF7E00">
-      <!-- <text x="0" y="0">{{userData.running_firstday}}</text> -->
-      <!-- <text x="0" y="0">{{userData.dt_10w}}</text> -->
-      <!-- <text x="0" y="0">{{userData.dt_100w}}</text> -->
-    </g>
+    <g id="{{name}}-imgs"></g>
 
     <g>
-      <g id="{{name}}-text" transform="translate(-400,1200)" font-size="56px" fill="white">
+      <g id="{{name}}-text" transform="translate(-400,1050)" font-size="56px" fill="white">
         <g id="{{name}}-text-0" opacity="0.0" >
           <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text>
           <text x="0" y="0">我开始使用乐动力</text>
@@ -39,19 +26,3 @@
 
   </svg>
 </div>
-
-<!-- <script id="{{name}}-template-text" type="handlebars-template"> -->
-<!--   <text> -->
-<!--     我开始使用乐动力 -->
-<!--   </text> -->
-<!-- </script> -->
-
-<script id="{{name}}-template" type="handlebars-template">
-  <div class="{{name}} {{name}}-text">
-    <div class="ldl-ss-text-orange {{name}}-text-1">\{{userData.firstday}}</div>
-    <div class="{{name}}-text-2">
-      <div>我开始使用乐动力</div>
-      <div>走出了历史性的第一步！</div>
-    </div>
-  </div>
-</script>

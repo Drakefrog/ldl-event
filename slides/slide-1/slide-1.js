@@ -365,7 +365,7 @@
         .text(function(d) { return d; });
 
       d3
-        .select('svg#slide-1-svg')
+        .select('g#slide-1-imgs')
         .append('g')
         .attr('id', 'slide-1-bgs')
 
