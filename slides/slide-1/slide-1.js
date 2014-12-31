@@ -2,6 +2,8 @@
   var $ = app.$,
       d3 = app.d3,
       chain = app.chain,
+      makeFadeIn = app.makeFadeIn,
+      makeFadeOut = app.makeFadeOut,
       // compile = app.compile,
       // template = compile($('#slide-1-template-text').html()),
       config = app.config['slide-1'],
@@ -169,24 +171,6 @@
       .attr('xlink:href', function(d) { return d['xlink:href']; });
   }
 
-  function fadeInText(el, duration, cb) {
-    d3
-      .select(el)
-      .transition()
-      .duration(duration)
-      .attr('opacity', 1.0)
-      .each('end', cb);
-  }
-
-  function fadeOutText(el, duration, cb) {
-    d3
-      .select(el)
-      .transition()
-      .duration(duration)
-      .attr('opacity', 0.0)
-      .each('end', cb);
-  }
-
   function makeResetText() {
     return function(ctx, done) { resetText(); done(); };
   }
@@ -231,27 +215,6 @@
       .each('end', function() {
         done();
       });
-  }
-
-  // FIXME:
-  function makeChain(fns) {
-    return function(ctx, done) { chain(ctx, fns, done); };
-  }
-
-  function makeFadeIn(el, duration) {
-    return function(ctx, done) {
-      fadeInText(el, duration, function() {
-        done();
-      });
-    };
-  }
-
-  function makeFadeOut(el, duration) {
-    return function(ctx, done) {
-      fadeOutText(el, duration, function() {
-        done();
-      });
-    };
   }
 
   function makeFadeInFadeOutChain(el, duration) {

@@ -123,7 +123,46 @@ var app = {
     }
     next();
   }
+
+  function fadeInText(el, duration, cb) {
+    app.d3
+      .select(el)
+      .transition()
+      .duration(duration)
+      .attr('opacity', 1.0)
+      .each('end', cb);
+  }
+
+  function fadeOutText(el, duration, cb) {
+    app.d3
+      .select(el)
+      .transition()
+      .duration(duration)
+      .attr('opacity', 0.0)
+      .each('end', cb);
+  }
+
+  function makeFadeIn(el, duration) {
+    return function(ctx, done) {
+      fadeInText(el, duration, function() {
+        done();
+      });
+    };
+  }
+
+  function makeFadeOut(el, duration) {
+    return function(ctx, done) {
+      fadeOutText(el, duration, function() {
+        done();
+      });
+    };
+  }
+
   app.chain = chain;
+  app.fadeInText = fadeInText;
+  app.fadeOutText = fadeOutText;
+  app.makeFadeIn = makeFadeIn;
+  app.makeFadeOut = makeFadeOut;
 })();
 
 app.mockData = {
