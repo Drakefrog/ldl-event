@@ -1,13 +1,16 @@
 <div id="{{name}}" class="ldl-ss-page ss-slide ss-{{posX}}-{{posY}} {{name}}">
-  <img src="{{basePath}}/earth.png" class="{{name}}-earth"></img>
-  <img src="{{basePath}}/superman.png" class="{{name}}-superman"></img>
-  <img src="{{basePath}}/girl.png" class="{{name}}-girl"></img>
-</div>
+  <svg viewBox="0 0 900 1600">
 
-<script id="{{name}}-template" type="handlebars-template">
-  <div class="{{name}} {{name}}-text">
-    <div class="ldl-ss-text-orange">\{{userData.firstday_running}}</div>
-    <div>第一次使用乐动力跑步功能</div>
-    <div>飞奔了<span class="ldl-ss-text-orange">\{{userData.firstday_running_steps}}</span>m</div>
-  </div>
-</script>
+    <g id="{{name}}-images"></g>
+
+    <g id="{{name}}-text" font-size="54px" fill="white"
+       transform="translate(50, 900)" opacity="0.0">
+      <text x="0" y="0" font-size="78px"
+            fill="#FF7E00" id="{{name}}-firstday"></text>
+      <text x="0" y="100">第一次使用乐动力跑步功能</text>
+      <text x="0" y="200">飞奔了<tspan font-size="76px" fill="#FF7E00" id="{{name}}-firstday-running"></tspan>m
+      </text>
+    </g>
+
+  </svg>
+</div>

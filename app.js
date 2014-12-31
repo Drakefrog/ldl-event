@@ -158,11 +158,47 @@ var app = {
     };
   }
 
+  function parseImageUrl(url) {
+    var paths = url.split('/'),
+        basename = paths[paths.length-1],
+        splits = basename.split('.'),
+        wh;
+
+    if (splits) {
+      wh = splits[0].split('-');
+      return {
+        width: parseInt(wh[wh.length-2]),
+        height: parseInt(wh[wh.length-1]),
+        name: wh.slice(0, -2).join('-'),
+        ext: splits[1]
+      };
+    } else return {};
+  }
+
+  function initImageElement(el, url, aIdPrefix) {
+    var obj = parseImageUrl(url),
+        w = obj.width,
+        h = obj.height,
+        idPrefix = aIdPrefix || '',
+        sel = app.d3.select(el);
+
+    sel
+      .attr('xlink:href', url)
+      .attr('id',  idPrefix + obj.name)
+      .attr('width',  w)
+      .attr('height',  h)
+      .attr('x', 0)
+      .attr('y',  0)
+      .attr('transform',  'translate(' + [-w/2, -h/2] + ')');
+  }
+
+  app.initImageElement = initImageElement;
   app.chain = chain;
   app.fadeInText = fadeInText;
   app.fadeOutText = fadeOutText;
   app.makeFadeIn = makeFadeIn;
   app.makeFadeOut = makeFadeOut;
+
 })();
 
 app.mockData = {

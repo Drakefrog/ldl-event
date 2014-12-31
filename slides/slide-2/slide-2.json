@@ -4,5 +4,15 @@
   "index": 2,
   "posX": 0,
   "posY": 2,
-  "duration": 2000
+
+  "textAnimationDuration": 1000,
+  "runnerAnimationDuration": 1000,
+  "supermanStartX": 810,
+  "supermanStartY": 400,
+  "girlStartX": 620,
+  "girlStartY": 320,
+  "supermanEndX": 670,
+  "supermanEndY": 270,
+  "girlEndX": 470,
+  "girlEndY": 140
 }
