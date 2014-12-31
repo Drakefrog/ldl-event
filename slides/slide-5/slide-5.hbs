@@ -10,29 +10,50 @@
       <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/bright-map.png" clip-path="url(#{{name}}-bright-map-clip)"/>
     </g>
 
+    <g id="{{name}}-rank-circle" transform="translate(700,600) scale(0.0)" >
+      <g transform="translate(-156, -156)" >
+        <image x="0" y="0" width="312" height="312" xlink:href="{{basePath}}/circle.png"/>
+        <text x="110" y="120" font-size="48" fill="white">超过</text>
+        <text x="80" y="220" font-size="80" fill="white" id="{{name}}-better-than-pct">  %</text>
+      </g>
+    </g>
+
+    <g>
+      <text x="50" y="112" opacity="1.0" fill="white" font-size="56">
+        我一共走了 <tspan fill="#FF7E00" font-size="78px">
+          <tspan id="{{name}}-total-steps">0</tspan>
+          <tspan> 步</tspan></tspan>
+      </text>
+      <text x="50" y="208" opacity="1.0" fill="white" font-size="56">
+        日均 <tspan fill="#FF7E00" font-size="78px">
+          <tspan id="{{name}}-avg-steps">0</tspan>
+          <tspan> 步</tspan></tspan>
+      </text>
+    </g>
+
+    <g opacity="1.0" transform="translate(450 1000)">
+      <text x="-400" y="-120" fill="#3250a3" font-size="54px">
+        可以当之无愧的称自己为
+      </text>
+
+      <polyline fill="none" stroke="#FF7E00" stroke-width="10" points="170,-90 250,-90 250,-50" />
+      <polyline fill="none" stroke="#FF7E00" stroke-width="10" points="-170,45 -250,45 -250,5" />
+
+      <text x="0" y="0" fill="#FF7E00" font-size="80px"
+            text-anchor="middle"
+            transform="scale(0.0)"
+            id="{{name}}-call-me">
+        运动绝缘体
+      </text>
+    </g>
+
+    <g opacity="1.0">
+      <g id="{{name}}-share-btn" transform="translate(450, 1125)">
+        <rect fill="#FF7E00" x="-225" y="-45" width="450" height="90" rx="20" ry="20"/>
+        <text x="0" y="25" font-size="50px" fill="white" text-anchor="middle">去分享</text>
+        <text x="0" y="100" font-size="42px" fill="#FF7E00" text-anchor="middle">2015年，乐动力继续陪伴你</text>
+      </g>
+    </g>
 
   </svg>
 </div>
-
-<script id="{{name}}-template-text-1" type="handlebars-template">
-  <text x="90" y="112" opacity="1.0" fill="white" font-size="48px">
-    我一共走了 <tspan style="fill: #FF7E00;" font-size="64px">
-      <tspan id="{{name}}-total-steps">0</tspan>
-      <tspan> 步</tspan></tspan>
-  </text>
-  <text x="90" y="208" opacity="1.0" fill="white" font-size="48px">
-    日均 <tspan style="fill: #FF7E00;" font-size="64px">
-      <tspan id="{{name}}-avg-steps">0</tspan>
-      <tspan> 步</tspan></tspan>
-  </text>
-</script>
-
-<script id="{{name}}-template-rank-circle" type="handlebars-template">
-  <g id="{{name}}-rank-circle" transform="translate(\{{circleCenterX}},\{{circleCenterY}}) scale(0.0)" >
-    <g transform="translate(-156, -156)" >
-      <image x="0" y="0" width="312" height="312" xlink:href="{{basePath}}/circle.png"/>
-      <text x="110" y="120" font-size="48" fill="white">超过</text>
-      <text x="80" y="220" font-size="80" fill="white">\{{userData.better_than_pct}}</text>
-    </g>
-  </g>
-</script>

@@ -202,46 +202,60 @@ var app = {
 })();
 
 app.mockData = {
-    "status": "OK",
-    "uid": null,
-    "ret": {
-        "dt_10w": "2013-06-28",
-        "firstday_running_steps": 0,
-        "accumulativesteps": 4160136,
-        "dt_100w": "2013-06-29",
-        "completegoalday": 279,
-        "averagesteps": 11243,
-        "dailystatsday": 370,
-        "firstday": "2013-04-15",
-        "completegoalrate": "0%",
-        "avatar_url": "http://tp4.sinaimg.cn/1967427891/180/5656156315/0",
-        "running_firstday": "0",
-        "rank": 181625,
-        "friendsinfo": {
-            "friendsrank": 5,
-            "friendslist": [
-                {
-                    "avatar_url": "http://files.ledongli.cn/avatar/11779431.jpg"
-                },
-                {
-                    "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/DEB1A64DE4DCBED7282D145868AAAB44/100"
-                },
-                {
-                    "avatar_url": "http://tp1.sinaimg.cn/1718274124/180/5703054401/0"
-                },
-                {
-                    "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/5FAD852F620FFA5059CBEAF3A8E02BCC/100"
-                },
-                {
-                    "avatar_url": "http://files.ledongli.cn/avatar/4148131.jpg"
-                }
-            ],
-            "friends_count": 7
+  "status": "OK",
+  "uid": null,
+  "ret": {
+    "dt_10w": "2013-06-28",
+    "firstday_running_steps": 0,
+    "accumulativesteps": 4160136,
+    "dt_100w": "2013-06-29",
+    "completegoalday": 279,
+    "averagesteps": 11243,
+    "dailystatsday": 370,
+    "firstday": "2013-04-15",
+    "completegoalrate": "0%",
+    "avatar_url": "http://tp4.sinaimg.cn/1967427891/180/5656156315/0",
+    "running_firstday": "0",
+    "rank": 181625,
+    "friendsinfo": {
+      "friendsrank": 5,
+      "friendslist": [
+        {
+          "avatar_url": "http://files.ledongli.cn/avatar/11779431.jpg"
         },
-        "lifetime": 619,
-        "better_than_pct": "99%"
+        {
+          "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/DEB1A64DE4DCBED7282D145868AAAB44/100"
+        },
+        {
+          "avatar_url": "http://tp1.sinaimg.cn/1718274124/180/5703054401/0"
+        },
+        {
+          "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/5FAD852F620FFA5059CBEAF3A8E02BCC/100"
+        },
+        {
+          "avatar_url": "http://files.ledongli.cn/avatar/4148131.jpg"
+        }
+      ],
+      "friends_count": 7
     },
-    "errorCode": 0,
-    "error": null,
-    "path": null
+    "lifetime": 619,
+    "better_than_pct": "99%"
+  },
+  "errorCode": 0,
+  "error": null,
+  "path": null
 };
+
+function WeiXinShareBtn() {
+  if (typeof WeixinJSBridge == "undefined") {
+    // alert(" 请先通过微信搜索 wow36kr 添加36氪为好友，通过微信分享文章 :) ");
+    alert("No weixijsbridge");
+  } else {
+    WeixinJSBridge.invoke('shareTimeline', {
+      "title": "乐动力",
+      "link": "http://localhost:3000",
+      "desc": "乐动力",
+      "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png"
+    });
+  }
+}
