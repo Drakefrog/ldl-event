@@ -53,23 +53,29 @@ var app = {
       return a.context.index - b.context.index;
     });
 
-    // add user data to slides context:
+    scope.ss = new SlideShow(scope.mainEl, slides);
 
+    // bootstrap first slide, defer others util api calls back
+    scope.ss.slides[0].onCreate();
+
+    // add user data to slides context:
     LDLAPI.getAnnualUserData(urlParams.uid, function(err, data) {
       if (err) {
         // TODO: handle the case can not get user data
       }
 
-      slides.forEach(function(slide) {
+      scope.ss.slides.forEach(function(slide, i) {
+        if (i === 0) return;
         slide.context.userData = data.ret;
+        slide.onCreate();
       });
 
-      scope.ss = new SlideShow(scope.mainEl, slides);
-      scope.ss.start();
-
-      if (urlParams.index) {
-        scope.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
-      }
     });
+
+    scope.ss.start();
+
+    if (urlParams.index) {
+      scope.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
+    }
   }
 };
