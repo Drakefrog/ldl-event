@@ -1,6 +1,7 @@
 (function(app) {
   var $ = app.$,
       d3 = app.d3,
+      chain = app.chain,
       // compile = app.compile,
       // template = compile($('#slide-1-template-text').html()),
       config = app.config['slide-1'],
@@ -312,46 +313,6 @@
         }
       });
   }
-
-  function chain(context, fns, done) {
-    var i = 0, count, j, len, completed;
-    function next() {
-      var fn = fns[i];
-
-      if (typeof fn === 'function') {
-        fn(context, function(err) {
-          if (err) {
-            done(err);
-            return;
-          }
-
-          ++i;
-          next();
-        });
-      } else if (Array.isArray(fn)) {
-        len = fn.length;
-        completed = 0;
-        j = 0;
-        for (j = 0; j < len; ++j) {
-          fn[j](context, function(err) {
-            if (err) {
-              done(err);
-              return;
-            }
-            completed += 1;
-            if (completed === len) {
-              ++i;
-              next();
-            }
-          });
-        }
-      } else {
-        done(null, context);
-      }
-    }
-    next();
-  }
-
 
   app.addSlide('slide-1', {
     onCreate: function() {
