@@ -104,18 +104,14 @@
 
         <div id="slide-4" class="ss-slide ss-0-4 slide-4">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600">
-    <!-- <g transform="translate(450, 425)"> -->
-    <!--   <image transform="translate(-150,-150)" x="0" y="0" width="300" height="300" xlink:href="slides/slide-4/background-no-arc.png"/> -->
-    <!-- </g> -->
     <g id="slide-4-text-pct" transform="translate(420, 410)">
       <text x="0" y="0" font-size="36px" fill="white" id="slide-4-complete-rate">00%</text>
     </g>
-
     <g>
       <polygon transform="translate(450, 410) scale(150)"
                fill="none"
                stroke="white"
-               stroke-width="0.05"
+               stroke-width="0.10"
                stroke-linecap="round"
                points="1.0,0.0 0.5,0.866025403784 -0.5,0.866025403784 -1.0,1.22464679915e-16 -0.5,-0.866025403784 0.5,-0.866025403784"/>
     </g>
@@ -142,38 +138,60 @@
       <image x="0" y="0" width="900" height="900" xlink:href="slides/slide-5/bright-map.png" clip-path="url(#slide-5-bright-map-clip)"/>
     </g>
 
+    <g id="slide-5-rank-circle" transform="translate(700,600) scale(0.0)" >
+      <g transform="translate(-156, -156)" >
+        <image x="0" y="0" width="312" height="312" xlink:href="slides/slide-5/circle.png"/>
+        <text x="110" y="120" font-size="48" fill="white">超过</text>
+        <text x="80" y="220" font-size="80" fill="white" id="slide-5-better-than-pct">  %</text>
+      </g>
+    </g>
+
+    <g>
+      <text x="50" y="112" opacity="1.0" fill="white" font-size="56">
+        我一共走了 <tspan fill="#FF7E00" font-size="78px">
+          <tspan id="slide-5-total-steps">0</tspan>
+          <tspan> 步</tspan></tspan>
+      </text>
+      <text x="50" y="208" opacity="1.0" fill="white" font-size="56">
+        日均 <tspan fill="#FF7E00" font-size="78px">
+          <tspan id="slide-5-avg-steps">0</tspan>
+          <tspan> 步</tspan></tspan>
+      </text>
+    </g>
+
+    <g opacity="1.0" transform="translate(450 1000)">
+      <text x="-400" y="-120" fill="#3250a3" font-size="54px">
+        可以当之无愧的称自己为
+      </text>
+
+      <polyline fill="none" stroke="#FF7E00" stroke-width="10" points="170,-90 250,-90 250,-50" />
+      <polyline fill="none" stroke="#FF7E00" stroke-width="10" points="-170,45 -250,45 -250,5" />
+
+      <text x="0" y="0" fill="#FF7E00" font-size="80px"
+            text-anchor="middle"
+            transform="scale(0.0)"
+            id="slide-5-call-me">
+        运动绝缘体
+      </text>
+    </g>
+
+    <g opacity="1.0">
+      <g id="slide-5-share-btn" transform="translate(450, 1125)">
+        <rect fill="#FF7E00" x="-225" y="-45" width="450" height="90" rx="20" ry="20"/>
+        <text x="0" y="25" font-size="50px" fill="white" text-anchor="middle">去分享</text>
+        <text x="0" y="100" font-size="42px" fill="#FF7E00" text-anchor="middle">2015年，乐动力继续陪伴你</text>
+      </g>
+    </g>
 
   </svg>
 </div>
-
-<script id="slide-5-template-text-1" type="handlebars-template">
-  <text x="90" y="112" opacity="1.0" fill="white" font-size="48px">
-    我一共走了 <tspan style="fill: #FF7E00;" font-size="64px">
-      <tspan id="slide-5-total-steps">0</tspan>
-      <tspan> 步</tspan></tspan>
-  </text>
-  <text x="90" y="208" opacity="1.0" fill="white" font-size="48px">
-    日均 <tspan style="fill: #FF7E00;" font-size="64px">
-      <tspan id="slide-5-avg-steps">0</tspan>
-      <tspan> 步</tspan></tspan>
-  </text>
-</script>
-
-<script id="slide-5-template-rank-circle" type="handlebars-template">
-  <g id="slide-5-rank-circle" transform="translate({{circleCenterX}},{{circleCenterY}}) scale(0.0)" >
-    <g transform="translate(-156, -156)" >
-      <image x="0" y="0" width="312" height="312" xlink:href="slides/slide-5/circle.png"/>
-      <text x="110" y="120" font-size="48" fill="white">超过</text>
-      <text x="80" y="220" font-size="80" fill="white">{{userData.better_than_pct}}</text>
-    </g>
-  </g>
-</script>
 
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
     <script src="//zeptojs.com/zepto.min.js"></script>
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="//rawgit.com/zxlie/WeixinApi/master/WeixinApi.js"></script>
 
     <script src="//cdn.jsdelivr.net/velocity/1.1.0/velocity.min.js"></script>
     <script src="lib/utils.js"></script>
