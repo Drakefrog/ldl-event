@@ -3,42 +3,20 @@
     <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/background.png" />
     <g id="{{name}}-self-photo"></g>
     <g id="{{name}}-friend-photos"></g>
-    <g id="{{name}}-text"></g>
+    <g id="{{name}}-text" transform="translate(50, 950)">
+      <g id="{{name}}-text-summary" opacity="0.0">
+        <text x="0" y="0" fill="white" font-size="50px">
+          共与<tspan fill="#FF7E00" id="{{name}}-friends-count">N</tspan>个好友产生纯洁的运动友谊
+        </text>
+        <text x="0" y="100" fill="white" font-size="50px">
+          我的运动量在我的好友排行中第<tspan fill="#FF7E00" id="{{name}}-friends-rank">m</tspan>名
+        </text>
+      </g>
+      <g id="{{name}}-text-yuepao" opacity="0.0">
+        <text x="0" y="220" fill="#FF7E00" font-family="ldl-ss" font-size="78px">
+          我们只约跑，不约pao
+        </text>
+      </g>
+    </g>
   </svg>
 </div>
-
-<script id="{{name}}-template-self-photo" type="handlebars-template">
-  <defs>
-    <pattern id="\{{patternId}}" x="-\{{radius}}" y="-\{{radius}}" patternUnits="userSpaceOnUse"
-             height="\{{diameter}}" width="\{{diameter}}">
-      <image x="0" y="0" width="\{{diameter}}" height="\{{diameter}}" xlink:href="\{{url}}"/>
-    </pattern>
-  </defs>
-  <circle transform="translate(\{{x}},\{{y}})" r="\{{radius}}" fill="url(#\{{patternId}})"/>
-</script>
-
-<script id="{{name}}-template-friend-photo" type="handlebars-template">
-  <defs>
-    <pattern id="\{{patternId}}" x="-\{{radius}}" y="-\{{radius}}" patternUnits="userSpaceOnUse"
-             height="\{{diameter}}" width="\{{diameter}}">
-      <image x="0" y="0" width="\{{diameter}}" height="\{{diameter}}" xlink:href="\{{url}}"/>
-    </pattern>
-  </defs>
-  <circle id="\{{id}}" style="display: none;" transform="translate(\{{x}},\{{y}})" r="0" fill="url(#\{{patternId}})"/>
-</script>
-
-<script id="{{name}}-template-text" type="handlebars-template">
-  <g id="{{name}}-text-summary">
-    <text  opacity="0.0" x="60" y="960" fill="white" font-size="48px">
-      共与<tspan font-weight="bold" style="fill: #FF7E00;" >\{{userData.friendsinfo.friends_count}}</tspan>个好友产生纯洁的运动友谊
-    </text>
-    <text opacity="0.0" x="60" y="1040" fill="white" font-size="48px">
-      我的运动量在我的好友排行中第<tspan style="fill: #FF7E00;" >\{{userData.friendsinfo.friendsrank}}</tspan>名
-    </text>
-  </g>
-  <g id="{{name}}-text-yuepao">
-    <text opacity="0.0" x="60" y="1170" style="fill: #FF7E00;" font-family="ldl-ss" font-size="76px">
-      我们只约跑，不约pao
-    </text>
-  </g>
-</script>
