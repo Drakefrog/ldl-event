@@ -77,7 +77,9 @@ var app = {
     scope.ss.start();
 
     if (urlParams.index) {
-      scope.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
+      setTimeout(function() {
+        scope.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
+      }, 100);
     }
   }
 };
