@@ -84,7 +84,7 @@
 
     var iPct = parseInt(pct, 10);
 
-    if (sex === 'female') {
+    if (/^[fF]/.test(sex)) {
       if (iPct <= 40) {
         return "运动白富美";
       } else if (iPct > 40 && iPct <= 70) {
@@ -106,7 +106,7 @@
   app.addSlide('slide-5', {
     onCreate: function() {
       var pct = this.context.userData.better_than_pct,
-          sex = this.context.userData.sex || 'male',
+          sex = this.context.userData.gender || 'male',
           shareUrl = 'http://ledongli.cn/';
 
       this.totalStepTextEl = $('#slide-5-total-steps')[0];

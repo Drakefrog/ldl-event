@@ -36,7 +36,8 @@
             "friends_count": 7
         },
         "lifetime": 619,
-        "better_than_pct": "99%"
+        "better_than_pct": "99%",
+        "gender": "female"
     },
     "errorCode": 0,
     "error": null,
