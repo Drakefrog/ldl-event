@@ -59,7 +59,8 @@
       var size = starSize,
           logoDuration = parseInt(this.context.logoAnimationDuration) || 200,
           textAnimationDuration = parseInt(this.context.textAnimationDuration) || 200,
-          starDelay = 0;
+          starDelay = 0,
+          ss = this.ss;
 
       // this.logo
       //   .transition()
@@ -86,7 +87,10 @@
         .transition()
         .delay(logoDuration + starDelay)
         .duration(500)
-        .attr('transform', 'translate(' + [190, 550] + ')');
+        .attr('transform', 'translate(' + [190, 550] + ')')
+        .each('end', function() {
+          ss.showArrowButton();
+        });
     },
     onExit: function() {
       reset.call(this);

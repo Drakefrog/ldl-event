@@ -15,6 +15,20 @@
     left: 0px;
 }
 
+.ss-down-arrow-container {
+    position: absolute;
+    overflow:hidden;
+    margin: 0;
+    padding: 0;
+}
+
+img.ss-down-arrow {
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 .ss-0-0 { top: 0px; left: 0px; }
 .ss-0-1 { top: 100%; left: 0px; }
 .ss-0-2 { top: 200%; left: 0px; }

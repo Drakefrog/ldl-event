@@ -303,7 +303,8 @@
       return;
     },
     onEnter: function() {
-      var doRotateSlides = function(ctx, done) { rotateSlides(ctx.angle, done); };
+      var doRotateSlides = function(ctx, done) { rotateSlides(ctx.angle, done); },
+          ss = this.ss;
 
       chain({
         angle: -90
@@ -315,7 +316,7 @@
         doRotateSlides,
         animateThirdSlide
       ], function(err, ctx) {
-
+        ss.showArrowButton();
       });
       return;
     },
