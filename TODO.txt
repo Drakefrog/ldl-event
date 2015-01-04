@@ -20,3 +20,8 @@
 - 6
   - “称自己为xx”动画
   - 去分享按钮
+
+测试:
+- uid=1771 female
+- uid=1538 female
+- uid=5087301 male
