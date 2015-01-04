@@ -12,8 +12,8 @@
         { x: 600, y: 160, circleborderWidth: 3, rayWidth: 3, radius: 90 },
         { x: 100, y: 500, circleborderWidth: 3, rayWidth: 3, radius: 81 }
       ];
-      // compile = app.compile,
-      // textTemplate = compile($('#slide-3-template-text').html());
+  // compile = app.compile,
+  // textTemplate = compile($('#slide-3-template-text').html());
 
   friendsPhotoSpecs = calculateLinesFromSelfToFriend(friendsPhotoSpecs);
 
@@ -163,7 +163,8 @@
     onEnter: function() {
       // TODO: clean up use d3
       var dt = this.context.avatarShowDuration || 200,
-           friendsList = this.context && this.context.userData &&
+          ss = this.ss,
+          friendsList = this.context && this.context.userData &&
             this.context.userData.friendsinfo &&
             this.context.userData.friendsinfo.friendslist || [];
 
@@ -184,7 +185,7 @@
               { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
               friendsPhotoSpecs[i].radius
             );
-            // html = photo.compileToHTML();
+        // html = photo.compileToHTML();
 
         photo.addToDOM('#slide-3-friend-photos');
 
@@ -204,6 +205,11 @@
         delay: 1500,
         duration: 800
       });
+
+      // TODO: make duration and delay a parameter
+      setTimeout(function() {
+        ss.showArrowButton();
+      }, 2300);
 
     },
     onExit: function() {

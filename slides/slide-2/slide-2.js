@@ -68,7 +68,8 @@
     },
 
     onEnter: function() {
-      var ctx = {};
+      var ctx = {},
+          ss = this.ss;
       ctx.textEl = this.context.textEl || '#slide-2-text';
       ctx.textAnimationDuration = parseInt(this.context.textAnimationDuration) || 1000;
 
@@ -77,7 +78,7 @@
         animateText,
         [ animateGirl, animateSuperman ]
       ], function(err) {
-
+        ss.showArrowButton();
       });
       return;
     },

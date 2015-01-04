@@ -90,7 +90,8 @@
     },
     onEnter: function() {
       var rate = this.context.userData.completegoalrate,
-          rateAnimationDuration = parseInt(this.context.rateAnimationDuration) || 2000;
+          rateAnimationDuration = parseInt(this.context.rateAnimationDuration) || 2000,
+          ss = this.ss;
 
       computeFgEndAngle(arcData, rate);
 
@@ -123,6 +124,10 @@
         .delay(rateAnimationDuration)
         .duration(rateAnimationDuration)
         .attr('opacity', 1.0);
+
+      setTimeout(function() {
+        ss.showArrowButton();
+      }, rateAnimationDuration + rateAnimationDuration);
 
     },
     onExit: function() {
