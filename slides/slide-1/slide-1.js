@@ -4,8 +4,7 @@
       chain = app.chain,
       makeFadeIn = app.makeFadeIn,
       makeFadeOut = app.makeFadeOut,
-      // compile = app.compile,
-      // template = compile($('#slide-1-template-text').html()),
+      makeDelay = app.makeDelay,
       config = app.config['slide-1'],
       basePath = app.config['slide-1'].basePath,
       w = 900,
@@ -31,9 +30,8 @@
               image: createImageElement(basePath + '/foot-564-360.png', 'slide-1-img-')
             },
           ],
-          angle: 90,
+          angle: 0,
           delay: config.subslideDelay || 1000,
-          delay: 0,
           duration: config.subslideDuration || 1000
         },
         {
@@ -53,7 +51,7 @@
               image: createImageElement(basePath + '/car-576-36.png', 'slide-1-img-')
             }
           ],
-          angle: 180,
+          angle: 90,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         },
@@ -77,7 +75,7 @@
               translate: [-80, 0]
             },
           ],
-          angle: 270,
+          angle: 180,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         }
@@ -179,8 +177,9 @@
     chain(ctx, [
       makeResetText(),
       animateFoot,
-      makeFadeIn('#slide-1-text-0', 1000),
-      makeFadeOut('#slide-1-text-0', 1000)
+      makeFadeIn('#slide-1-text-0', 500),
+      makeDelay(1000),
+      makeFadeOut('#slide-1-text-0', 500)
     ], done);
   }
 
@@ -188,8 +187,9 @@
     chain(ctx, [
       makeResetText(),
       animateCar,
-      makeFadeIn('#slide-1-text-1', 1000),
-      makeFadeOut('#slide-1-text-1', 1000)
+      makeFadeIn('#slide-1-text-1', 500),
+      makeDelay(1000),
+      makeFadeOut('#slide-1-text-1', 500)
     ], done);
   }
 
@@ -197,7 +197,7 @@
     chain(ctx, [
       makeResetText(),
       // animateMonsters,
-      makeFadeIn('#slide-1-text-2', 1000),
+      makeFadeIn('#slide-1-text-2', 500),
       // makeFadeOut('#slide-1-text-2', 1000)
     ], done);
   }
@@ -217,22 +217,22 @@
       });
   }
 
-  function makeFadeInFadeOutChain(el, duration) {
-    return makeChain([
-      function(ctx, done) {
-        resetText();
-        done();
-      },
-      function(ctx, done) {
-        fadeInText(el, duration, function() {
-          done();
-        });
-      },
-      function(ctx, done) {
-        fadeOutText(el, duration, function() { done(); });
-      }
-    ]);
-  }
+  // function makeFadeInFadeOutChain(el, duration) {
+  //   return makeChain([
+  //     function(ctx, done) {
+  //       resetText();
+  //       done();
+  //     },
+  //     function(ctx, done) {
+  //       fadeInText(el, duration, function() {
+  //         done();
+  //       });
+  //     },
+  //     function(ctx, done) {
+  //       fadeOutText(el, duration, function() { done(); });
+  //     }
+  //   ]);
+  // }
 
   function animateFoot(ctx, done) {
     d3
@@ -282,11 +282,13 @@
       var userData = this.context.userData || {};
       d3.selectAll('g#slide-1-text > g text.ldl-date')
         .data([
-          userData.firstday,
-          userData.dt_10w,
-          userData.dt_100w,
+          userData.firstday_parsed,
+          userData.dt_10w_parsed,
+          userData.dt_100w_parsed,
         ])
-        .text(function(d) { return d; });
+        .text(function(d) {
+          return d.year + '年' + d.month + '月' + d.day + '日';
+        });
 
       d3
         .select('g#slide-1-imgs')
@@ -309,7 +311,6 @@
       chain({
         angle: -90
       }, [
-        doRotateSlides,
         animateFirstSlide,
         doRotateSlides,
         animateSecondSlide,

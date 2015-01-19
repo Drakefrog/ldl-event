@@ -158,6 +158,14 @@ var app = {
     };
   }
 
+  function makeDelay(delay) {
+    return function(ctx, done) {
+      setTimeout(function() {
+        done();
+      }, delay);
+    };
+  }
+
   function parseImageUrl(url) {
     var paths = url.split('/'),
         basename = paths[paths.length-1],
@@ -198,6 +206,7 @@ var app = {
   app.fadeOutText = fadeOutText;
   app.makeFadeIn = makeFadeIn;
   app.makeFadeOut = makeFadeOut;
+  app.makeDelay = makeDelay;
 
 })();
 
