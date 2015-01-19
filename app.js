@@ -22,6 +22,9 @@ var app = {
       });
     }
     options.context = context;
+
+    console.log('index', context.index);
+
     options.domEl = name;
 
     // Apply config from url for this slide

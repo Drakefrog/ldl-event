@@ -35,6 +35,12 @@
       // template = compile($('#slide-2-template').html());
 
   app.addSlide('slide-2', {
+    shouldCreate: function() {
+      return this.context &&
+        this.context.userData &&
+        this.context.userData.firstday_running_steps &&
+        this.context.userData.firstday_running_steps > 0;
+    },
     onCreate: function() {
       var basePath = this.context.basePath,
           userData = this.context.userData;

@@ -364,11 +364,23 @@ function uuid() {
     });
   }
 
+  function parseDate(dStr) {
+    var arr = dStr.split('-');
+    return {
+      year: arr[0],
+      month: arr[1],
+      day: arr[2]
+    };
+  }
+
   // TODO: if need extra parsing...
   function parseLDLAPIResultData(json) {
     // json.ret.day_10w = new Date(json.ret.day_10w);
     // json.ret.better_than_pct = (100 - parseInt(json.ret.rank_pct)) + '%';
     json.ret.completegoalrate = Math.round(100*(json.ret.completegoalday/json.ret.lifetime));
+    json.ret.firstday_parsed = parseDate(json.ret.firstday);
+    json.ret.dt_10w_parsed = parseDate(json.ret.dt_10w);
+    json.ret.dt_100w_parsed = parseDate(json.ret.dt_100w);
     // console.log(json);
     return json;
   }
@@ -405,7 +417,8 @@ function uuid() {
 (function(global) {
 
   // TODO: remove dependcy on velocity
-  var Velocity = window.$.Velocity,
+  var $ = window.$,
+      Velocity = window.$.Velocity,
       getWindowSize = window.getWindowSize,
       noop = function() {};
 
@@ -750,12 +763,30 @@ function uuid() {
     }
 
     function init() {
+      slides = slides.filter(function(s) {
+        return s.shouldCreate();
+      });
+
+      // fix index, posX, posY
+      // fix css class
+      slides.forEach(function(s, i) {
+        var ctx = s.context,
+            $el = $(s.domEl),
+            oldClassName = 'ss-' + ctx.posX + '-' + ctx.posY,
+            newClassName;
+
+        ctx.index = i;
+        ctx.posY = i;
+        newClassName = 'ss-' + ctx.posX + '-' + ctx.posY;
+
+        $el
+          .removeClass(oldClassName)
+          .addClass(newClassName);
+      });
+
       slides.forEach(function(s) {
         s.ss = scope;
       });
-      // slides = slides.filter(function(s) {
-      //   return s.shouldCreate();
-      // });
 
       // slides.forEach(function(slide) {
       //   slide.onCreate();
@@ -804,6 +835,9 @@ var app = {
       });
     }
     options.context = context;
+
+    console.log('index', context.index);
+
     options.domEl = name;
 
     // Apply config from url for this slide
@@ -940,6 +974,14 @@ var app = {
     };
   }
 
+  function makeDelay(delay) {
+    return function(ctx, done) {
+      setTimeout(function() {
+        done();
+      }, delay);
+    };
+  }
+
   function parseImageUrl(url) {
     var paths = url.split('/'),
         basename = paths[paths.length-1],
@@ -980,6 +1022,7 @@ var app = {
   app.fadeOutText = fadeOutText;
   app.makeFadeIn = makeFadeIn;
   app.makeFadeOut = makeFadeOut;
+  app.makeDelay = makeDelay;
 
 })();
 
@@ -1043,7 +1086,7 @@ function WeiXinShareBtn() {
 }
 
 
-      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"starAnimationDuration":200,"logoAnimationDuration":200,"textAnimationDuration":0,"textOnBoard":"年度运动旅程","basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"subslideDelay":1500,"subslideDuration":1500,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"textAnimationDuration":1000,"runnerAnimationDuration":1000,"supermanStartX":810,"supermanStartY":400,"girlStartX":620,"girlStartY":320,"supermanEndX":670,"supermanEndY":270,"girlEndX":470,"girlEndY":140,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4,"rateAnimationDuration":1000,"basePath":"slides/slide-4"},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5,"circleCenterX":700,"circleCenterY":600,"stepsAccumulateAnimationDuration":1000,"rankCircleAnimationDuration":200,"basePath":"slides/slide-5"}};
+      app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"starAnimationDuration":200,"logoAnimationDuration":200,"textAnimationDuration":0,"textOnBoard":"年度运动旅程","basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"subslideDelay":500,"subslideDuration":500,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"textAnimationDuration":1000,"runnerAnimationDuration":1000,"supermanStartX":810,"supermanStartY":400,"girlStartX":620,"girlStartY":320,"supermanEndX":670,"supermanEndY":270,"girlEndX":470,"girlEndY":140,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4,"rateAnimationDuration":1000,"basePath":"slides/slide-4"},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5,"circleCenterX":700,"circleCenterY":600,"stepsAccumulateAnimationDuration":1000,"rankCircleAnimationDuration":200,"basePath":"slides/slide-5"}};
     
 (function(app) {
   var d3 = app.d3,
@@ -1151,8 +1194,7 @@ function WeiXinShareBtn() {
       chain = app.chain,
       makeFadeIn = app.makeFadeIn,
       makeFadeOut = app.makeFadeOut,
-      // compile = app.compile,
-      // template = compile($('#slide-1-template-text').html()),
+      makeDelay = app.makeDelay,
       config = app.config['slide-1'],
       basePath = app.config['slide-1'].basePath,
       w = 900,
@@ -1178,9 +1220,8 @@ function WeiXinShareBtn() {
               image: createImageElement(basePath + '/foot-564-360.png', 'slide-1-img-')
             },
           ],
-          angle: 90,
+          angle: 0,
           delay: config.subslideDelay || 1000,
-          delay: 0,
           duration: config.subslideDuration || 1000
         },
         {
@@ -1200,7 +1241,7 @@ function WeiXinShareBtn() {
               image: createImageElement(basePath + '/car-576-36.png', 'slide-1-img-')
             }
           ],
-          angle: 180,
+          angle: 90,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         },
@@ -1224,7 +1265,7 @@ function WeiXinShareBtn() {
               translate: [-80, 0]
             },
           ],
-          angle: 270,
+          angle: 180,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
         }
@@ -1326,8 +1367,9 @@ function WeiXinShareBtn() {
     chain(ctx, [
       makeResetText(),
       animateFoot,
-      makeFadeIn('#slide-1-text-0', 1000),
-      makeFadeOut('#slide-1-text-0', 1000)
+      makeFadeIn('#slide-1-text-0', 500),
+      makeDelay(1000),
+      makeFadeOut('#slide-1-text-0', 500)
     ], done);
   }
 
@@ -1335,8 +1377,9 @@ function WeiXinShareBtn() {
     chain(ctx, [
       makeResetText(),
       animateCar,
-      makeFadeIn('#slide-1-text-1', 1000),
-      makeFadeOut('#slide-1-text-1', 1000)
+      makeFadeIn('#slide-1-text-1', 500),
+      makeDelay(1000),
+      makeFadeOut('#slide-1-text-1', 500)
     ], done);
   }
 
@@ -1344,7 +1387,7 @@ function WeiXinShareBtn() {
     chain(ctx, [
       makeResetText(),
       // animateMonsters,
-      makeFadeIn('#slide-1-text-2', 1000),
+      makeFadeIn('#slide-1-text-2', 500),
       // makeFadeOut('#slide-1-text-2', 1000)
     ], done);
   }
@@ -1364,22 +1407,22 @@ function WeiXinShareBtn() {
       });
   }
 
-  function makeFadeInFadeOutChain(el, duration) {
-    return makeChain([
-      function(ctx, done) {
-        resetText();
-        done();
-      },
-      function(ctx, done) {
-        fadeInText(el, duration, function() {
-          done();
-        });
-      },
-      function(ctx, done) {
-        fadeOutText(el, duration, function() { done(); });
-      }
-    ]);
-  }
+  // function makeFadeInFadeOutChain(el, duration) {
+  //   return makeChain([
+  //     function(ctx, done) {
+  //       resetText();
+  //       done();
+  //     },
+  //     function(ctx, done) {
+  //       fadeInText(el, duration, function() {
+  //         done();
+  //       });
+  //     },
+  //     function(ctx, done) {
+  //       fadeOutText(el, duration, function() { done(); });
+  //     }
+  //   ]);
+  // }
 
   function animateFoot(ctx, done) {
     d3
@@ -1429,11 +1472,13 @@ function WeiXinShareBtn() {
       var userData = this.context.userData || {};
       d3.selectAll('g#slide-1-text > g text.ldl-date')
         .data([
-          userData.firstday,
-          userData.dt_10w,
-          userData.dt_100w,
+          userData.firstday_parsed,
+          userData.dt_10w_parsed,
+          userData.dt_100w_parsed,
         ])
-        .text(function(d) { return d; });
+        .text(function(d) {
+          return d.year + '年' + d.month + '月' + d.day + '日';
+        });
 
       d3
         .select('g#slide-1-imgs')
@@ -1456,7 +1501,6 @@ function WeiXinShareBtn() {
       chain({
         angle: -90
       }, [
-        doRotateSlides,
         animateFirstSlide,
         doRotateSlides,
         animateSecondSlide,
@@ -1510,6 +1554,12 @@ function WeiXinShareBtn() {
       // template = compile($('#slide-2-template').html());
 
   app.addSlide('slide-2', {
+    shouldCreate: function() {
+      return this.context &&
+        this.context.userData &&
+        this.context.userData.firstday_running_steps &&
+        this.context.userData.firstday_running_steps > 0;
+    },
     onCreate: function() {
       var basePath = this.context.basePath,
           userData = this.context.userData;
