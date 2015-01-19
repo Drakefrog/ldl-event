@@ -1,0 +1,39 @@
+{
+  "status": "OK",
+  "uid": null,
+  "errorCode": 0,
+  "error": null,
+  "path": null,
+  "ret": {
+    "firstday": "2014-11-11",
+    "lifetime": 51,
+    "averagesteps": 8120.5,
+    "completegoalday": 20 ,
+    "completegoalrate": "50.1%",
+    "accumulativesteps": 20000 ,
+    "rank": 100001,
+    "day_10w": "2014-11-19",
+    "day_100w": "2014-11-28",
+    "firstday_running": "2014-12-28",
+    "runningsteps": 800,
+    "friendsinfo":
+    {
+      "friends_count": 30,
+      "friendsrank": 29,
+      "friendslist": [
+        {
+          "nick_name":"横渠居士",
+          "avatar_url":" http://files.ledongli.cn/avatar/5087301.jpg"
+        },
+        {
+          "nick_name":"横渠居士",
+          "avatar_url":" http://files.ledongli.cn/avatar/5087301.jpg"
+        },
+        {
+          "nick_name":"横渠居士",
+          "avatar_url":" http://files.ledongli.cn/avatar/5087301.jpg"
+        }
+      ]
+    }
+  }
+}

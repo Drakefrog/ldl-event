@@ -1,0 +1,44 @@
+{
+  "status": "OK",
+  "uid": null,
+  "errorCode": 0,
+  "error": null,
+  "path": null,
+  "ret": {
+    "accumulativesteps": "4160136",
+    "uid": "1538",
+    "avatar_url": "http://tp4.sinaimg.cn/1967427891/180/5656156315/0",
+    "dt_100w": "2013-06-29",
+    "completegoalday": "279",
+    "averagesteps": 11243,
+    "firstday": "2013-04-15",
+    "rank": "181625",
+    "better_than_pct": "36%",
+    "firstday_running": "0",
+    "firstday_running_steps": "0",
+    "dailystatsday": "370",
+    "dt_10w": "2013-06-28",
+    "friendsinfo": {
+      "friendsrank": "5",
+      "friendslist": [
+        {
+          "avatar_url": "http://files.ledongli.cn/avatar/4148131.jpg"
+        },
+        {
+          "avatar_url": "http://files.ledongli.cn/avatar/6504055.jpg"
+        },
+        {
+          "avatar_url": "http://tp1.sinaimg.cn/1718274124/180/5703054401/0"
+        },
+        {
+          "avatar_url": "http://files.ledongli.cn/avatar/9151392.jpg"
+        },
+        {
+          "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/DEB1A64DE4DCBED7282D145868AAAB44/100"
+        }
+      ],
+      "friends_count": "7"
+    },
+    "lifetime": "619"
+  }
+}

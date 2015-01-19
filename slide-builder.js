@@ -92,6 +92,7 @@ function render(template, aContext) {
 }
 
 exports.load = load;
+exports.loadSlidesList = loadSlidesList;
 exports.render = render;
 
 if (!module.parent) {

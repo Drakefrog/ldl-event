@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/lge88/ldl-event-slideshow",
   "dependencies": {
+    "clean-css": "^3.0.5",
     "express": "^4.10.6",
     "hbs": "^2.8.0",
     "jsdom": "^2.0.0",
