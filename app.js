@@ -22,9 +22,6 @@ var app = {
       });
     }
     options.context = context;
-
-    console.log('index', context.index);
-
     options.domEl = name;
 
     // Apply config from url for this slide
@@ -69,9 +66,35 @@ var app = {
       }
 
 
-      scope.ss.slides.forEach(function(slide, i) {
-        if (i === 0) return;
+      var ss = scope.ss;
+
+      ss.slides.forEach(function(slide, i) {
         slide.context.userData = data.ret;
+      });
+
+      ss.slides = ss.slides.filter(function(s) {
+        return s.shouldCreate();
+      });
+
+      // fix index, posX, posY
+      // fix css class
+      ss.slides.forEach(function(s, i) {
+        var ctx = s.context,
+            $el = app.$(s.domEl),
+            oldClassName = 'ss-' + ctx.posX + '-' + ctx.posY,
+            newClassName;
+
+        ctx.index = i;
+        ctx.posY = i;
+        newClassName = 'ss-' + ctx.posX + '-' + ctx.posY;
+
+        $el
+          .removeClass(oldClassName)
+          .addClass(newClassName);
+      });
+
+      ss.slides.forEach(function(slide, i) {
+        if (i === 0) return;
         slide.onCreate();
       });
 

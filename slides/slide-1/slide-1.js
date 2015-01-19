@@ -177,9 +177,9 @@
     chain(ctx, [
       makeResetText(),
       animateFoot,
-      makeFadeIn('#slide-1-text-0', 500),
+      makeFadeIn('#slide-1-text-0',300),
       makeDelay(1000),
-      makeFadeOut('#slide-1-text-0', 500)
+      makeFadeOut('#slide-1-text-0', 300)
     ], done);
   }
 
@@ -187,9 +187,9 @@
     chain(ctx, [
       makeResetText(),
       animateCar,
-      makeFadeIn('#slide-1-text-1', 500),
+      makeFadeIn('#slide-1-text-1', 300),
       makeDelay(1000),
-      makeFadeOut('#slide-1-text-1', 500)
+      makeFadeOut('#slide-1-text-1', 300)
     ], done);
   }
 
@@ -216,23 +216,6 @@
         done();
       });
   }
-
-  // function makeFadeInFadeOutChain(el, duration) {
-  //   return makeChain([
-  //     function(ctx, done) {
-  //       resetText();
-  //       done();
-  //     },
-  //     function(ctx, done) {
-  //       fadeInText(el, duration, function() {
-  //         done();
-  //       });
-  //     },
-  //     function(ctx, done) {
-  //       fadeOutText(el, duration, function() { done(); });
-  //     }
-  //   ]);
-  // }
 
   function animateFoot(ctx, done) {
     d3
