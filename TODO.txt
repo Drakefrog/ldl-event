@@ -33,6 +33,9 @@
 
 9*）首页设计修改（因为改到春节期上线，所有首页元素会有调整。等设计图后再定）
 
+notes:
+ - Prefetch all image.srcs in the background before slide enter.
+
 测试:
 - uid=1771 female
 - uid=1538 female
