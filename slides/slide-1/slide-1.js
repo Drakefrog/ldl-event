@@ -178,8 +178,8 @@
       makeResetText(),
       animateFoot,
       makeFadeIn('#slide-1-text-0',300),
-      makeDelay(1000),
-      makeFadeOut('#slide-1-text-0', 300)
+      // makeDelay(1000),
+      // makeFadeOut('#slide-1-text-0', 300)
     ], done);
   }
 
@@ -188,8 +188,8 @@
       makeResetText(),
       animateCar,
       makeFadeIn('#slide-1-text-1', 300),
-      makeDelay(1000),
-      makeFadeOut('#slide-1-text-1', 300)
+      // makeDelay(1000),
+      // makeFadeOut('#slide-1-text-1', 300)
     ], done);
   }
 
@@ -289,17 +289,29 @@
     },
     onEnter: function() {
       var doRotateSlides = function(ctx, done) { rotateSlides(ctx.angle, done); },
-          ss = this.ss;
+          ss = this.ss,
+          nSteps = this.context.userData.accumulativesteps,
+          animations = [
+            animateFirstSlide
+          ];
+
+      if (nSteps > 100000) {
+        animations.push(makeDelay(1000));
+        animations.push(makeFadeOut('#slide-1-text-0', 300));
+        animations.push(doRotateSlides);
+        animations.push(animateSecondSlide);
+      }
+
+      if (nSteps > 1000000) {
+        animations.push(makeDelay(1000));
+        animations.push(makeFadeOut('#slide-1-text-1', 300));
+        animations.push(doRotateSlides);
+        animations.push(animateThirdSlide);
+      }
 
       chain({
         angle: -90
-      }, [
-        animateFirstSlide,
-        doRotateSlides,
-        animateSecondSlide,
-        doRotateSlides,
-        animateThirdSlide
-      ], function(err, ctx) {
+      }, animations, function(err, ctx) {
         ss.showArrowButton();
       });
       return;
