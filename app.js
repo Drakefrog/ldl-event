@@ -65,6 +65,7 @@ var app = {
         data = scope.mockData;
       }
 
+      app.userData = data.ret;
 
       var ss = scope.ss;
 

@@ -173,9 +173,60 @@
     return function(ctx, done) { resetText(); done(); };
   }
 
+  function animateDigits(el, from, to) {
+    d3.select(el)
+      .transition()
+      .duration(2000)
+      .tween("text", function(d) {
+        var i = d3.interpolate(from, to),
+            prec = (d + "").split("."),
+            round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+        return function(t) {
+          this.textContent = Math.round(i(t) * round) / round;
+        };
+      });
+  }
+
+  function makeAnimateText(el, to, ndigits, duration) {
+    return function(ctx, done) {
+      d3.select(el)
+        .transition()
+        .duration(duration)
+        .tween("text", function(d) {
+          var from = this.textContent,
+              i = d3.interpolate(from, to),
+              prec = (from + "").split("."),
+              round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+          return function(t) {
+            this.textContent = pad(Math.round(i(t) * round) / round, ndigits);
+          };
+        })
+        .each('end', function() {
+          done();
+        });
+    };
+  }
+
+  function pad(num, size) {
+    var s = num + '';
+    while (s.length < size) s = '0' + s;
+    return s;
+  }
+
   function animateFirstSlide(ctx, done) {
+    var year = ctx.userData.firstday_parsed.year,
+        month = ctx.userData.firstday_parsed.month,
+        day = ctx.userData.firstday_parsed.day;
+
     chain(ctx, [
       makeResetText(),
+      [
+        makeAnimateText('#slide-1-year', year, 4, 1000),
+        makeAnimateText('#slide-1-month', month, 2, 1000),
+        makeAnimateText('#slide-1-day', day, 2, 1000)
+      ],
       animateFoot,
       makeFadeIn('#slide-1-text-0',300),
       // makeDelay(1000),
@@ -184,8 +235,17 @@
   }
 
   function animateSecondSlide(ctx, done) {
+    var year = ctx.userData.dt_10w_parsed.year,
+        month = ctx.userData.dt_10w_parsed.month,
+        day = ctx.userData.dt_10w_parsed.day;
+
     chain(ctx, [
       makeResetText(),
+      [
+        makeAnimateText('#slide-1-year', year, 4, 1000),
+        makeAnimateText('#slide-1-month', month, 2, 1000),
+        makeAnimateText('#slide-1-day', day, 2, 1000)
+      ],
       animateCar,
       makeFadeIn('#slide-1-text-1', 300),
       // makeDelay(1000),
@@ -194,8 +254,17 @@
   }
 
   function animateThirdSlide(ctx, done) {
+    var year = ctx.userData.dt_100w_parsed.year,
+        month = ctx.userData.dt_100w_parsed.month,
+        day = ctx.userData.dt_100w_parsed.day;
+
     chain(ctx, [
       makeResetText(),
+      [
+        makeAnimateText('#slide-1-year', year, 4, 1000),
+        makeAnimateText('#slide-1-month', month, 2, 1000),
+        makeAnimateText('#slide-1-day', day, 2, 1000)
+      ],
       // animateMonsters,
       makeFadeIn('#slide-1-text-2', 500),
       // makeFadeOut('#slide-1-text-2', 1000)
@@ -310,6 +379,7 @@
       }
 
       chain({
+        userData: this.context.userData,
         angle: -90
       }, animations, function(err, ctx) {
         ss.showArrowButton();
