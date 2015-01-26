@@ -11,7 +11,8 @@
         { x: 200, y: 720, circleborderWidth: 3, rayWidth: 3, radius: 105 },
         { x: 600, y: 160, circleborderWidth: 3, rayWidth: 3, radius: 90 },
         { x: 100, y: 500, circleborderWidth: 3, rayWidth: 3, radius: 81 }
-      ];
+      ],
+      ORANGE = '#FF7E00';
   // compile = app.compile,
   // textTemplate = compile($('#slide-3-template-text').html());
 
@@ -74,11 +75,13 @@
     return SelfPhoto.template(data);
   };
 
-  function FriendPhoto(imgUrl, location, radius) {
+  function FriendPhoto(imgUrl, location, radius, circleborderWidth, rayWidth) {
     this.id = uuid();
     this.url = imgUrl;
     this.location = location;
     this.radius = radius;
+    this.circleborderWidth = circleborderWidth;
+    this.rayWidth = rayWidth;
   }
   // FriendPhoto.template = compile($('#slide-3-template-friend-photo').html());
 
@@ -107,7 +110,26 @@
       .attr('id', id)
       .attr('transform', 'translate(' + [x, y] + ')')
       .attr('r', 0)
-      .attr('fill', 'url(#' + patternId + ')');
+      .attr('fill', 'url(#' + patternId + ')')
+      .attr('stroke', ORANGE)
+      .attr('stroke-width', this.circleborderWidth);
+
+    var cx = 460, cy = 450, dx = x - cx, dy = y - cy, l = Math.sqrt(dx*dx+dy*dy);
+    var cos = dx/l, sin = dy/l;
+    var rSelfPhoto = 170;
+    var x1 = cx + rSelfPhoto*cos, y1 = cy + rSelfPhoto*sin;
+    var x2 = x - r*cos, y2 = y - r*sin;
+
+    d3.select(el)
+      .append('line')
+      .attr('id', this.id + '-line')
+      .attr('stroke-width', this.rayWidth)
+      .attr('stroke', ORANGE)
+      .attr('visibility', 'hidden')
+      .attr('x1', x1)
+      .attr('y1', y1)
+      .attr('x2', x2)
+      .attr('y2', y2);
   };
 
   FriendPhoto.prototype.compileToHTML = function() {
@@ -125,18 +147,24 @@
 
   FriendPhoto.prototype.present = function(duration, delay) {
     var id = this.id, r = this.radius, loc = this.location,
+        lineAnimateId,
         animateId = setTimeout(function() {
           $('#' + id)
             .css('display', '')
             .velocity({ translateX: loc.x, translateY: loc.y }, {duration: 0})
             .velocity({ r: r }, {
               duration: duration,
-              delay: delay
+              delay: delay,
+              easing: [300, 20],
+              complete: function() {
+                $('#' + id + '-line').attr('visibility', 'visible');
+              }
             });
         }, delay);
     return {
       stop: function() {
         clearTimeout(animateId);
+        clearTimeout(lineAnimateId);
         $('#' + id).velocity('stop', true);
         $('#' + id).css('display', 'none');
       }
@@ -146,7 +174,10 @@
   app.addSlide('slide-3', {
     onCreate: function() {
       var selfImgUrl = this.context && this.context.userData && this.context.userData.avatar_url,
-          selfPhoto = new SelfPhoto(selfImgUrl);
+          selfPhoto = new SelfPhoto(selfImgUrl),
+          friendsList = this.context && this.context.userData &&
+            this.context.userData.friendsinfo &&
+            this.context.userData.friendsinfo.friendslist || [];
 
       this.photosContainer = $('#slide-3-self-photo', this.domEl)[0];
       selfPhoto.addToDOM(this.photosContainer);
@@ -159,6 +190,28 @@
 
       this.$summary = $('#slide-3-text-summary', this.domEl);
       this.$yuepao = $('#slide-3-text-yuepao', this.domEl);
+
+
+      this.friendsPhotos = [];
+      // this.friendsPhotoContainer = $('#slide-3-friend-photos', this.domEl)[0];
+      friendsList = friendsList.slice(0, 5);
+
+      friendsList.forEach(function(p, i) {
+        var url = p.avatar_url,
+            photo = new FriendPhoto(
+              url,
+              { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
+              friendsPhotoSpecs[i].radius,
+              friendsPhotoSpecs[i].circleborderWidth,
+              friendsPhotoSpecs[i].rayWidth
+            );
+        // html = photo.compileToHTML();
+
+        photo.addToDOM('#slide-3-friend-photos');
+
+        // this.friendsPhotoContainer.innerHTML += html;
+        this.friendsPhotos.push(photo);
+      }, this);
     },
     onEnter: function() {
       // TODO: clean up use d3
@@ -174,24 +227,24 @@
         duration: 1500
       });
 
-      this.friendsPhotos = [];
+      // this.friendsPhotos = [];
       // this.friendsPhotoContainer = $('#slide-3-friend-photos', this.domEl)[0];
-      friendsList = friendsList.slice(0, 5);
+      // friendsList = friendsList.slice(0, 5);
 
-      friendsList.forEach(function(p, i) {
-        var url = p.avatar_url,
-            photo = new FriendPhoto(
-              url,
-              { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
-              friendsPhotoSpecs[i].radius
-            );
-        // html = photo.compileToHTML();
+      // friendsList.forEach(function(p, i) {
+      //   var url = p.avatar_url,
+      //       photo = new FriendPhoto(
+      //         url,
+      //         { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
+      //         friendsPhotoSpecs[i].radius
+      //       );
+      //   // html = photo.compileToHTML();
 
-        photo.addToDOM('#slide-3-friend-photos');
+      //   photo.addToDOM('#slide-3-friend-photos');
 
-        // this.friendsPhotoContainer.innerHTML += html;
-        this.friendsPhotos.push(photo);
-      }, this);
+      //   // this.friendsPhotoContainer.innerHTML += html;
+      //   this.friendsPhotos.push(photo);
+      // }, this);
 
       this.animationHandles = [];
 
