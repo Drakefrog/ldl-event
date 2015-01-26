@@ -36,18 +36,23 @@
 
     <g>
       <g id="slide-1-text" transform="translate(-400,1050)" font-size="56px" fill="white">
+
+        <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">
+          <tspan id="slide-1-year">2000</tspan><tspan>年</tspan><tspan id="slide-1-month">01</tspan><tspan>月</tspan><tspan id="slide-1-day">01</tspan><tspan>日</tspan>
+        </text>
+
         <g id="slide-1-text-0" opacity="0.0">
-          <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text>
+          <!-- <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text> -->
           <text x="0" y="0">我开始使用乐动力</text>
           <text x="0" y="100">走出了历史性的第一步！</text>
         </g>
         <g id="slide-1-text-1" opacity="0.0">
-          <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text>
+          <!-- <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text> -->
           <text x="0" y="0">第一次走到<tspan fill="#FF7E00"> 10 </tspan>万步</text>
           <text x="0" y="100">相当于绕香港岛一圈</text>
         </g>
         <g id="slide-1-text-2" opacity="0.0">
-          <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text>
+          <!-- <text class="ldl-date" x="0" y="-100" font-size="76px" fill="#FF7E00">Date</text> -->
           <text x="0" y="0">第一次走到<tspan fill="#FF7E00"> 100 </tspan>万步</text>
           <text x="0" y="100">相当于奥特曼追到小怪兽的距离</text>
         </g>
@@ -878,6 +883,7 @@ var app = {
         data = scope.mockData;
       }
 
+      app.userData = data.ret;
 
       var ss = scope.ss;
 
@@ -1386,29 +1392,98 @@ function WeiXinShareBtn() {
     return function(ctx, done) { resetText(); done(); };
   }
 
+  function animateDigits(el, from, to) {
+    d3.select(el)
+      .transition()
+      .duration(2000)
+      .tween("text", function(d) {
+        var i = d3.interpolate(from, to),
+            prec = (d + "").split("."),
+            round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+        return function(t) {
+          this.textContent = Math.round(i(t) * round) / round;
+        };
+      });
+  }
+
+  function makeAnimateText(el, to, ndigits, duration) {
+    return function(ctx, done) {
+      d3.select(el)
+        .transition()
+        .duration(duration)
+        .tween("text", function(d) {
+          var from = this.textContent,
+              i = d3.interpolate(from, to),
+              prec = (from + "").split("."),
+              round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+          return function(t) {
+            this.textContent = pad(Math.round(i(t) * round) / round, ndigits);
+          };
+        })
+        .each('end', function() {
+          done();
+        });
+    };
+  }
+
+  function pad(num, size) {
+    var s = num + '';
+    while (s.length < size) s = '0' + s;
+    return s;
+  }
+
   function animateFirstSlide(ctx, done) {
+    var year = ctx.userData.firstday_parsed.year,
+        month = ctx.userData.firstday_parsed.month,
+        day = ctx.userData.firstday_parsed.day;
+
     chain(ctx, [
       makeResetText(),
+      [
+        makeAnimateText('#slide-1-year', year, 4, 1000),
+        makeAnimateText('#slide-1-month', month, 2, 1000),
+        makeAnimateText('#slide-1-day', day, 2, 1000)
+      ],
       animateFoot,
       makeFadeIn('#slide-1-text-0',300),
-      makeDelay(1000),
-      makeFadeOut('#slide-1-text-0', 300)
+      // makeDelay(1000),
+      // makeFadeOut('#slide-1-text-0', 300)
     ], done);
   }
 
   function animateSecondSlide(ctx, done) {
+    var year = ctx.userData.dt_10w_parsed.year,
+        month = ctx.userData.dt_10w_parsed.month,
+        day = ctx.userData.dt_10w_parsed.day;
+
     chain(ctx, [
       makeResetText(),
+      [
+        makeAnimateText('#slide-1-year', year, 4, 1000),
+        makeAnimateText('#slide-1-month', month, 2, 1000),
+        makeAnimateText('#slide-1-day', day, 2, 1000)
+      ],
       animateCar,
       makeFadeIn('#slide-1-text-1', 300),
-      makeDelay(1000),
-      makeFadeOut('#slide-1-text-1', 300)
+      // makeDelay(1000),
+      // makeFadeOut('#slide-1-text-1', 300)
     ], done);
   }
 
   function animateThirdSlide(ctx, done) {
+    var year = ctx.userData.dt_100w_parsed.year,
+        month = ctx.userData.dt_100w_parsed.month,
+        day = ctx.userData.dt_100w_parsed.day;
+
     chain(ctx, [
       makeResetText(),
+      [
+        makeAnimateText('#slide-1-year', year, 4, 1000),
+        makeAnimateText('#slide-1-month', month, 2, 1000),
+        makeAnimateText('#slide-1-day', day, 2, 1000)
+      ],
       // animateMonsters,
       makeFadeIn('#slide-1-text-2', 500),
       // makeFadeOut('#slide-1-text-2', 1000)
@@ -1502,17 +1577,30 @@ function WeiXinShareBtn() {
     },
     onEnter: function() {
       var doRotateSlides = function(ctx, done) { rotateSlides(ctx.angle, done); },
-          ss = this.ss;
+          ss = this.ss,
+          nSteps = this.context.userData.accumulativesteps,
+          animations = [
+            animateFirstSlide
+          ];
+
+      if (nSteps > 100000) {
+        animations.push(makeDelay(1000));
+        animations.push(makeFadeOut('#slide-1-text-0', 300));
+        animations.push(doRotateSlides);
+        animations.push(animateSecondSlide);
+      }
+
+      if (nSteps > 1000000) {
+        animations.push(makeDelay(1000));
+        animations.push(makeFadeOut('#slide-1-text-1', 300));
+        animations.push(doRotateSlides);
+        animations.push(animateThirdSlide);
+      }
 
       chain({
+        userData: this.context.userData,
         angle: -90
-      }, [
-        animateFirstSlide,
-        doRotateSlides,
-        animateSecondSlide,
-        doRotateSlides,
-        animateThirdSlide
-      ], function(err, ctx) {
+      }, animations, function(err, ctx) {
         ss.showArrowButton();
       });
       return;
@@ -1716,7 +1804,8 @@ function WeiXinShareBtn() {
         { x: 200, y: 720, circleborderWidth: 3, rayWidth: 3, radius: 105 },
         { x: 600, y: 160, circleborderWidth: 3, rayWidth: 3, radius: 90 },
         { x: 100, y: 500, circleborderWidth: 3, rayWidth: 3, radius: 81 }
-      ];
+      ],
+      ORANGE = '#FF7E00';
   // compile = app.compile,
   // textTemplate = compile($('#slide-3-template-text').html());
 
@@ -1779,11 +1868,13 @@ function WeiXinShareBtn() {
     return SelfPhoto.template(data);
   };
 
-  function FriendPhoto(imgUrl, location, radius) {
+  function FriendPhoto(imgUrl, location, radius, circleborderWidth, rayWidth) {
     this.id = uuid();
     this.url = imgUrl;
     this.location = location;
     this.radius = radius;
+    this.circleborderWidth = circleborderWidth;
+    this.rayWidth = rayWidth;
   }
   // FriendPhoto.template = compile($('#slide-3-template-friend-photo').html());
 
@@ -1812,7 +1903,26 @@ function WeiXinShareBtn() {
       .attr('id', id)
       .attr('transform', 'translate(' + [x, y] + ')')
       .attr('r', 0)
-      .attr('fill', 'url(#' + patternId + ')');
+      .attr('fill', 'url(#' + patternId + ')')
+      .attr('stroke', ORANGE)
+      .attr('stroke-width', this.circleborderWidth);
+
+    var cx = 460, cy = 450, dx = x - cx, dy = y - cy, l = Math.sqrt(dx*dx+dy*dy);
+    var cos = dx/l, sin = dy/l;
+    var rSelfPhoto = 170;
+    var x1 = cx + rSelfPhoto*cos, y1 = cy + rSelfPhoto*sin;
+    var x2 = x - r*cos, y2 = y - r*sin;
+
+    d3.select(el)
+      .append('line')
+      .attr('id', this.id + '-line')
+      .attr('stroke-width', this.rayWidth)
+      .attr('stroke', ORANGE)
+      .attr('visibility', 'hidden')
+      .attr('x1', x1)
+      .attr('y1', y1)
+      .attr('x2', x2)
+      .attr('y2', y2);
   };
 
   FriendPhoto.prototype.compileToHTML = function() {
@@ -1830,18 +1940,24 @@ function WeiXinShareBtn() {
 
   FriendPhoto.prototype.present = function(duration, delay) {
     var id = this.id, r = this.radius, loc = this.location,
+        lineAnimateId,
         animateId = setTimeout(function() {
           $('#' + id)
             .css('display', '')
             .velocity({ translateX: loc.x, translateY: loc.y }, {duration: 0})
             .velocity({ r: r }, {
               duration: duration,
-              delay: delay
+              delay: delay,
+              easing: [300, 20],
+              complete: function() {
+                $('#' + id + '-line').attr('visibility', 'visible');
+              }
             });
         }, delay);
     return {
       stop: function() {
         clearTimeout(animateId);
+        clearTimeout(lineAnimateId);
         $('#' + id).velocity('stop', true);
         $('#' + id).css('display', 'none');
       }
@@ -1851,7 +1967,10 @@ function WeiXinShareBtn() {
   app.addSlide('slide-3', {
     onCreate: function() {
       var selfImgUrl = this.context && this.context.userData && this.context.userData.avatar_url,
-          selfPhoto = new SelfPhoto(selfImgUrl);
+          selfPhoto = new SelfPhoto(selfImgUrl),
+          friendsList = this.context && this.context.userData &&
+            this.context.userData.friendsinfo &&
+            this.context.userData.friendsinfo.friendslist || [];
 
       this.photosContainer = $('#slide-3-self-photo', this.domEl)[0];
       selfPhoto.addToDOM(this.photosContainer);
@@ -1864,6 +1983,28 @@ function WeiXinShareBtn() {
 
       this.$summary = $('#slide-3-text-summary', this.domEl);
       this.$yuepao = $('#slide-3-text-yuepao', this.domEl);
+
+
+      this.friendsPhotos = [];
+      // this.friendsPhotoContainer = $('#slide-3-friend-photos', this.domEl)[0];
+      friendsList = friendsList.slice(0, 5);
+
+      friendsList.forEach(function(p, i) {
+        var url = p.avatar_url,
+            photo = new FriendPhoto(
+              url,
+              { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
+              friendsPhotoSpecs[i].radius,
+              friendsPhotoSpecs[i].circleborderWidth,
+              friendsPhotoSpecs[i].rayWidth
+            );
+        // html = photo.compileToHTML();
+
+        photo.addToDOM('#slide-3-friend-photos');
+
+        // this.friendsPhotoContainer.innerHTML += html;
+        this.friendsPhotos.push(photo);
+      }, this);
     },
     onEnter: function() {
       // TODO: clean up use d3
@@ -1879,24 +2020,24 @@ function WeiXinShareBtn() {
         duration: 1500
       });
 
-      this.friendsPhotos = [];
+      // this.friendsPhotos = [];
       // this.friendsPhotoContainer = $('#slide-3-friend-photos', this.domEl)[0];
-      friendsList = friendsList.slice(0, 5);
+      // friendsList = friendsList.slice(0, 5);
 
-      friendsList.forEach(function(p, i) {
-        var url = p.avatar_url,
-            photo = new FriendPhoto(
-              url,
-              { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
-              friendsPhotoSpecs[i].radius
-            );
-        // html = photo.compileToHTML();
+      // friendsList.forEach(function(p, i) {
+      //   var url = p.avatar_url,
+      //       photo = new FriendPhoto(
+      //         url,
+      //         { x: friendsPhotoSpecs[i].x, y: friendsPhotoSpecs[i].y },
+      //         friendsPhotoSpecs[i].radius
+      //       );
+      //   // html = photo.compileToHTML();
 
-        photo.addToDOM('#slide-3-friend-photos');
+      //   photo.addToDOM('#slide-3-friend-photos');
 
-        // this.friendsPhotoContainer.innerHTML += html;
-        this.friendsPhotos.push(photo);
-      }, this);
+      //   // this.friendsPhotoContainer.innerHTML += html;
+      //   this.friendsPhotos.push(photo);
+      // }, this);
 
       this.animationHandles = [];
 
