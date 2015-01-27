@@ -8,6 +8,15 @@
       makeFadeIn = app.makeFadeIn,
       fadeInText = app.fadeInText,
 
+      earthCenter = [460, 470],
+      earthRadius = 300,
+
+      posOnEarth = function(theta) {
+        var cx = earthCenter[0], cy = earthCenter[1];
+        var r = earthRadius, t = theta/180*Math.PI;
+        return [cx + r*Math.cos(t), cy + r*Math.sin(t)];
+      },
+
       imageData = [
         {
           url: basePath + '/earth-900-900.png',
@@ -19,20 +28,21 @@
         {
           url: basePath + '/girl-114-192.png',
           // translate: [config.girlStartX, config.girlStartY],
-          translate: [1200, config.girlStartY],
-          scale: 0.5,
+          translate: posOnEarth(config.startTheta),
+          scale: 0.0,
           rotate: 0
         },
         {
           url: basePath + '/superman-156-150.png',
-          translate: [1500, config.supermanStartY],
+          translate: posOnEarth(config.startTheta),
+          // translate: [1500, config.supermanStartY],
           // translate: [config.supermanStartX, config.supermanStartY],
-          scale: 0.5,
+          scale: 0.0,
           rotate: 0
         },
       ];
-      // compile = app.compile,
-      // template = compile($('#slide-2-template').html());
+  // compile = app.compile,
+  // template = compile($('#slide-2-template').html());
 
   app.addSlide('slide-2', {
     shouldCreate: function() {
@@ -82,7 +92,8 @@
       chain(ctx, [
         animateEarth,
         animateText,
-        [ animateGirl, animateSuperman ]
+        animateGirl,
+        animateSuperman
       ], function(err) {
         ss.showArrowButton();
       });
@@ -120,28 +131,22 @@
         d3.select(this.parentNode)
           .transition()
           .duration(duration)
-          .attr('transform', function() {
-            return [
-              'translate(' + [config.girlStartX, config.girlStartY] + ')',
-              'scale(0.5)',
-            ].join(' ');
+          .ease(d3.ease('elastic', 1.0, 0.80))
+          .attrTween('transform', function() {
+            var t0 = config.startTheta, t1 = config.endGirlTheta;
+            var diff = t1 - t0;
+
+            return function(t) {
+              var theta = t0 + t*diff;
+              var pos = posOnEarth(theta);
+              return [
+                'translate(' + pos + ')',
+                'scale(' + t + ')'
+              ].join(' ');
+            };
           })
           .each('end', function() {
-            d3.select(this)
-              .transition()
-              .duration(duration)
-              .ease(d3.ease('elastic'))
-              .attr('transform', function() {
-                return [
-                  'translate(' + [config.girlEndX, config.girlEndY] + ')',
-                  // 'translate(' + [config.girlStartX, config.girlStartY] + ')',
-                  'scale(1)',
-                  // 'rotate(0)'
-                ].join(' ');
-              })
-              .each('end', function() {
-                done();
-              });
+            done();
           });
       });
   }
@@ -153,26 +158,22 @@
         d3.select(this.parentNode)
           .transition()
           .duration(duration)
-          .attr('transform', function() {
-            return [
-              'translate(' + [config.supermanStartX, config.supermanStartY] + ')',
-              'scale(0.5)',
-            ].join(' ');
+          .ease(d3.ease('elastic', 1.0, 0.80))
+          .attrTween('transform', function() {
+            var t0 = config.startTheta, t1 = config.endSupermanTheta;
+            var diff = t1 - t0;
+
+            return function(t) {
+              var theta = t0 + t*diff;
+              var pos = posOnEarth(theta);
+              return [
+                'translate(' + pos + ')',
+                'scale(' + t + ')'
+              ].join(' ');
+            };
           })
           .each('end', function() {
-            d3.select(this)
-              .transition()
-              .duration(duration)
-              .ease(d3.ease('elastic'))
-              .attr('transform', function() {
-                return [
-                  'translate(' + [config.supermanEndX, config.supermanEndY] + ')',
-                  'scale(1)',
-                ].join(' ');
-              })
-              .each('end', function() {
-                done();
-              });
+            done();
           });
       });
   }

@@ -12,9 +12,9 @@
 
 3）跑步页
   －动画优化：人物从左侧的云开始出现，转圈270到地球上方位置（目前定位的位置），到点之后加一个overshoot的动画
-    ？
+    done
   －数据优化：first_running_steps为0的时候不该展示该页
-    提供几个first_running_steps不为零的uid供测试，我手头的用户这个字段都是零
+    测试能用
 
 4）好友关系：好友头像出来之后有bounce动感（案例：http://goo.gl/9W8laO）
   - bounce
@@ -46,3 +46,7 @@ notes:
 - uid=1771 female
 - uid=1538 female
 - uid=5087301 male
+- uid=583499
+- 1058345
+- 1383695
+- 2536661

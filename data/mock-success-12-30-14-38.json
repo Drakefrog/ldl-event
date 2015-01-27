@@ -3,7 +3,7 @@
     "uid": null,
     "ret": {
         "dt_10w": "2013-06-28",
-        "firstday_running_steps": 0,
+        "firstday_running_steps": 1000,
         "accumulativesteps": 4160136,
         "dt_100w": "2013-06-29",
         "completegoalday": 279,

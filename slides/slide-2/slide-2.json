@@ -14,5 +14,8 @@
   "supermanEndX": 670,
   "supermanEndY": 270,
   "girlEndX": 470,
-  "girlEndY": 140
+  "girlEndY": 140,
+  "startTheta": 170,
+  "endGirlTheta": -90,
+  "endSupermanTheta": -50
 }
