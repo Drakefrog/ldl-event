@@ -50,3 +50,12 @@ notes:
 - 1058345
 - 1383695
 - 2536661
+
+测试链接:
+http://vision2.ucsd.edu:8800/dist/?uid=1771
+http://vision2.ucsd.edu:8800/dist/?uid=1538
+http://vision2.ucsd.edu:8800/dist/?uid=5087301
+http://vision2.ucsd.edu:8800/dist/?uid=583499
+http://vision2.ucsd.edu:8800/dist/?uid=1058345
+http://vision2.ucsd.edu:8800/dist/?uid=1383695
+http://vision2.ucsd.edu:8800/dist/?uid=2536661
