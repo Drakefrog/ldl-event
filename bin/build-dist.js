@@ -209,7 +209,7 @@ function copyAssets(src, dest) {
         return all;
       }, []),
       libPngs = [
-        path.resolve(libSrc, 'ss-arrow.png')
+        path.resolve(libSrc, 'ss-arrow.gif')
       ],
       fonts = [
         path.resolve(fontsSrc, 'mengnajianchaoganghei.otf')

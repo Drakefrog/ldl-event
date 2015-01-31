@@ -6,11 +6,6 @@ body {
     background-color: #0B1635;
 }
 
-@font-face {
-    font-family: ldl-ss;
-    src: url(fonts/mengnajianchaoganghei.otf);
-}
-
 .ldl-ss-page {
     font-family: Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
 }
