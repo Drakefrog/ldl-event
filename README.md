@@ -17,10 +17,11 @@ ldl-event-slideshow
 
 ## Test links:
 
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=1771
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=1538
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=5087301
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=583499
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=1058345
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=1383695
-http://lge88.github.io/ldl-event-slideshow/dist/?uid=2536661
+- http://lge88.github.io/ldl-event-slideshow/dist
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=1771
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=1538
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=5087301
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=583499
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=1058345
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=1383695
+- http://lge88.github.io/ldl-event-slideshow/dist/?uid=2536661
