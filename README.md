@@ -12,6 +12,15 @@ ldl-event-slideshow
 - Build:
   * `node bin/build-dev.js`
   * `node bin/build-dist.js` (TODO)
-- Add a new slide: 
+- Add a new slide:
   `node bin/add-slide.js slide-5` will generate a scaffold in `slides/slide-5`
 
+## Test links:
+
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=1771
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=1538
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=5087301
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=583499
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=1058345
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=1383695
+http://lge88.github.io/ldl-event-slideshow/dist/?uid=2536661
