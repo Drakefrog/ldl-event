@@ -2,6 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     jsdom = require("jsdom"),
     CleanCSS = require('clean-css'),
+    UglifyJS = require("uglify-js"),
     mkdirp = require('mkdirp').sync,
     serializeDocument = require("jsdom").serializeDocument,
 
@@ -104,7 +105,7 @@ function processJS(document) {
   document.body.appendChild(allJSEl);
 
   function minifyJS(js) {
-    return js;
+    return UglifyJS.minify(js, {fromString: true}).code;
   }
 
   function isLocalScript(scriptEl) {
