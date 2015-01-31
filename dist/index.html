@@ -390,6 +390,53 @@ function uuid() {
     return json;
   }
 
+  var mockSuccessData = {
+    "status": "OK",
+    "uid": null,
+    "ret": {
+      "dt_10w": "2013-06-28",
+      "firstday_running_steps": 1000,
+      "accumulativesteps": 4160136,
+      "dt_100w": "2013-06-29",
+      "completegoalday": 279,
+      "averagesteps": 11243,
+      "dailystatsday": 370,
+      "firstday": "2013-04-15",
+      "completegoalrate": "0%",
+      "avatar_url": "http://tp4.sinaimg.cn/1967427891/180/5656156315/0",
+      "running_firstday": "0",
+      "rank": 181625,
+      "friendsinfo": {
+        "friendsrank": 5,
+        "friendslist": [
+          {
+            "avatar_url": "http://files.ledongli.cn/avatar/11779431.jpg"
+          },
+          {
+            "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/DEB1A64DE4DCBED7282D145868AAAB44/100"
+          },
+          {
+            "avatar_url": "http://tp1.sinaimg.cn/1718274124/180/5703054401/0"
+          },
+          {
+            "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/5FAD852F620FFA5059CBEAF3A8E02BCC/100"
+          },
+          {
+            "avatar_url": "http://files.ledongli.cn/avatar/4148131.jpg"
+          }
+        ],
+        "friends_count": 7
+      },
+      "lifetime": 619,
+      "better_than_pct": "99%",
+      "gender": "female"
+    },
+    "errorCode": 0,
+    "error": null,
+    "path": null
+  };
+
+
   function getAnnualUserData(uid, callback) {
     var path,
         url,
@@ -400,17 +447,20 @@ function uuid() {
         };
 
     if (!uid || scope.USE_MOCK) {
-      if (scope.MOCK_STATUS === 'FAIL')
-        ajaxGet(baseUrl + '/data/mock-fail.json', 'json', params, cb);
-      else
-        ajaxGet(baseUrl + '/data/mock-success-12-30-14-38.json', 'json', params, cb);
+      cb(null, mockSuccessData);
     } else {
       path = scope.DEV_PATH;
       if (/^prod/i.test(scope.CONFIG_GROUP)) path = scope.PROD_PATH;
       url = scope.ENDPOINT + path;
       params.action = 'getannualdata';
       params.uid = uid;
-      ajaxGet(url, 'jsonp', params, cb);
+      ajaxGet(url, 'jsonp', params, function(err, data) {
+        if (err || !data || data.stataus !== 'OK') {
+          cb(null, mockSuccessData);
+        } else {
+          cb(null. data);
+        }
+      });
     }
   }
 
@@ -757,7 +807,7 @@ function uuid() {
       div.style.display = 'none';
       div.className = 'ss-down-arrow-container';
 
-      img.src = 'lib/ss-arrow.png';
+      img.src = 'lib/ss-arrow.gif';
       img.className = 'ss-down-arrow';
       img.__onclick = gotoNextSlide;
 
@@ -1054,65 +1104,6 @@ var app = {
   app.makeDelay = makeDelay;
 
 })();
-
-app.mockData = {
-  "status": "OK",
-  "uid": null,
-  "ret": {
-    "dt_10w": "2013-06-28",
-    "firstday_running_steps": 0,
-    "accumulativesteps": 4160136,
-    "dt_100w": "2013-06-29",
-    "completegoalday": 279,
-    "averagesteps": 11243,
-    "dailystatsday": 370,
-    "firstday": "2013-04-15",
-    "completegoalrate": "0%",
-    "avatar_url": "http://tp4.sinaimg.cn/1967427891/180/5656156315/0",
-    "running_firstday": "0",
-    "rank": 181625,
-    "friendsinfo": {
-      "friendsrank": 5,
-      "friendslist": [
-        {
-          "avatar_url": "http://files.ledongli.cn/avatar/11779431.jpg"
-        },
-        {
-          "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/DEB1A64DE4DCBED7282D145868AAAB44/100"
-        },
-        {
-          "avatar_url": "http://tp1.sinaimg.cn/1718274124/180/5703054401/0"
-        },
-        {
-          "avatar_url": "http://qzapp.qlogo.cn/qzapp/100481185/5FAD852F620FFA5059CBEAF3A8E02BCC/100"
-        },
-        {
-          "avatar_url": "http://files.ledongli.cn/avatar/4148131.jpg"
-        }
-      ],
-      "friends_count": 7
-    },
-    "lifetime": 619,
-    "better_than_pct": "99%"
-  },
-  "errorCode": 0,
-  "error": null,
-  "path": null
-};
-
-function WeiXinShareBtn() {
-  if (typeof WeixinJSBridge == "undefined") {
-    // alert(" 请先通过微信搜索 wow36kr 添加36氪为好友，通过微信分享文章 :) ");
-    alert("No weixijsbridge");
-  } else {
-    WeixinJSBridge.invoke('shareTimeline', {
-      "title": "乐动力",
-      "link": "http://localhost:3000",
-      "desc": "乐动力",
-      "img_url": "http://www.36kr.com/assets/images/apple-touch-icon.png"
-    });
-  }
-}
 
 
       app.config = {"slide-0":{"name":"slide-0","title":"slide-0","index":0,"posX":0,"posY":0,"starAnimationDuration":200,"logoAnimationDuration":200,"textAnimationDuration":0,"textOnBoard":"年度运动旅程","basePath":"slides/slide-0"},"slide-1":{"name":"slide-1","title":"slide-1","index":1,"posX":0,"posY":1,"subslideDelay":500,"subslideDuration":500,"basePath":"slides/slide-1"},"slide-2":{"name":"slide-2","title":"slide-2","index":2,"posX":0,"posY":2,"textAnimationDuration":1000,"runnerAnimationDuration":1000,"supermanStartX":810,"supermanStartY":400,"girlStartX":620,"girlStartY":320,"supermanEndX":670,"supermanEndY":270,"girlEndX":470,"girlEndY":140,"startTheta":170,"endGirlTheta":-90,"endSupermanTheta":-50,"basePath":"slides/slide-2"},"slide-3":{"name":"slide-3","title":"slide-3","index":3,"posX":0,"posY":3,"basePath":"slides/slide-3"},"slide-4":{"name":"slide-4","title":"slide-4","index":4,"posX":0,"posY":4,"rateAnimationDuration":1000,"basePath":"slides/slide-4"},"slide-5":{"name":"slide-5","title":"slide-5","index":5,"posX":0,"posY":5,"circleCenterX":700,"circleCenterY":600,"stepsAccumulateAnimationDuration":1000,"rankCircleAnimationDuration":200,"basePath":"slides/slide-5"}};
@@ -2069,21 +2060,21 @@ function WeiXinShareBtn() {
   var d3 = app.d3,
       arcCenter = [450, 425],
       startInnerRadius = 206,
-      maxRandomAngle = 40,
+      maxRandomAngle = 30,
       w = 15,
       arcData = [
-        { startAngle: 60, endAngle: 270, color: '#1d3689', width: w },
-        { startAngle: 60, endAngle: 270, color: '#1d3689', width: w },
-        { startAngle: 60, endAngle: 270, color: '#1d3689', width: w },
-        { startAngle: 60, endAngle: 270, color: '#0177c1', width: w },
-        { startAngle: 60, endAngle: 270, color: '#0177c1', width: w },
-        { startAngle: 60, endAngle: 270, color: '#0177c1', width: w },
-        { startAngle: 60, endAngle: 270, color: '#73d36c', width: w },
-        { startAngle: 60, endAngle: 270, color: '#73d36c', width: w },
-        { startAngle: 60, endAngle: 270, color: '#73d36c', width: w },
-        { startAngle: 60, endAngle: 270, color: '#30b949', width: w },
-        { startAngle: 60, endAngle: 270, color: '#30b949', width: w },
-        { startAngle: 60, endAngle: 270, color: '#30b949', width: 2*w }
+        { startAngle: 60, endAngle: 290, color: '#1d3689', width: w },
+        { startAngle: 60, endAngle: 290, color: '#1d3689', width: w },
+        { startAngle: 60, endAngle: 290, color: '#1d3689', width: w },
+        { startAngle: 60, endAngle: 290, color: '#0177c1', width: w },
+        { startAngle: 60, endAngle: 290, color: '#0177c1', width: w },
+        { startAngle: 60, endAngle: 290, color: '#0177c1', width: w },
+        { startAngle: 60, endAngle: 290, color: '#73d36c', width: w },
+        { startAngle: 60, endAngle: 290, color: '#73d36c', width: w },
+        { startAngle: 60, endAngle: 290, color: '#73d36c', width: w },
+        { startAngle: 60, endAngle: 290, color: '#30b949', width: w },
+        { startAngle: 60, endAngle: 290, color: '#30b949', width: w },
+        { startAngle: 60, endAngle: 290, color: '#30b949', width: 2*w }
       ],
       bgArc = d3.svg.arc()
         .startAngle(function(d) { return d.startAngle/180*Math.PI; })
