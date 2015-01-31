@@ -6,15 +6,22 @@
           <rect x="0" y="0" width="100" height="900" />
         </clipPath>
       </defs>
-      <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/dark-map.png" />
-      <image x="0" y="0" width="900" height="900" xlink:href="{{basePath}}/bright-map.png" clip-path="url(#{{name}}-bright-map-clip)"/>
+
+      <image x="0" y="0" width="900" height="900"
+             xlink:href="{{basePath}}/dark-map.png" />
+
+      <image x="0" y="0" width="900" height="900"
+             xlink:href="{{basePath}}/bright-map.png"
+             clip-path="url(#{{name}}-bright-map-clip)"/>
     </g>
 
     <g id="{{name}}-rank-circle" transform="translate(700,600) scale(0.0)" >
       <g transform="translate(-156, -156)" >
-        <image x="0" y="0" width="312" height="312" xlink:href="{{basePath}}/circle.png"/>
+        <image x="0" y="0" width="312" height="312"
+               xlink:href="{{basePath}}/circle.png"/>
         <text x="110" y="120" font-size="48" fill="white">超过</text>
-        <text x="80" y="220" font-size="80" fill="white" id="{{name}}-better-than-pct">  %</text>
+        <text x="80" y="220" font-size="80" fill="white"
+              id="{{name}}-better-than-pct">  %</text>
       </g>
     </g>
 
@@ -31,27 +38,66 @@
       </text>
     </g>
 
-    <g opacity="1.0" transform="translate(450 1000)">
-      <text x="-400" y="-120" fill="#3250a3" font-size="54px">
+    <g opacity="1.0" transform="translate(450 1050)">
+      <text x="-400" y="-140" fill="red" font-size="54px">
         可以当之无愧的称自己为
       </text>
 
-      <polyline fill="none" stroke="#FF7E00" stroke-width="10" points="170,-90 250,-90 250,-50" />
-      <polyline fill="none" stroke="#FF7E00" stroke-width="10" points="-170,45 -250,45 -250,5" />
+      <g transform="translate(-320, 0)">
+        <image x="-72" y="-90" width="144" height="180"
+               xlink:href="{{basePath}}/bracket-left.png"></image>
+      </g>
 
-      <text x="0" y="0" fill="#FF7E00" font-size="80px"
-            text-anchor="middle"
-            transform="scale(0.0)"
-            id="{{name}}-call-me">
-        运动绝缘体
-      </text>
+      <g transform="translate(320, 0)">
+        <image x="-72" y="-90" width="144" height="180"
+               xlink:href="{{basePath}}/bracket-right.png"></image>
+      </g>
+
+      <g transform="scale(0.0)" id="{{name}}-call-me-0">
+        <image x="-187.5" y="-43.5" width="375" height="87"
+               xlink:href="{{basePath}}/运动女神.png" />
+      </g>
+
+      <g transform="scale(0.0)" id="{{name}}-call-me-1">
+        <image x="-187.5" y="-43.5" width="375" height="87"
+               xlink:href="{{basePath}}/运动男神.png" />
+      </g>
+
+      <g transform="scale(0.0)" id="{{name}}-call-me-2">
+        <image x="-284.5" y="-43.5" width="569" height="87"
+               xlink:href="{{basePath}}/运动界的范爷.png" />
+      </g>
+
+      <g transform="scale(0.0)" id="{{name}}-call-me-3">
+        <image x="-332.5" y="-43.5" width="665" height="87"
+               xlink:href="{{basePath}}/运动界的钢铁侠.png" />
+      </g>
+
+      <g transform="scale(0.0)" id="{{name}}-call-me-4">
+        <image x="-236" y="-43.5" width="472" height="87"
+               xlink:href="{{basePath}}/运动白富美.png" />
+      </g>
+
+      <g transform="scale(0.0)" id="{{name}}-call-me-5">
+        <image x="-235" y="-43.5" width="470" height="87"
+               xlink:href="{{basePath}}/运动高富帅.png" />
+      </g>
+
     </g>
 
     <g opacity="1.0">
-      <g id="{{name}}-share-btn" transform="translate(450, 1125)">
-        <rect fill="#FF7E00" x="-225" y="-45" width="450" height="90" rx="20" ry="20"/>
-        <text x="0" y="25" font-size="50px" fill="white" text-anchor="middle">去分享</text>
-        <text x="0" y="100" font-size="42px" fill="#FF7E00" text-anchor="middle">2015年，乐动力继续陪伴你</text>
+      <g id="{{name}}-share-btn" transform="translate(450, 1250)">
+
+        <rect fill="#FF7E00" x="-225" y="-45"
+              width="450" height="120" rx="20" ry="20"/>
+
+        <text x="0" y="30" font-size="50px"
+              font-family="Arial"
+              fill="white" text-anchor="middle">去分享</text>
+
+        <image x="-261" y="100" width="522" height="144"
+               xlink:href="{{basePath}}/ldl-happy-new-year.png"></image>
+
       </g>
     </g>
 

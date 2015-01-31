@@ -80,27 +80,29 @@
     };
   }
 
-  function callMe(pct, sex) {
+  function callMeId(pct, sex) {
 
-    var iPct = parseInt(pct, 10);
+    var iPct = parseInt(pct, 10), basePrefix = '#slide-5-call-me-',
+        idx;
 
     if (/^[fF]/.test(sex)) {
       if (iPct <= 40) {
-        return "运动白富美";
+        idx = 4;
       } else if (iPct > 40 && iPct <= 70) {
-        return "运动女神";
+        idx = 0;
       } else {
-        return "运动界的范爷";
+        idx = 2;
       }
     } else {
       if (iPct <= 40) {
-        return "运动高富帅";
+        idx = 5;
       } else if (iPct > 40 && iPct <= 70) {
-        return "运动男神";
+        idx = 1;
       } else {
-        return "运动钢铁侠";
+        idx = 3;
       }
     }
+    return basePrefix + idx;
   }
 
   app.addSlide('slide-5', {
@@ -119,8 +121,8 @@
       d3.select('#slide-5-better-than-pct')
         .text(pct);
 
-      d3.select('#slide-5-call-me')
-        .text(callMe(pct, sex));
+      this.pct = pct;
+      this.sex = sex;
 
       d3.select('#slide-5-share-btn text')
         .on('click', function() {
@@ -148,7 +150,7 @@
         stepAccDuration,
         rankCircleDuration));
 
-      d3.select('#slide-5-call-me')
+      d3.select(callMeId(this.pct, this.sex))
         .transition()
         .duration(500)
         .delay(rankCircleDuration+stepAccDuration)
