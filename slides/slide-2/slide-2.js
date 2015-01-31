@@ -44,6 +44,11 @@
   // compile = app.compile,
   // template = compile($('#slide-2-template').html());
 
+  function formatFirstDay(d) {
+    var arr = d.trim().split('-');
+    return arr[0] + '年' + arr[1] + '月' + arr[2] + '日';
+  }
+
   app.addSlide('slide-2', {
     shouldCreate: function() {
       return this.context &&
@@ -77,7 +82,7 @@
         });
 
       d3.select('#slide-2-firstday')
-        .text(userData.firstday);
+        .text(formatFirstDay(userData.firstday));
 
       d3.select('#slide-2-firstday-running')
         .text(' ' + userData.firstday_running_steps + ' ');
