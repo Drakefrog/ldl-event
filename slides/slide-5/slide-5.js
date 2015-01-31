@@ -80,6 +80,20 @@
     };
   }
 
+  function animateFireworks(smallFirework, largeFirework, duration, delay) {
+    d3.select(smallFirework)
+      .transition()
+      .duration(duration)
+      .delay(delay)
+      .attr('transform', 'scale(1.0)')
+      .each('end', function() {
+        d3.select(largeFirework)
+          .transition()
+          .duration(duration)
+          .attr('transform', 'scale(1.0)');
+      });
+  }
+
   function callMeId(pct, sex) {
 
     var iPct = parseInt(pct, 10), basePrefix = '#slide-5-call-me-',
@@ -118,6 +132,9 @@
 
       this.$rankCircle = $('#slide-5-rank-circle');
 
+      this.smallFireworkEl = '#slide-5-firework-small';
+      this.largeFireworkEl = '#slide-5-firework-large';
+
       d3.select('#slide-5-better-than-pct')
         .text(pct);
 
@@ -135,6 +152,7 @@
     onEnter: function() {
       var stepAccDuration = this.context.stepsAccumulateAnimationDuration || 2000,
           rankCircleDuration = this.context.rankCircleAnimationDuration || 200,
+          fireworkDuration = this.context.fireworkAnimationDuration || 200,
           destWidth = 800,
           totalSteps = this.context.userData.accumulativesteps,
           avgSteps = this.context.userData.averagesteps;
@@ -142,18 +160,19 @@
       this.animationHandles.push(animateTextNumber(this.totalStepTextEl, totalSteps, stepAccDuration));
       this.animationHandles.push(animateTextNumber(this.avgStepTextEl, avgSteps, stepAccDuration));
       this.animationHandles.push(animateRectWidth(this.$clipRect, destWidth, stepAccDuration));
+      this.animationHandles.push(animateFireworks(this.smallFireworkEl, this.largeFireworkEl, fireworkDuration, stepAccDuration));
       this.animationHandles.push(animateRankCircle(
         this.$rankCircle[0],
         this.context.circleCenterX,
         this.context.circleCenterY,
         1.0,
-        stepAccDuration,
+        stepAccDuration + 2*fireworkDuration,
         rankCircleDuration));
 
       d3.select(callMeId(this.pct, this.sex))
         .transition()
         .duration(500)
-        .delay(rankCircleDuration+stepAccDuration)
+        .delay(rankCircleDuration + stepAccDuration + 2*fireworkDuration)
         .attr('transform', 'scale(1.0)');
     },
     onExit: function() {
