@@ -5,3 +5,10 @@
     top: 0;
     bottom: 0;
 }
+
+.slide-0-frame {
+    width: 98%;
+    height: 98%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
