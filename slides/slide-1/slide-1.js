@@ -30,6 +30,7 @@
               image: createImageElement(basePath + '/foot-564-360.png', 'slide-1-img-')
             },
           ],
+          startAngle: 0,
           angle: 0,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
@@ -51,6 +52,7 @@
               image: createImageElement(basePath + '/car-576-36.png', 'slide-1-img-')
             }
           ],
+          startAngle: 90,
           angle: 90,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
@@ -75,6 +77,7 @@
               translate: [-80, 0]
             },
           ],
+          startAngle: 180,
           angle: 180,
           delay: config.subslideDelay || 1000,
           duration: config.subslideDuration || 1000
@@ -305,6 +308,28 @@
       .attr('opacity', 0.0);
   }
 
+  function resetAnimations() {
+    // Reset slides
+    d3.selectAll('#slide-1-bgs > g')
+      .attr('transform', function(d) {
+        var loc = slideLocationFromAngle(d.startAngle);
+        d.angle = d.startAngle;
+        return 'translate(' + [loc.x, loc.y] + ')';
+      });
+
+    // Reset foot
+    d3
+      .select('#slide-1-0-foot')
+      .attr('visibility', 'hidden')
+      .attr('transform', 'translate(-700, 0)');
+
+    // Reset car
+    d3.select('#slide-1-car')
+      .attr('transform', 'translate(750, 180)');
+
+
+  }
+
   function rotateSlides(angle, done) {
     var count = 3;
     d3.selectAll('#slide-1-bgs > g')
@@ -361,6 +386,7 @@
           ss = this.ss,
           nSteps = this.context.userData.accumulativesteps,
           animations = [
+            doReset,
             animateFirstSlide
           ];
 
@@ -378,6 +404,12 @@
         animations.push(animateThirdSlide);
       }
 
+      function doReset(ctx, done) {
+        resetText();
+        resetAnimations();
+        done();
+      }
+
       chain({
         userData: this.context.userData,
         angle: -90
@@ -387,7 +419,8 @@
       return;
     },
     onExit: function() {
-      resetText();
+      // resetText();
+      // resetAnimations();
     }
   });
 })(app);
