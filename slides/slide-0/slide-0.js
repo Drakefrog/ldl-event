@@ -67,6 +67,9 @@
       //   .duration(logoDuration)
       //   .attr('opacity', 1.0);
 
+      ss.hideArrowButton();
+      ss.disableUserInteraction();
+
       this.stars
         .transition()
         .delay(function(d) {
@@ -90,6 +93,7 @@
         .attr('transform', 'translate(' + [190, 550] + ')')
         .each('end', function() {
           ss.showArrowButton();
+          ss.enableUserInteraction();
         });
     },
     onExit: function() {

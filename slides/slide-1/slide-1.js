@@ -410,11 +410,15 @@
         done();
       }
 
+      ss.hideArrowButton();
+      ss.disableUserInteraction();
+
       chain({
         userData: this.context.userData,
         angle: -90
       }, animations, function(err, ctx) {
         ss.showArrowButton();
+        ss.enableUserInteraction();
       });
       return;
     },

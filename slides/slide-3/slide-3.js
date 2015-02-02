@@ -221,6 +221,9 @@
             this.context.userData.friendsinfo &&
             this.context.userData.friendsinfo.friendslist || [];
 
+      ss.hideArrowButton();
+      ss.disableUserInteraction();
+
       $(this.$summary).velocity({
         opacity: 1.0
       }, {
@@ -262,6 +265,7 @@
       // TODO: make duration and delay a parameter
       setTimeout(function() {
         ss.showArrowButton();
+        ss.enableUserInteraction();
       }, 2300);
 
     },

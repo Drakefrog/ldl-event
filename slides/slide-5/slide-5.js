@@ -155,7 +155,10 @@
           fireworkDuration = this.context.fireworkAnimationDuration || 200,
           destWidth = 800,
           totalSteps = this.context.userData.accumulativesteps,
-          avgSteps = this.context.userData.averagesteps;
+          avgSteps = this.context.userData.averagesteps,
+          ss = this.ss;
+
+      ss.disableUserInteraction();
 
       this.animationHandles.push(animateTextNumber(this.totalStepTextEl, totalSteps, stepAccDuration));
       this.animationHandles.push(animateTextNumber(this.avgStepTextEl, avgSteps, stepAccDuration));
@@ -174,6 +177,10 @@
         .duration(500)
         .delay(rankCircleDuration + stepAccDuration + 2*fireworkDuration)
         .attr('transform', 'scale(1.0)');
+
+      setTimeout(function() {
+        ss.enableUserInteraction();
+      }, rankCircleDuration + stepAccDuration + 2*fireworkDuration + 500);
     },
     onExit: function() {
       this.animationHandles.forEach(function(handle) {

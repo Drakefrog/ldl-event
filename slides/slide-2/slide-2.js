@@ -94,6 +94,9 @@
       ctx.textEl = this.context.textEl || '#slide-2-text';
       ctx.textAnimationDuration = parseInt(this.context.textAnimationDuration) || 1000;
 
+      ss.hideArrowButton();
+      ss.disableUserInteraction();
+
       chain(ctx, [
         animateEarth,
         animateText,
@@ -101,6 +104,7 @@
         animateSuperman
       ], function(err) {
         ss.showArrowButton();
+        ss.enableUserInteraction();
       });
       return;
     },

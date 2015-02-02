@@ -93,6 +93,9 @@
           rateAnimationDuration = parseInt(this.context.rateAnimationDuration) || 2000,
           ss = this.ss;
 
+      ss.hideArrowButton();
+      ss.disableUserInteraction();
+
       computeFgEndAngle(arcData, rate);
 
       d3.select('#slide-4-complete-rate')
@@ -127,6 +130,7 @@
 
       setTimeout(function() {
         ss.showArrowButton();
+        ss.enableUserInteraction();
       }, rateAnimationDuration + rateAnimationDuration);
 
     },
