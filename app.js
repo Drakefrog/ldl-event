@@ -99,6 +99,11 @@ var app = {
         slide.onCreate();
       });
 
+      // fix ios7 height calculation bug:
+      if (scope.hasIos7Issue()) {
+        scope.fixIos7();
+      }
+
     });
 
     scope.ss.start();
@@ -108,6 +113,21 @@ var app = {
         scope.ss.gotoSlide(parseInt(urlParams.index), { animate: false });
       }, 100);
     }
+  },
+
+  hasIos7Issue: function() {
+    var $ = this.$;
+    var $first = $($('.ldl-ss-page svg')[0]);
+    if ($first && $first.height() > 2000 ) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  fixIos7: function() {
+    var $ = this.$;
+    $('.ldl-ss-page svg').addClass('ios7-fix-svg');
   }
 };
 

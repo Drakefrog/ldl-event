@@ -10,6 +10,13 @@ body {
     font-family: Arial, "Microsoft YaHei", "微软雅黑", sans-serif;
 }
 
+.ios7-fix-svg {
+    left: 0;
+    top: 0;
+    width: 209px;
+    height: 372px;
+}
+
 .ldl-ss-text-orange {
     color: #FF7E00;
 }
