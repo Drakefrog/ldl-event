@@ -134,7 +134,7 @@
   }
 
   function animateGirl(ctx, done) {
-    var duration = ctx.runnerAnimationDuration || 500;
+    var duration = ctx.runnerAnimationDuration || 1000;
     d3.select('#slide-2-girl')
       .each(function() {
         d3.select(this.parentNode)
@@ -161,7 +161,7 @@
   }
 
   function animateSuperman(ctx, done) {
-    var duration = ctx.runnerAnimationDuration || 500;
+    var duration = ctx.runnerAnimationDuration || 1500;
     d3.select('#slide-2-superman')
       .each(function() {
         d3.select(this.parentNode)
