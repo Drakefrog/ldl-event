@@ -30,7 +30,7 @@
 
     // logo.attr('opacity', 0.0);
 
-    text.attr('transform', 'translate(' + [-600, 550] + ')');
+    text.attr('transform', 'translate(' + [190, 335] + ')');
   }
 
   app.addSlide('slide-0', {
@@ -90,7 +90,7 @@
         .transition()
         .delay(logoDuration + starDelay)
         .duration(500)
-        .attr('transform', 'translate(' + [190, 550] + ')')
+        // .attr('transform', 'translate(' + [190, 550] + ')')
         .each('end', function() {
           ss.showArrowButton();
           ss.enableUserInteraction();
