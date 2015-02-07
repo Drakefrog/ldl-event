@@ -1,25 +1,25 @@
 (function(app) {
   var compile = app.compile,
-      $ = app.$,
-      d3 = app.d3;
-      // text1Template = compile($('#slide-5-template-text-1').html()),
-      // rankCircleTemplate = compile($('#slide-5-template-rank-circle').html());
+    $ = app.$,
+    d3 = app.d3;
+  // text1Template = compile($('#slide-5-template-text-1').html()),
+  // rankCircleTemplate = compile($('#slide-5-template-rank-circle').html());
 
   function animateTextNumber(el, dest, duration) {
     var startTime = Date.now(),
-        startValue = parseInt(el.textContent),
-        dist = dest - startValue,
-        animate = function () {
-          var t = Date.now(),
-              progress = (t-startTime)/duration;
-          if (progress > 0.99) {
-            el.textContent = '' + dest;
-            stop();
-          } else {
-            el.textContent = '' + Math.round(startValue + progress*dist);
-            requestAnimationFrame(animate);
-          }
-        };
+      startValue = parseInt(el.textContent),
+      dist = dest - startValue,
+      animate = function() {
+        var t = Date.now(),
+          progress = (t - startTime) / duration;
+        if (progress > 0.99) {
+          el.textContent = '' + dest;
+          stop();
+        } else {
+          el.textContent = '' + Math.round(startValue + progress * dist);
+          requestAnimationFrame(animate);
+        }
+      };
 
     function stop() {
       animate = function() {};
@@ -53,7 +53,7 @@
       .transition()
       .delay(delay)
       .duration(duration)
-      .attr('transform', 'translate(' + [x,y] + ') scale(' + destScale + ')');
+      .attr('transform', 'translate(' + [x, y] + ') scale(' + destScale + ')');
 
     // $el
     //   .velocity({
@@ -96,24 +96,38 @@
 
   function callMeId(pct, sex) {
 
-    var iPct = parseInt(pct, 10), basePrefix = '#slide-5-call-me-',
-        idx;
+    var iPct = parseInt(pct, 10),
+      basePrefix = '#slide-5-call-me-',
+      idx;
+
 
     if (/^[fF]/.test(sex)) {
-      if (iPct <= 40) {
-        idx = 4;
-      } else if (iPct > 40 && iPct <= 70) {
+      if (iPct <= 20) {
         idx = 0;
-      } else {
+      } else if (iPct > 20 && iPct <= 50) {
         idx = 2;
+      } else if (iPct > 50 && iPct <= 60) {
+        idx = 4;
+      } else if (iPct > 60 && iPct <= 70) {
+        idx = 6;
+      } else if (iPct > 70 && iPct <= 90) {
+        idx = 8;
+      } else {
+        idx = 10;
       }
     } else {
-      if (iPct <= 40) {
-        idx = 5;
-      } else if (iPct > 40 && iPct <= 70) {
+      if (iPct <= 20) {
         idx = 1;
-      } else {
+      } else if (iPct > 20 && iPct <= 50) {
         idx = 3;
+      } else if (iPct > 50 && iPct <= 60) {
+        idx = 5;
+      } else if (iPct > 60 && iPct <= 70) {
+        idx = 7;
+      } else if (iPct > 70 && iPct <= 90) {
+        idx = 9;
+      } else {
+        idx = 11;
       }
     }
     return basePrefix + idx;
@@ -122,8 +136,8 @@
   app.addSlide('slide-5', {
     onCreate: function() {
       var pct = this.context.userData.better_than_pct,
-          sex = this.context.userData.gender || 'male',
-          shareUrl = 'http://ledongli.cn/';
+        sex = this.context.userData.gender || 'male',
+        shareUrl = 'http://ledongli.cn/';
 
       this.totalStepTextEl = $('#slide-5-total-steps')[0];
       this.avgStepTextEl = $('#slide-5-avg-steps')[0];
@@ -151,12 +165,12 @@
     },
     onEnter: function() {
       var stepAccDuration = this.context.stepsAccumulateAnimationDuration || 2000,
-          rankCircleDuration = this.context.rankCircleAnimationDuration || 200,
-          fireworkDuration = this.context.fireworkAnimationDuration || 200,
-          destWidth = 800,
-          totalSteps = this.context.userData.accumulativesteps,
-          avgSteps = this.context.userData.averagesteps,
-          ss = this.ss;
+        rankCircleDuration = this.context.rankCircleAnimationDuration || 200,
+        fireworkDuration = this.context.fireworkAnimationDuration || 200,
+        destWidth = 800,
+        totalSteps = this.context.userData.accumulativesteps,
+        avgSteps = this.context.userData.averagesteps,
+        ss = this.ss;
 
       ss.disableUserInteraction();
 
@@ -169,18 +183,18 @@
         this.context.circleCenterX,
         this.context.circleCenterY,
         1.0,
-        stepAccDuration + 2*fireworkDuration,
+        stepAccDuration + 2 * fireworkDuration,
         rankCircleDuration));
 
       d3.select(callMeId(this.pct, this.sex))
         .transition()
         .duration(500)
-        .delay(rankCircleDuration + stepAccDuration + 2*fireworkDuration)
+        .delay(rankCircleDuration + stepAccDuration + 2 * fireworkDuration)
         .attr('transform', 'scale(1.0)');
 
       setTimeout(function() {
         ss.enableUserInteraction();
-      }, rankCircleDuration + stepAccDuration + 2*fireworkDuration + 500);
+      }, rankCircleDuration + stepAccDuration + 2 * fireworkDuration + 500);
     },
     onExit: function() {
       this.animationHandles.forEach(function(handle) {
