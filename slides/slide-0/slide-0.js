@@ -80,11 +80,41 @@
           d3.select(this)
             .transition()
             .style('display', '')
-            .duration(function(d) { return d.duration; })
+            .duration(function(d) {
+              return d.duration;
+            })
             .attr('width', size)
             .attr('height', size)
-            .attr('transform', 'translate(' + [-size/2, -size/2] + ')');
+            .attr('transform', 'translate(' + [-size / 2, -size / 2] + ')');
         });
+
+      this.image
+      .transition()
+      .attr('class', '')
+        // .removeClass()
+        .attr('class', 'wow')
+        // .addClass('wow bounceIn ' + 'animated')
+        .delay(3000)
+        .each('animated', function() {
+          $(this).attr('class', '');
+          // $(this).addClass('lalal')
+          console.log('111');
+        });
+        
+        // .removeClass('wow bounceIn animated');
+
+
+      // $('#slide-0-image')
+      //   .removeClass()
+      //   .addClass('wow bounceIn ' + 'animated')
+      //   .delay(3000)
+      //   .removeClass('wow bounceIn animated');
+
+      // .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+      //     $(this).removeClass('wow bounceIn animated');
+      //     $(this).addClass('lalal')
+      //     console.log('111');
+      //   });
 
       this.text
         .transition()

@@ -12,3 +12,9 @@
     margin-top: 1%;
     margin-bottom: 1%;
 }
+
+#slide-0-image{
+	/*-webkit-animation-duration: 3s;*/
+  	-webkit-animation-delay: 1000ms;
+  	/*-webkit-animation-iteration-count: infinite;*/
+}
