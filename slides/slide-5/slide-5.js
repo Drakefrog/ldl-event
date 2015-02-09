@@ -133,6 +133,15 @@
     return basePrefix + idx;
   }
 
+  function isWeixin() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   app.addSlide('slide-5', {
     onCreate: function() {
       var pct = this.context.userData.better_than_pct,
@@ -149,29 +158,52 @@
       this.smallFireworkEl = '#slide-5-firework-small';
       this.largeFireworkEl = '#slide-5-firework-large';
 
+      
+
+
+
       d3.select('#slide-5-better-than-pct')
         .text(pct);
 
       this.pct = pct;
       this.sex = sex;
 
-      d3.select('#slide-5-share-btn text')
+      if (isWeixin()) {
+        var downloadUrl = "http://www.baidu.com";
+        d3.select('#sharecontent')
+        .text("开启新旅程");
+        d3.select("#slide-5-share-btn text")
+          .on('click', function() {
+            var win = window.open(downloadUrl,'_blank');
+            win.focus();
+          });
+
+      } else{
+        d3.select('#slide-5-share-btn rect')
         .on('click', function() {
           d3.select(".cover")
             .transition()
               .duration("2000")
-              .ease("line")
               .style("display","block");
         });
-      d3.select('.cover')
+        d3.select('#slide-5-share-btn text')
         .on('click', function() {
-          d3.select(this)
-          .transition()
-            .duration(500)
-            .style("display","none");
-          /* Act on the event */
-        });;
+          d3.select(".cover")
+            .transition()
+              .duration("2000")
+              .style("display","block");
+        });
+        d3.select('.cover')
+          .on('click', function() {
+            d3.select(this)
+            .transition()
+              .duration(500)
+              .style("display","none");
+            /* Act on the event */
+          });
+      };
 
+      
       this.animationHandles = [];
     },
     onEnter: function() {
