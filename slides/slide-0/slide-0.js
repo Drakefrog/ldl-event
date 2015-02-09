@@ -30,7 +30,9 @@
 
     // logo.attr('opacity', 0.0);
 
-    text.attr('transform', 'translate(' + [190, 335] + ')');
+    // text.attr('transform', 'translate(' + [190, 335] + ')');
+
+    text.attr('class', 'wow bounce animated');
   }
 
   app.addSlide('slide-0', {
@@ -51,7 +53,8 @@
 
       this.logo = d3.select('#slide-0-logo');
 
-      this.text = d3.select('g#slide-0-text');
+      this.text = d3.select('#slide-0-image');
+
 
       reset.call(this);
     },
@@ -88,43 +91,16 @@
             .attr('transform', 'translate(' + [-size / 2, -size / 2] + ')');
         });
 
-      this.image
-      .transition()
-      .attr('class', '')
-        // .removeClass()
-        .attr('class', 'wow')
-        // .addClass('wow bounceIn ' + 'animated')
-        .delay(3000)
-        .each('animated', function() {
-          $(this).attr('class', '');
-          // $(this).addClass('lalal')
-          console.log('111');
-        });
-        
-        // .removeClass('wow bounceIn animated');
-
-
-      // $('#slide-0-image')
-      //   .removeClass()
-      //   .addClass('wow bounceIn ' + 'animated')
-      //   .delay(3000)
-      //   .removeClass('wow bounceIn animated');
-
-      // .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-      //     $(this).removeClass('wow bounceIn animated');
-      //     $(this).addClass('lalal')
-      //     console.log('111');
-      //   });
-
-      this.text
+        this.text
         .transition()
-        .delay(logoDuration + starDelay)
-        .duration(500)
-        // .attr('transform', 'translate(' + [190, 550] + ')')
+        .delay(starDelay)
+        .duration(100)
+        .attr('class', 'wow pulse animated')
         .each('end', function() {
           ss.showArrowButton();
           ss.enableUserInteraction();
         });
+
     },
     onExit: function() {
       reset.call(this);
