@@ -144,8 +144,9 @@
     }
   }
 
-  function shareString (days,idx) {
-    var shareString = "";
+
+  function sharecontent (idx) {
+    // body
     var sharetitle = "";
     switch (idx){
       case 0: sharetitle = "运动白富美";break;
@@ -161,11 +162,21 @@
       case 10: sharetitle = "全宇宙级运动女神";break;
       case 11: sharetitle = "全宇宙级运动健将";break;
     }
-    shareString = "我用乐动力" +  days + "天，获得了 " + sharetitle + " 称号！";
+    return sharetitle;    
+  }
+
+  function shareContentString (days,idx) {
+    var shareString = "";
+    var sharetitle = sharecontent(idx);
+    shareString = "我用乐动力" +  days + "天，获得了「" + sharetitle + "」称号！";
     return shareString;
     }
 
-
+  function shareTitleString (idx) {
+    // body...
+    var shareString = "我获得了「" + sharecontent(idx) + "」的称号！你呢？";
+    return shareString;
+  }
 
 
   app.addSlide('slide-5', {
@@ -198,11 +209,18 @@
                     + "-"
                     + this.context.userData.firstday_parsed.day;
 
-      var days = (today.getTime() - Date.parse(startdate))/86400000;
-      var str = shareString(parseInt(days),idxs);
+      var days       = (today.getTime() - Date.parse(startdate))/86400000;
+      var strTitle   = shareTitleString(idxs);
+      var strContent = shareContentString(parseInt(days),idxs);
+
+      d3.select('#ldl-share-title')
+        .text(function (){
+          return strTitle ;
+        });
+
       d3.select('#ldl-share-content')
         .text(function (){
-          return str + "!";
+          return strContent + "!";
         });
 
       if (isWeixin()) {
