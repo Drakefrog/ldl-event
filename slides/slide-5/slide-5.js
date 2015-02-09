@@ -1,7 +1,8 @@
 (function(app) {
   var compile = app.compile,
     $ = app.$,
-    d3 = app.d3;
+    d3 = app.d3,
+    idxs = 0;
   // text1Template = compile($('#slide-5-template-text-1').html()),
   // rankCircleTemplate = compile($('#slide-5-template-rank-circle').html());
 
@@ -130,6 +131,7 @@
         idx = 11;
       }
     }
+    idxs = idx;
     return basePrefix + idx;
   }
 
@@ -141,6 +143,30 @@
       return false;
     }
   }
+
+  function shareString (days,idx) {
+    var shareString = "";
+    var sharetitle = "";
+    switch (idx){
+      case 0: sharetitle = "运动白富美";break;
+      case 1: sharetitle = "运动高富帅";break;
+      case 2: sharetitle = "中国级运动女神";break;
+      case 3: sharetitle = "中国级运动健将";break;
+      case 4: sharetitle = "亚洲级运动女神";break;
+      case 5: sharetitle = "亚洲级运动健将";break;
+      case 6: sharetitle = "国际级运动女神";break;
+      case 7: sharetitle = "国际级运动健将";break;
+      case 8: sharetitle = "银河系级运动女神";break;
+      case 9: sharetitle = "银河系级运动健将";break;
+      case 10: sharetitle = "全宇宙级运动女神";break;
+      case 11: sharetitle = "全宇宙级运动健将";break;
+    }
+    shareString = "我用乐动力" +  days + "天，获得了 " + sharetitle + " 称号！";
+    return shareString;
+    }
+
+
+
 
   app.addSlide('slide-5', {
     onCreate: function() {
@@ -158,9 +184,6 @@
       this.smallFireworkEl = '#slide-5-firework-small';
       this.largeFireworkEl = '#slide-5-firework-large';
 
-      
-
-
 
       d3.select('#slide-5-better-than-pct')
         .text(pct);
@@ -168,8 +191,22 @@
       this.pct = pct;
       this.sex = sex;
 
+      var today = new Date();
+      var startdate = this.context.userData.firstday_parsed.year 
+                    + "-"
+                    + this.context.userData.firstday_parsed.month 
+                    + "-"
+                    + this.context.userData.firstday_parsed.day;
+
+      var days = (today.getTime() - Date.parse(startdate))/86400000;
+      var str = shareString(parseInt(days),idxs);
+      d3.select('#ldl-share-content')
+        .text(function (){
+          return str + "!";
+        });
+
       if (isWeixin()) {
-        var downloadUrl = "http://www.baidu.com";
+        var downloadUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=cn.ledongli.ldl&g_f=991653";
         d3.select('#sharecontent')
         .text("开启新旅程");
         d3.select("#slide-5-share-btn text")
