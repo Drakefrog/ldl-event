@@ -185,6 +185,10 @@
         sex = this.context.userData.gender || 'male',
         shareUrl = 'http://ledongli.cn/';
 
+      if (this.context.userData.averagesteps < 2000) {
+        pct = '10%';
+      };
+
       this.totalStepTextEl = $('#slide-5-total-steps')[0];
       this.avgStepTextEl = $('#slide-5-avg-steps')[0];
 
