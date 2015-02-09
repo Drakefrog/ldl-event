@@ -157,9 +157,20 @@
 
       d3.select('#slide-5-share-btn text')
         .on('click', function() {
-          var win = window.open(shareUrl, '_blank');
-          win.focus();
+          d3.select(".cover")
+            .transition()
+              .duration("2000")
+              .ease("line")
+              .style("display","block");
         });
+      d3.select('.cover')
+        .on('click', function() {
+          d3.select(this)
+          .transition()
+            .duration(500)
+            .style("display","none");
+          /* Act on the event */
+        });;
 
       this.animationHandles = [];
     },
