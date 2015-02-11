@@ -150,7 +150,7 @@
     var sharetitle = "";
     switch (idx){
       case 0: sharetitle = "运动白富美";break;
-      case 1: sharetitle = "运动高富帅";break;
+      case 1: sharetitle = "潜力股运动健将";break;
       case 2: sharetitle = "中国级运动女神";break;
       case 3: sharetitle = "中国级运动健将";break;
       case 4: sharetitle = "亚洲级运动女神";break;
