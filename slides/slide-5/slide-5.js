@@ -101,31 +101,30 @@
       basePrefix = '#slide-5-call-me-',
       idx;
 
-
     if (/^[fF]/.test(sex)) {
-      if (iPct <= 20) {
+      if (iPct <= 60) {
         idx = 0;
-      } else if (iPct > 20 && iPct <= 50) {
+      } else if (iPct > 60 && iPct <= 68) {
         idx = 2;
-      } else if (iPct > 50 && iPct <= 60) {
+      } else if (iPct > 68 && iPct <= 76) {
         idx = 4;
-      } else if (iPct > 60 && iPct <= 70) {
+      } else if (iPct > 76 && iPct <= 84) {
         idx = 6;
-      } else if (iPct > 70 && iPct <= 90) {
+      } else if (iPct > 84 && iPct <= 92) {
         idx = 8;
       } else {
         idx = 10;
       }
     } else {
-      if (iPct <= 20) {
+      if (iPct <= 60) {
         idx = 1;
-      } else if (iPct > 20 && iPct <= 50) {
+      } else if (iPct > 60 && iPct <= 68) {
         idx = 3;
-      } else if (iPct > 50 && iPct <= 60) {
+      } else if (iPct > 68 && iPct <= 76) {
         idx = 5;
-      } else if (iPct > 60 && iPct <= 70) {
+      } else if (iPct > 76 && iPct <= 84) {
         idx = 7;
-      } else if (iPct > 70 && iPct <= 90) {
+      } else if (iPct > 84 && iPct <= 92) {
         idx = 9;
       } else {
         idx = 11;
