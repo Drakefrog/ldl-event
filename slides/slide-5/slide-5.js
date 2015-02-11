@@ -183,7 +183,7 @@
       var pct = this.context.userData.better_than_pct,
         sex = this.context.userData.gender || 'male',
         shareUrl = 'http://ledongli.cn/';
-
+         callMeId(pct,sex);
       if (this.context.userData.averagesteps < 2000) {
         pct = '10%';
       };
@@ -213,7 +213,7 @@
                     + this.context.userData.firstday_parsed.day;
 
       var days       = (today.getTime() - Date.parse(startdate))/86400000;
-      var strTitle   = shareTitleString(idxs);
+      var strTitle   = shareContentString(parseInt(days),idxs);
       var strContent = shareContentString(parseInt(days),idxs);
 
       d3.select('#ldl-share-title')
