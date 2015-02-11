@@ -32,8 +32,8 @@
           ],
           startAngle: 0,
           angle: 0,
-          delay: config.subslideDelay || 1000,
-          duration: config.subslideDuration || 1000
+          delay: config.subslideDelay || 2000,
+          duration: config.subslideDuration || 2000
         },
         {
           id: 'slide-1-1',
@@ -54,8 +54,8 @@
           ],
           startAngle: 90,
           angle: 90,
-          delay: config.subslideDelay || 1000,
-          duration: config.subslideDuration || 1000
+          delay: config.subslideDelay || 2000,
+          duration: config.subslideDuration || 2000
         },
         {
           id: 'slide-1-2',
@@ -79,8 +79,8 @@
           ],
           startAngle: 180,
           angle: 180,
-          delay: config.subslideDelay || 1000,
-          duration: config.subslideDuration || 1000
+          delay: config.subslideDelay || 2000,
+          duration: config.subslideDuration || 2000
         }
       ], slideAnimates;
 
@@ -226,13 +226,13 @@
     chain(ctx, [
       makeResetText(),
       [
-        makeAnimateText('#slide-1-year', year, 4, 1000),
-        makeAnimateText('#slide-1-month', month, 2, 1000),
-        makeAnimateText('#slide-1-day', day, 2, 1000)
+        makeAnimateText('#slide-1-year', year, 4, 1500),
+        makeAnimateText('#slide-1-month', month, 2, 1500),
+        makeAnimateText('#slide-1-day', day, 2, 1500)
       ],
       animateFoot,
-      makeFadeIn('#slide-1-text-0',300),
-      // makeDelay(1000),
+      makeFadeIn('#slide-1-text-0',700),
+      // makeDelay(1500),
       // makeFadeOut('#slide-1-text-0', 300)
     ], done);
   }
@@ -245,12 +245,12 @@
     chain(ctx, [
       makeResetText(),
       [
-        makeAnimateText('#slide-1-year', year, 4, 1000),
-        makeAnimateText('#slide-1-month', month, 2, 1000),
-        makeAnimateText('#slide-1-day', day, 2, 1000)
+        makeAnimateText('#slide-1-year', year, 4, 1500),
+        makeAnimateText('#slide-1-month', month, 2, 1500),
+        makeAnimateText('#slide-1-day', day, 2, 1500)
       ],
       animateCar,
-      makeFadeIn('#slide-1-text-1', 300),
+      makeFadeIn('#slide-1-text-1', 700),
       // makeDelay(1000),
       // makeFadeOut('#slide-1-text-1', 300)
     ], done);
@@ -264,12 +264,12 @@
     chain(ctx, [
       makeResetText(),
       [
-        makeAnimateText('#slide-1-year', year, 4, 1000),
-        makeAnimateText('#slide-1-month', month, 2, 1000),
-        makeAnimateText('#slide-1-day', day, 2, 1000)
+        makeAnimateText('#slide-1-year', year, 4, 1500),
+        makeAnimateText('#slide-1-month', month, 2, 1500),
+        makeAnimateText('#slide-1-day', day, 2, 1500)
       ],
       // animateMonsters,
-      makeFadeIn('#slide-1-text-2', 500),
+      makeFadeIn('#slide-1-text-2', 700),
       // makeFadeOut('#slide-1-text-2', 1000)
     ], done);
   }
@@ -282,7 +282,7 @@
   function animateCar(ctx, done) {
     d3.select('#slide-1-car')
       .transition()
-      .duration(1000)
+      .duration(1500)
       .attr('transform', 'translate(-200, 180)')
       .each('end', function() {
         done();
@@ -294,7 +294,7 @@
       .select('#slide-1-0-foot')
       .attr('visibility', 'visible')
       .transition()
-      .duration(200)
+      .duration(400)
       .ease(d3.ease('elastic'))
       .attr('transform', 'translate(-200, 0)')
       .each('end', function() {
